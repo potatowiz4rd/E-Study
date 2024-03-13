@@ -17,6 +17,15 @@ namespace E_Study.Repository.Repositories
         {
 
         }
+        public IList<Course> GetAllCourseOfUser(string userId)
+        {
+            var courses = dataContext.UserCourses
+            .Where(uc => uc.UserId == userId)
+            .Select(uc => uc.Course)
+            .ToList();
+
+            return courses;
+        }
 
         public void AddUserToCourse(string userId, string courseId)
         {

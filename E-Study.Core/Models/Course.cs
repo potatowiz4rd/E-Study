@@ -14,5 +14,7 @@ namespace E_Study.Core.Models
         public ICollection<UserCourse> UserCourses { get; set; } = new HashSet<UserCourse>();
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         public ICollection<PdfFile> PdfFiles { get; set; } = new List<PdfFile>();
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
+
     }
 }

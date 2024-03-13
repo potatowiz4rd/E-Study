@@ -7,6 +7,7 @@
         /// </summary>
         /// <param name="entity"></param>
         void Create(TEntity entity);
+        Task CreateAsync(TEntity entity);  // Asynchronous version
 
         /// <summary>
         /// Change state of entity to deleted

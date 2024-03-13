@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
 using E_Study.Core;
 using E_Study.Core.Data;
 using E_Study.Repository.IRepositories;
@@ -12,7 +12,7 @@ namespace E_Study.Repository.Infrastructures
         private ICourseRepository _courseRepository;
         private IUserRepository _userRepository;
         private IUserCourseRepository _userCourseRepository;
-
+        private IMessageRepository _messageRepository;
 
         public UnitOfWork(AppDbContext context = null)
         {
@@ -52,6 +52,18 @@ namespace E_Study.Repository.Infrastructures
                     _userCourseRepository = new UserCourseRepository(_context);
                 }
                 return _userCourseRepository;
+            }
+        }
+
+        public IMessageRepository MessageRepository
+        {
+            get
+            {
+                if (_messageRepository == null)
+                {
+                    _messageRepository = new MessageRepository(_context);
+                }
+                return _messageRepository;
             }
         }
 

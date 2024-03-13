@@ -1,18 +1,23 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using E_Study.Core.Data;
 using E_Study.Core.Models;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using E_Study.UI.Mail;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using System.Configuration;
 using E_Study.Repository.Infrastructures;
+using Microsoft.Extensions.DependencyInjection;
+using E_Study.UI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+builder.Services.AddSignalR();
 
 // Add session services.
 builder.Services.AddSession(options =>
@@ -131,6 +136,27 @@ app.UseEndpoints(endpoints =>
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    // Map SignalR hub
+    endpoints.MapHub<ChatHub>("/chat");
+
+    // Map course chat controller
+    endpoints.MapControllerRoute(
+        name: "Course",
+        pattern: "course/index/{id}/chat", // Adjust the route pattern as needed
+        defaults: new
+        {
+            controller = "Course",
+            action = "Chat",
+        });
+
+    // Map default controller route
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Run();

@@ -21,6 +21,12 @@ namespace E_Study.Repository.Infrastructures
             dbSet.Add(entity);
         }
 
+        public async Task CreateAsync(TEntity entity)
+        {
+            //_context.Entry<TEntity>(entity);
+            await dbSet.AddAsync(entity);
+        }
+
         public void Delete(TEntity entity)
         {
             dbSet.Remove(entity);

@@ -40,7 +40,7 @@ namespace E_Study.UI.Areas.Identity.Pages.Account
                 {
                     title = "Đã đăng xuất",
                     htmlcontent = "Đăng xuất thành công",
-                    urlredirect = (returnUrl != null) ? returnUrl : Url.Page("/Index")
+                    urlredirect = string.IsNullOrEmpty(returnUrl) ? "/Index" : returnUrl
                 }
             );
         }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace E_Study.UI.Areas.Admin.Pages.Role
+namespace E_Study.UI.Areas.Admin.Pages
 {
     public class _ViewStartModel : PageModel
     {
