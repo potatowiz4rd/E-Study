@@ -125,33 +125,28 @@ app.UseRouting();
 
 app.UseEndpoints(endpoints =>
 {
+    // Map Area-specific routes
     endpoints.MapAreaControllerRoute(
         areaName: "Admin",
         name: "Admin",
         pattern: "Admin/{controller}/{action}/{id?}"
     );
 
-    endpoints.MapRazorPages();
-});
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.UseEndpoints(endpoints =>
-{
     // Map SignalR hub
     endpoints.MapHub<ChatHub>("/chat");
 
     // Map course chat controller
     endpoints.MapControllerRoute(
         name: "Course",
-        pattern: "course/index/{id}/chat", // Adjust the route pattern as needed
+        pattern: "course/chat/{id}",
         defaults: new
         {
             controller = "Course",
             action = "Chat",
         });
+
+    // Map Razor Pages
+    endpoints.MapRazorPages();
 
     // Map default controller route
     endpoints.MapControllerRoute(

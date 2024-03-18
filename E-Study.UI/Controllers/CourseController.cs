@@ -18,32 +18,37 @@ namespace E_Study.UI.Controllers
             this.userManager = userManager;
         }
         public async Task<IActionResult> Index(string id)
-        {
-            var currentUser = await userManager.GetUserAsync(User);
-            ViewBag.CurrentUserName = currentUser.UserName;
-            ViewBag.CurrentCourseId = id;
-            var messages = await uow.MessageRepository.GetMessagesByCourseIdAsync(id);
-            TempData["CourseId"] = id;
-            return View(messages);
-        }
-        public async Task<IActionResult> Chat(string id)
-        {
-            var currentUser = await userManager.GetUserAsync(User);
-            ViewBag.CurrentUserName = currentUser.UserName;
-            ViewBag.CurrentCourseId = id;
-            var messages = await uow.MessageRepository.GetMessagesByCourseIdAsync(id);
-            TempData["CourseId"] = id;
-            return View("Chat", messages);
+        {           
+            return View();
         }
 
-        public async Task<IActionResult> SendMessage(Message message)
+        public async Task<IActionResult> Chat(string id)
+        {
+            if (id == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var currentUser = await userManager.GetUserAsync(User);
+                ViewBag.CurrentUserName = currentUser.UserName;
+                ViewBag.CurrentCourseId = id;
+                var messages = await uow.MessageRepository.GetMessagesByCourseIdAsync(id);
+                TempData["CourseId"] = id;
+                return View(messages);
+            }
+           
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(Message message, string courseId)
         {
             if (ModelState.IsValid)
             {
                 message.Username = User.Identity.Name;
                 var sender = await userManager.GetUserAsync(User);
                 message.UserId = sender.Id;
-                message.CourseId = TempData["CourseId"].ToString();
+                message.CourseId = courseId; // Use the CourseId passed from the form
                 await uow.MessageRepository.CreateAsync(message);
                 await uow.SaveChangesAsync();
                 return Ok();
