@@ -42,12 +42,10 @@ namespace E_Study.Repository.Repositories
         public IList<User> GetUsersInCourse(string courseId)
         {
             // Fetch the users associated with the course
-            var users = dataContext.UserCourses
+            return dataContext.UserCourses
                 .Where(uc => uc.CourseId == courseId)
                 .Select(uc => uc.User)
-                .ToList();
-
-            return users;
+                .ToList(); ;
         }
 
         public IList<User> GetUsersNotInCourse(string courseId)

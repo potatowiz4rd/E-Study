@@ -17,14 +17,29 @@ namespace E_Study.UI.Controllers
             this.webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
         }
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string courseId)
         {           
             return View();
         }
 
-        public async Task<IActionResult> Chat(string id)
+        public IActionResult Students(string courseId)
         {
-            if (id == null)
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var students =  uow.CourseRepository.GetUsersInCourse(courseId);
+                ViewBag.CurrentCourseId = courseId;                
+                return View(students);
+            }
+        }
+
+        public async Task<IActionResult> Chat(string courseId)
+        {
+            if (courseId == null)
             {
                 // Handle the case where CourseId is null
                 return RedirectToAction("Index", "Home"); // Redirect to a default page
@@ -33,9 +48,9 @@ namespace E_Study.UI.Controllers
             {
                 var currentUser = await userManager.GetUserAsync(User);
                 ViewBag.CurrentUserName = currentUser.UserName;
-                ViewBag.CurrentCourseId = id;
-                var messages = await uow.MessageRepository.GetMessagesByCourseIdAsync(id);
-                TempData["CourseId"] = id;
+                ViewBag.CurrentCourseId = courseId;
+                var messages = await uow.MessageRepository.GetMessagesByCourseIdAsync(courseId);
+                TempData["CourseId"] = courseId;
                 return View(messages);
             }
            
