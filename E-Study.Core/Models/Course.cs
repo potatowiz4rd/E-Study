@@ -15,6 +15,8 @@ namespace E_Study.Core.Models
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         public ICollection<PdfFile> PdfFiles { get; set; } = new List<PdfFile>();
         public ICollection<Message> Messages { get; set; } = new List<Message>();
+        public ICollection<Post> Posts { get; set; } = new List<Post>();
+
 
     }
 }

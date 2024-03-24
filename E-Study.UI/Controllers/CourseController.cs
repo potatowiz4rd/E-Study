@@ -22,6 +22,11 @@ namespace E_Study.UI.Controllers
             return View();
         }
 
+        public async Task<IActionResult> CreatePost(string courseId)
+        {
+            return View();
+        }
+
         public IActionResult Students(string courseId)
         {
             if (courseId == null)

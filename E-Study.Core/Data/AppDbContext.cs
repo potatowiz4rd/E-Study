@@ -26,6 +26,10 @@ public partial class AppDbContext : IdentityDbContext<User>
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Message).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(User).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PdfFile).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Comment).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Post).Assembly);
+
+
 
         OnModelCreatingPartial(modelBuilder);
         base.OnModelCreating(modelBuilder);
@@ -59,5 +63,7 @@ public partial class AppDbContext : IdentityDbContext<User>
     public DbSet<UserCourse> UserCourses { get; set; }
     public DbSet<PdfFile> PdfFiles { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
 }

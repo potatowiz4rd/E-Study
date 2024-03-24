@@ -9,6 +9,8 @@ namespace E_Study.Repository.Infrastructures
         public IUserRepository UserRepository { get; } // read only
         public IUserCourseRepository UserCourseRepository { get; } // read only
         public IMessageRepository MessageRepository { get; } // read only
+        public IPostRepository PostRepository { get; } // read only
+        public ICommentRepository CommentRepository { get; } // read only
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
