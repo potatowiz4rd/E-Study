@@ -39,9 +39,15 @@ namespace E_Study.Repository.Infrastructures
             dbSet.Remove(entity);
         }
 
-        public TEntity Find(params object[] primaryKey)
+        public TEntity GetById(params object[] primaryKey)
         {
             return dbSet.Find(primaryKey);
+        }
+
+        public async Task<TEntity> GetByIdAsync(params object[] primaryKey)
+        {
+            //_context.Entry<TEntity>(entity);
+            return await dbSet.FindAsync(primaryKey);
         }
 
         public IEnumerable<TEntity> GetAll()

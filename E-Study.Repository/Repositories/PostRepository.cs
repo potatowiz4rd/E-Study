@@ -2,6 +2,7 @@
 using E_Study.Core.Models;
 using E_Study.Repository.Infrastructures;
 using E_Study.Repository.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,15 @@ namespace E_Study.Repository.Repositories
     {
         public PostRepository(AppDbContext context) : base(context)
         {
+
+        }
+
+        public async Task<List<Post>> GetPostsByCourseIdAsync(string courseId)
+        {
+            // Assuming you have DbSet<Message> named DbSet in your context
+            return await dataContext.Posts
+                .Where(m => m.CourseId == courseId)
+                .ToListAsync();
         }
     }
 }

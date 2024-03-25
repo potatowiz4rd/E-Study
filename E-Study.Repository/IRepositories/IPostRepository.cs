@@ -10,5 +10,7 @@ namespace E_Study.Repository.IRepositories
 {
     public interface IPostRepository : IBaseRepository<Post>
     {
+        Task<List<Post>> GetPostsByCourseIdAsync(string courseId);
+
     }
 }

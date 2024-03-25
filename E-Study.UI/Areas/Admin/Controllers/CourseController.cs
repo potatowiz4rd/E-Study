@@ -46,7 +46,7 @@ namespace E_Study.UI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Detail(string id)
         {
-            var result = uow.CourseRepository.Find(id);
+            var result = uow.CourseRepository.GetById(id);
             return View(result);
         }
 

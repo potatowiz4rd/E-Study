@@ -14,7 +14,11 @@ namespace E_Study.Service
     {
         public MapperConfig()
         {
-            CreateMap<Course, CourseViewModel>().ReverseMap();           
+            CreateMap<Course, CourseViewModel>().ReverseMap();
+            CreateMap<Post, PostViewModel>().ReverseMap();
+            CreateMap<Comment, CommentViewModel>().ReverseMap();
+
+
         }
     }
 }

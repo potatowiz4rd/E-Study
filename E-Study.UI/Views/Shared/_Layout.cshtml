@@ -149,7 +149,7 @@
                                 {
                                         @foreach (var item in courses)
                                         {
-                                        <li><a class="active" href="@Url.Action("Chat","Course", new{courseId = item.Id})">@item.Name</a></li>
+                                        <li><a class="active" href="@Url.Action("Index","Course", new{courseId = item.Id})">@item.Name</a></li>
                                         }
                                 }
                             </ul>

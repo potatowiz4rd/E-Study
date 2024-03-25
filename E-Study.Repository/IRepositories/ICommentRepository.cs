@@ -10,5 +10,7 @@ namespace E_Study.Repository.IRepositories
 {
     public interface ICommentRepository : IBaseRepository<Comment>
     {
+        Task<List<Comment>> GetCommentsByPostIdAsync(string postId);
+
     }
 }

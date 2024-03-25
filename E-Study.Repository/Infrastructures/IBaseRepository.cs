@@ -39,8 +39,7 @@
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        TEntity Find(params object[] primaryKey);
-
-
+        TEntity GetById(params object[] primaryKey);
+        Task<TEntity> GetByIdAsync(params object[] primaryKey);  // Asynchronous version
     }
 }

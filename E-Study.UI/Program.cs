@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using E_Study.Repository.Infrastructures;
 using Microsoft.Extensions.DependencyInjection;
 using E_Study.UI.Hubs;
+using E_Study.Service.course;
+using E_Study.Service.post;
+using E_Study.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -18,6 +21,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSignalR();
+
+builder.Services.AddAutoMapper((typeof(MapperConfig).Assembly));
 
 // Add session services.
 builder.Services.AddSession(options =>
@@ -35,7 +40,8 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddDefaultTokenProviders();
 
 //builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddTransient<ICourseService, CourseService>();
+builder.Services.AddTransient<IPostService, PostService>();
+
 //builder.Services.AddTransient<IStudentService, StudentService>();
 //builder.Services.AddTransient<IExamService, ExamService>();
 //builder.Services.AddTransient<IQnAsService, QnAsService>();
@@ -72,6 +78,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.SignIn.RequireConfirmedPhoneNumber = false; // Xác thực số điện thoại
 
 });
+
 
 // Cấu hình Cookie
 builder.Services.ConfigureApplicationCookie(options =>
