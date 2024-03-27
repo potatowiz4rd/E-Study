@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace E_Study.Core.Models
 {
-    public class UserCourse
+    public class ExamCourse
     {
-        public string UserId { get; set; }
-        public User User { get; set; }
         public string CourseId { get; set; }
         public Course Course { get; set; }
+
+        public string ExamId { get; set; }
+        public Exam Exam { get; set; }
+
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

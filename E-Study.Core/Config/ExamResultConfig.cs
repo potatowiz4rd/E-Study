@@ -17,7 +17,6 @@ namespace E_Study.Core.Config
             builder.HasOne(x => x.Exam).WithMany(x => x.ExamResults).HasForeignKey(x => x.ExamId);
             builder.HasOne(x => x.QnAs).WithMany(x => x.ExamResults).HasForeignKey(x => x.QnAsId).OnDelete(DeleteBehavior.ClientSetNull);
             builder.HasOne(x => x.User).WithMany(x => x.ExamResults).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.ClientSetNull);
-
         }
     }
 }

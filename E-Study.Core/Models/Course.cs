@@ -12,11 +12,9 @@ namespace E_Study.Core.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<UserCourse> UserCourses { get; set; } = new HashSet<UserCourse>();
-        public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
+        public ICollection<ExamCourse> ExamCourses { get; set; } = new HashSet<ExamCourse>();
         public ICollection<PdfFile> PdfFiles { get; set; } = new List<PdfFile>();
         public ICollection<Message> Messages { get; set; } = new List<Message>();
         public ICollection<Post> Posts { get; set; } = new List<Post>();
-
-
     }
 }

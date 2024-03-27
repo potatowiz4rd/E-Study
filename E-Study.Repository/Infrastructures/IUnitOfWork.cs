@@ -11,9 +11,9 @@ namespace E_Study.Repository.Infrastructures
         public IMessageRepository MessageRepository { get; } // read only
         public IPostRepository PostRepository { get; } // read only
         public ICommentRepository CommentRepository { get; } // read only
+        public IExamRepository ExamRepository { get; } // read only
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
-
     }
 }

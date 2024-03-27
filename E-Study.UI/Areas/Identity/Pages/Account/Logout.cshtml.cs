@@ -29,7 +29,7 @@ namespace E_Study.UI.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
-            if (!_signInManager.IsSignedIn(User)) return RedirectToPage("/Index");
+            if (!_signInManager.IsSignedIn(User)) return RedirectToPage("/login");
 
             await _signInManager.SignOutAsync();
             _logger.LogInformation("Người dùng đăng xuất");
@@ -40,7 +40,7 @@ namespace E_Study.UI.Areas.Identity.Pages.Account
                 {
                     title = "Đã đăng xuất",
                     htmlcontent = "Đăng xuất thành công",
-                    urlredirect = string.IsNullOrEmpty(returnUrl) ? "/Index" : returnUrl
+                    urlredirect = string.IsNullOrEmpty(returnUrl) ? "/login" : returnUrl
                 }
             );
         }

@@ -23,6 +23,6 @@ namespace E_Study.Core.Models
         public ICollection<Message> Messages { get; set; } = new List<Message>();
         public ICollection<Post> Posts { get; set; } = new List<Post>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-
+        public ICollection<Grade> Grades { get; set; } = new List<Grade>();
     }
 }

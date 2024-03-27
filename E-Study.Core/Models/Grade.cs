@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace E_Study.Core.Models
 {
-    public class ExamResult
+    public class Grade
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-        public string? ExamId { get; set; }
+        public string ExamId { get; set; }
         public Exam Exam { get; set; }
-        public string QnAsId { get; set; }
-        public QnAs QnAs { get; set; }
-        public string Answer { get; set; }
-        public bool IsCorrect { get; set; }
+        public double Score { get; set; }
+        public DateTime DateAssigned { get; set; }
+        // Additional properties as needed
     }
 }

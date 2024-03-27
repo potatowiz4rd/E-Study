@@ -19,7 +19,5 @@ namespace E_Study.Core.Models
         public string Option4 { get; set; }
 
         public ICollection<ExamResult> ExamResults { get; set; } = new HashSet<ExamResult>();
-
-
     }
 }

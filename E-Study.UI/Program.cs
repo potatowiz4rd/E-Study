@@ -11,6 +11,7 @@ using E_Study.UI.Hubs;
 using E_Study.Service.course;
 using E_Study.Service.post;
 using E_Study.Service;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -117,6 +118,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -127,6 +129,8 @@ app.UseSession();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<AuthenticationMiddleware>();
 
 app.UseRouting();
 

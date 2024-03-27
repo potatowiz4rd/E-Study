@@ -45,7 +45,7 @@ namespace E_Study.Repository.Repositories
             return dataContext.UserCourses
                 .Where(uc => uc.CourseId == courseId)
                 .Select(uc => uc.User)
-                .ToList(); ;
+                .ToList();
         }
 
         public IList<User> GetUsersNotInCourse(string courseId)

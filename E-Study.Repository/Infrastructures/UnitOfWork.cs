@@ -15,6 +15,8 @@ namespace E_Study.Repository.Infrastructures
         private IMessageRepository _messageRepository;
         private IPostRepository _postRepository;
         private ICommentRepository _commentRepository;
+        private IExamRepository _examRepository;
+
 
         public UnitOfWork(AppDbContext context = null)
         {
@@ -90,6 +92,17 @@ namespace E_Study.Repository.Infrastructures
                     _commentRepository = new CommentRepository(_context);
                 }
                 return _commentRepository;
+            }
+        }
+        public IExamRepository ExamRepository
+        {
+            get
+            {
+                if (_examRepository == null)
+                {
+                    _examRepository = new ExamRepository(_context);
+                }
+                return _examRepository;
             }
         }
 

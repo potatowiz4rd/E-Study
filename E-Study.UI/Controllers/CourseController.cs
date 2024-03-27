@@ -21,8 +21,16 @@ namespace E_Study.UI.Controllers
             this.userManager = userManager;
             this.postService = postService;
         }
-        public async Task<IActionResult> Index(string courseId)
+
+        [HttpGet]
+        public IActionResult Index()
         {
+            return View();
+        }
+
+        public async Task<IActionResult> NewFeed(string courseId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
             var currentUser = await userManager.GetUserAsync(User);
             ViewBag.CurrentUserName = currentUser.UserName;
             ViewBag.CurrentCourseId = courseId;
@@ -73,8 +81,7 @@ namespace E_Study.UI.Controllers
                 try
                 {
                     // Retrieve the post associated with the comment
-                    var post = await uow.PostRepository.GetByIdAsync(comment.PostId);
-
+                    var post = await uow.PostRepository.GetByIdAsync(comment.PostId);                  
                     if (post != null)
                     {
                         // Assuming you have the current user available (e.g., through UserManager)
@@ -120,6 +127,7 @@ namespace E_Study.UI.Controllers
 
         public IActionResult Students(string courseId)
         {
+            ViewData["CurrentCourseId"] = courseId;
             if (courseId == null)
             {
                 // Handle the case where CourseId is null
@@ -128,13 +136,29 @@ namespace E_Study.UI.Controllers
             else
             {
                 var students =  uow.CourseRepository.GetUsersInCourse(courseId);
-                ViewBag.CurrentCourseId = courseId;                
                 return View(students);
+            }
+        }
+
+        public IActionResult Exams(string courseId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var exams = uow.ExamRepository.GetExamsInCourse(courseId);
+                return View(exams);
             }
         }
 
         public async Task<IActionResult> Chat(string courseId)
         {
+            ViewData["CurrentCourseId"] = courseId;
+
             if (courseId == null)
             {
                 // Handle the case where CourseId is null
