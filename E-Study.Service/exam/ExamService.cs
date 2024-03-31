@@ -36,7 +36,7 @@ namespace E_Study.Service.exam
                 {
                     var qnas = mapper.Map<QnAs>(qnasViewModel); // Map QnA ViewModel to QnA entity
                     qnas.ExamId = exam.Id; // Assign exam Id to QnA
-                    exam.QnAs.Add(qnas); // Add QnA to the exam
+                   // exam.QnAs.Add(qnas); // Add QnA to the exam
                 }
 
                 await uow.SaveChangesAsync();
