@@ -12,6 +12,8 @@ using E_Study.Service.course;
 using E_Study.Service.post;
 using E_Study.Service;
 using Microsoft.AspNetCore.Authentication;
+using E_Study.Service.exam;
+using E_Study.Service.qnas;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -25,10 +27,12 @@ builder.Services.AddSignalR();
 
 builder.Services.AddAutoMapper((typeof(MapperConfig).Assembly));
 
+builder.Services.AddDistributedMemoryCache();
+
 // Add session services.
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set your desired session timeout
+    options.IdleTimeout = TimeSpan.FromMinutes(60); // Set your desired session timeout
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -42,10 +46,9 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 //builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IPostService, PostService>();
-
 //builder.Services.AddTransient<IStudentService, StudentService>();
-//builder.Services.AddTransient<IExamService, ExamService>();
-//builder.Services.AddTransient<IQnAsService, QnAsService>();
+builder.Services.AddTransient<IExamService, ExamService>();
+builder.Services.AddTransient<IQnAsService, QnAsService>();
 //builder.Services.AddTransient<IAccountService, AccountService>();
 //builder.Services.AddTransient<IFileService, FileService>();
 
@@ -85,7 +88,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // options.Cookie.HttpOnly = true;  
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.LoginPath = $"/login/";                                 // Url đến trang đăng nhập
     options.LogoutPath = $"/logout/";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";   // Trang khi User bị cấm truy cập
@@ -128,11 +131,11 @@ app.UseSession();
 
 app.UseAuthentication();
 
-app.UseAuthorization();
-
 app.UseMiddleware<AuthenticationMiddleware>();
 
 app.UseRouting();
+
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

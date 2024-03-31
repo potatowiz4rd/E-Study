@@ -11,6 +11,7 @@ namespace E_Study.Repository.IRepositories
     public interface IExamRepository : IBaseRepository<Exam>
     {
         IEnumerable<Exam> GetExamsInCourse(string courseId);
-
+        IEnumerable<Exam> GetAllExamsOfUser(string userId);
+        void AddExamToCourse(string examId, string courseId, DateTime startDate, DateTime endDate);
     }
 }

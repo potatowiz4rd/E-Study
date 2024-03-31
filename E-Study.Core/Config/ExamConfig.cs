@@ -19,6 +19,7 @@ namespace E_Study.Core.Config
             builder.Property(x => x.Title).IsRequired().HasMaxLength(50);
             builder.Property(x => x.MaxScore).IsRequired();
             builder.Property(x => x.Description).HasMaxLength(255);
+            builder.HasOne(x => x.Author).WithMany(x => x.Exams).HasForeignKey(x => x.AuthorId).OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

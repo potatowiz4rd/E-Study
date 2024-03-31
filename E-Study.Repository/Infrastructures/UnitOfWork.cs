@@ -16,7 +16,8 @@ namespace E_Study.Repository.Infrastructures
         private IPostRepository _postRepository;
         private ICommentRepository _commentRepository;
         private IExamRepository _examRepository;
-
+        private IQnAsRepository _qnAsRepository;
+        private IExamResultRepository _examResultRepository;
 
         public UnitOfWork(AppDbContext context = null)
         {
@@ -103,6 +104,30 @@ namespace E_Study.Repository.Infrastructures
                     _examRepository = new ExamRepository(_context);
                 }
                 return _examRepository;
+            }
+        }
+
+        public IQnAsRepository QnAsRepository
+        {
+            get
+            {
+                if (_qnAsRepository == null)
+                {
+                    _qnAsRepository = new QnAsRepository(_context);
+                }
+                return _qnAsRepository;
+            }
+        }
+
+        public IExamResultRepository ExamResultRepository
+        {
+            get
+            {
+                if (_examResultRepository == null)
+                {
+                    _examResultRepository = new ExamResultRepository(_context);
+                }
+                return _examResultRepository;
             }
         }
 

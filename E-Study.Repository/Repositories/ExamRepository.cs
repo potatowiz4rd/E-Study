@@ -17,6 +17,25 @@ namespace E_Study.Repository.Repositories
         {
         }
 
+        public void AddExamToCourse(string examId, string courseId, DateTime startDate, DateTime endDate)
+        {
+            //complete this function that will add an exam to a course
+            if (!dataContext.ExamCourses.Any(uc => uc.ExamId == examId && uc.CourseId == courseId))
+            {
+                dataContext.ExamCourses
+                    .Add(new ExamCourse { ExamId = examId, CourseId = courseId, StartDate = startDate, EndDate = endDate });
+                dataContext.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Exam> GetAllExamsOfUser(string userId)
+        {
+            // Assuming you have DbSet<Message> named DbSet in your context
+            return dataContext.Exams
+                .Where(m => m.AuthorId == userId)
+                .ToList();
+        }
+
         public IEnumerable<Exam> GetExamsInCourse(string courseId)
         {
             return dataContext.ExamCourses

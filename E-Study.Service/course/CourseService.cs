@@ -26,7 +26,8 @@ namespace E_Study.Service.course
 
             try
             {
-                var courses = uow.CourseRepository.GetAll();
+          
+                var courses = uow.CourseRepository.GetAll();                
                 if (courses == null || courses.Count() == 0)
                 {
                     return new ResponseResult<CourseViewModel>() { Message = "No data", StatusCode = 404 };

@@ -14,6 +14,8 @@ namespace E_Study.Core.Models
         public string Description { get; set; }
         public int Time { get; set; }
         public double MaxScore { get; set; }
+        public string AuthorId { get; set; }
+        public User Author { get; set; }
         public ICollection<ExamResult> ExamResults { get; set; }
         public ICollection<QnAs> QnAs { get; set; } = new HashSet<QnAs>();
         public ICollection<ExamCourse> ExamCourses { get; set; } = new HashSet<ExamCourse>();

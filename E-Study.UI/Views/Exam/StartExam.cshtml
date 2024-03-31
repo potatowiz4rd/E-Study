@@ -1,0 +1,69 @@
+﻿@model E_Study.ViewModel.StartExamViewModel
+
+@{
+    ViewData["Title"] = "Start Exam";
+}
+
+<h1>@Model.ExamName</h1>
+
+<h3>Exam Paper</h3>
+
+<form asp-action="StartExam" asp-controller="Exam" method="post">
+    <input type="hidden" asp-for="StudentId" />
+    <ul>
+        @for (var i = 0; i < Model.QnAs.Count(); i++)
+        {
+            <input type="hidden" asp-for="@Model.QnAs[i].Id" />
+            <input type="hidden" asp-for="@Model.QnAs[i].ExamId" />
+            <input type="hidden" asp-for="@Model.QnAs[i].Answer" />
+            <div class="mt-5">
+                <span>Question @(i + 1)</span>
+                <h3 class="mb-3 mt-1">@Model.QnAs[i].Question</h3>
+                <!-- list group -->
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-action " aria-current="true">
+                        <!-- form check -->
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option1_@i" value="@Model.QnAs[i].Option1">
+                            <label class="form-check-label stretched-link" for="option1_@i">
+                                @Model.QnAs[i].Option1
+                            </label>
+                        </div>
+                    </div>
+                    <!-- list group -->
+                    <div class="list-group-item list-group-item-action">
+                        <!-- form check -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option2_@i" value="@Model.QnAs[i].Option2">
+                            <label class="form-check-label stretched-link" for="option2_@i">
+                                @Model.QnAs[i].Option2
+                            </label>
+                        </div>
+                    </div>
+                    <!-- list group -->
+                    <div class="list-group-item list-group-item-action">
+                        <!-- form check -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option3_@i" value="@Model.QnAs[i].Option3">
+                            <label class="form-check-label stretched-link" for="option3_@i">
+                                @Model.QnAs[i].Option3
+                            </label>
+                        </div>
+                    </div>
+                    <!-- list group -->
+                    <div class="list-group-item list-group-item-action">
+                        <!-- form check -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option4_@i" value="@Model.QnAs[i].Option4">
+                            <label class="form-check-label stretched-link" for="option4_@i">
+                                @Model.QnAs[i].Option4
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </ul>
+    <button type="submit" name="action" class="btn btn-primary">Finish</button>
+</form>

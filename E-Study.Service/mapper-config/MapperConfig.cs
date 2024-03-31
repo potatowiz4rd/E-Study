@@ -17,8 +17,9 @@ namespace E_Study.Service
             CreateMap<Course, CourseViewModel>().ReverseMap();
             CreateMap<Post, PostViewModel>().ReverseMap();
             CreateMap<Comment, CommentViewModel>().ReverseMap();
-
-
+            CreateMap<Exam, ExamViewModel>().ReverseMap();
+            CreateMap<QnAs, QnAsViewModel>().ReverseMap();
+            CreateMap<ExamCourse, ExamCourseViewModel>().ReverseMap();
         }
     }
 }

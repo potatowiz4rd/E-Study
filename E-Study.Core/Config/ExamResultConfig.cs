@@ -13,7 +13,9 @@ namespace E_Study.Core.Config
     {
         public void Configure(EntityTypeBuilder<ExamResult> builder)
         {
-            builder.ToTable("ExamResults");            
+            builder.ToTable("ExamResults");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.HasOne(x => x.Exam).WithMany(x => x.ExamResults).HasForeignKey(x => x.ExamId);
             builder.HasOne(x => x.QnAs).WithMany(x => x.ExamResults).HasForeignKey(x => x.QnAsId).OnDelete(DeleteBehavior.ClientSetNull);
             builder.HasOne(x => x.User).WithMany(x => x.ExamResults).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.ClientSetNull);

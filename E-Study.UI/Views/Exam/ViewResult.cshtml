@@ -1,0 +1,33 @@
+﻿@model E_Study.ViewModel.ResultViewModel
+
+@{
+    ViewData["Title"] = "ViewResult";
+}
+
+<h1>View Result</h1>
+
+<div>
+    <br />
+    <div class="table-responsive">
+        <table id="resultGrid" class="datatable table table-stripped">
+            <thead>
+                <tr>
+                    <th>Exam Name</th>
+                    <th>Total Question</th>
+                    <th>Correct</th>
+                    <th>Wrong</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>@Model.ExamName</td>
+                    <td>@Model.TotalQuestion</td>
+                    <td>@Model.CorrectAnswer</td>
+                    <td>@Model.WrongAnswer</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

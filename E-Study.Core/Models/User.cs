@@ -18,6 +18,7 @@ namespace E_Study.Core.Models
 
         //[DataType(DataType.Date)]
         public DateTime? Birthday { set; get; }
+        public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         public ICollection<ExamResult> ExamResults { get; set; } = new HashSet<ExamResult>();
         public ICollection<UserCourse> UserCourses { get; set; } = new HashSet<UserCourse>();
         public ICollection<Message> Messages { get; set; } = new List<Message>();

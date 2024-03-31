@@ -1,0 +1,98 @@
+﻿@model E_Study.ViewModel.ExamViewModel
+@{
+    ViewData["Title"] = "CreateExam";
+}
+<h1>CreateExam</h1>
+<h4>Exam</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateExam" asp-controller="Exam" method="post">
+            <!-- Exam details -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxScore" class="control-label"></label>
+                <input asp-for="MaxScore" class="form-control" />
+                <span asp-validation-for="MaxScore" class="text-danger"></span>
+            </div>                               
+
+            <!-- Add QnAs -->
+            <div id="qnaContainer">
+                <div class="form-group qna">
+                    <label for="question" class="control-label">Question</label>
+                    <input type="text" name="QnAs[0].Question" class="form-control" />
+                    <label for="answer" class="control-label">Answer</label>
+                    <input type="text" name="QnAs[0].Answer" class="form-control" />
+                    <label for="option1" class="control-label">Option 1</label>
+                    <input type="text" name="QnAs[0].Option1" class="form-control" />
+                    <label for="option2" class="control-label">Option 2</label>
+                    <input type="text" name="QnAs[0].Option2" class="form-control" />
+                    <label for="option3" class="control-label">Option 3</label>
+                    <input type="text" name="QnAs[0].Option3" class="form-control" />
+                    <label for="option4" class="control-label">Option 4</label>
+                    <input type="text" name="QnAs[0].Option4" class="form-control" />
+                    <button type="button" class="btn btn-sm btn-danger remove-qna">Remove</button>
+                </div>
+            </div>
+            <button type="button" id="addQna" class="btn btn-sm btn-primary">Add QnA</button>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var qnaIndex = 1;
+
+            $('#addQna').click(function () {
+                var qnaHtml = '<div class="form-group qna">' +
+                    '<label for="question" class="control-label">Question</label>' +
+                    '<input type="text" name="QnAs[' + qnaIndex + '].Question" class="form-control" />' +
+                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Question"></span>' +
+                    '<label for="answer" class="control-label">Answer</label>' +
+                    '<input type="text" name="QnAs[' + qnaIndex + '].Answer" class="form-control" />' +
+                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Answer"></span>' +
+                    '<label for="option1" class="control-label">Option 1</label>' +
+                    '<input type="text" name="QnAs[' + qnaIndex + '].Option1" class="form-control" />' +
+                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option1"></span>' +
+                    '<label for="option2" class="control-label">Option 2</label>' +
+                    '<input type="text" name="QnAs[' + qnaIndex + '].Option2" class="form-control" />' +
+                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option2"></span>' +
+                    '<label for="option3" class="control-label">Option 3</label>' +
+                    '<input type="text" name="QnAs[' + qnaIndex + '].Option3" class="form-control" />' +
+                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option3"></span>' +
+                    '<label for="option4" class="control-label">Option 4</label>' +
+                    '<input type="text" name="QnAs[' + qnaIndex + '].Option4" class="form-control" />' +
+                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option4"></span>' +
+                    '<button type="button" class="btn btn-sm btn-danger remove-qna">Remove</button>' +
+                    '</div>';
+                $('#qnaContainer').append(qnaHtml);
+                qnaIndex++;
+            });
+
+            $(document).on('click', '.remove-qna', function () {
+                $(this).closest('.qna').remove();
+            });
+        });
+    </script>
+}

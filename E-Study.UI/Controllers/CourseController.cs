@@ -1,9 +1,12 @@
 ﻿using E_Study.Core.Models;
 using E_Study.Repository.Infrastructures;
 using E_Study.Service.course;
+using E_Study.Service.exam;
 using E_Study.Service.post;
+using E_Study.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Study.UI.Controllers
@@ -13,13 +16,19 @@ namespace E_Study.UI.Controllers
         private readonly IUnitOfWork uow;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IPostService postService;
+        private readonly IExamService examService;
         public readonly UserManager<User> userManager;
-        public CourseController(IUnitOfWork uow, IWebHostEnvironment webHostEnvironment, UserManager<User> userManager, IPostService postService)
+        public CourseController(IUnitOfWork uow,
+            IWebHostEnvironment webHostEnvironment,
+            UserManager<User> userManager,
+            IPostService postService,
+            IExamService examService)
         {
             this.uow = uow;
             this.webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.postService = postService;
+            this.examService = examService;
         }
 
         [HttpGet]
@@ -61,7 +70,7 @@ namespace E_Study.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(Post post, string courseId)
         {
-            
+
             if (ModelState.IsValid)
             {
                 var user = await userManager.GetUserAsync(User);
@@ -81,7 +90,7 @@ namespace E_Study.UI.Controllers
                 try
                 {
                     // Retrieve the post associated with the comment
-                    var post = await uow.PostRepository.GetByIdAsync(comment.PostId);                  
+                    var post = await uow.PostRepository.GetByIdAsync(comment.PostId);
                     if (post != null)
                     {
                         // Assuming you have the current user available (e.g., through UserManager)
@@ -135,7 +144,7 @@ namespace E_Study.UI.Controllers
             }
             else
             {
-                var students =  uow.CourseRepository.GetUsersInCourse(courseId);
+                var students = uow.CourseRepository.GetUsersInCourse(courseId);
                 return View(students);
             }
         }
@@ -153,6 +162,35 @@ namespace E_Study.UI.Controllers
                 var exams = uow.ExamRepository.GetExamsInCourse(courseId);
                 return View(exams);
             }
+        }
+
+        public IActionResult AddExamToCourse(string courseId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
+            var response = examService.GetAllExamCreatedByUser(userManager.GetUserId(User));
+            ViewBag.Exams = new SelectList(response.DataList, "Id", "Title");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddExamToCourse(ExamCourseViewModel model, string courseId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
+
+            if (ModelState.IsValid)
+            {
+                var response = examService.AddExamToCourse(model);
+                if (response.IsSuccessed)
+                {
+                    return RedirectToAction("Exams", new { courseId });
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+
+            return View("Exams", new { courseId });
         }
 
         public async Task<IActionResult> Chat(string courseId)
@@ -173,8 +211,8 @@ namespace E_Study.UI.Controllers
                 TempData["CourseId"] = courseId;
                 return View(messages);
             }
-           
         }
+
         [HttpPost]
         public async Task<IActionResult> SendMessage(Message message, string courseId)
         {

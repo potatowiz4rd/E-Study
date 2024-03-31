@@ -1,13 +1,13 @@
-﻿@model IEnumerable<E_Study.Core.Models.Exam>
+﻿@model IEnumerable<E_Study.ViewModel.ExamViewModel>
 
 @{
     ViewData["Title"] = "Exams";
 }
 
-<h1>Exams in this course</h1>
+<h1>Exams</h1>
 
 <p>
-    <a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]">Add Exam</a>
+    <a asp-action="CreateExam" asp-controller="Exam">Create New Exam</a>
 </p>
 <table class="table">
     <thead>
@@ -43,8 +43,7 @@
                 @Html.DisplayFor(modelItem => item.MaxScore)
             </td>
             <td>
-                <a asp-action="StartExam" asp-controller="Exam" asp-route-examId="@item.Id">Start Exam</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
