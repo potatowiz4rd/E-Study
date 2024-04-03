@@ -1,26 +1,36 @@
 ﻿@model IEnumerable<E_Study.Core.Models.Message>
 @{
     ViewData["Title"] = "Chat";
-    var userName = User.Identity.Name;
+    var currentUserName = User.Identity.Name;
 }
 
 <h1>Chat</h1>
-
 <div class="row">
     <div class="col-md-12" id="chat">
         @if (Model != null)
-    {
-        @foreach (var message in Model.OrderBy(m => m.DateTime))
         {
-            <div class="row">
-                <div class="offset-1">
-                    <p>@message.Username</p>
-                    <p>@message.Text</p>
-                    <span>@message.DateTime.ToString()</span>
+            @foreach (var message in Model.OrderBy(m => m.DateTime))
+            {
+                <div class="row">
+                    @if (message.Username == currentUserName)
+                    {
+                        <div class="offset-8 col-3 bg-primary text-white rounded text-right">
+                            <p>@message.Username</p>
+                            <p>@message.Text</p>
+                            <span>@message.DateTime.ToString()</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-3 bg-light rounded">
+                            <p>@message.Username</p>
+                            <p>@message.Text</p>
+                            <span>@message.DateTime.ToString()</span>
+                        </div>
+                    }
                 </div>
-            </div>
+            }
         }
-    }
     </div>
     <div class="col-md-12">
         <form asp-action="SendMessage" data-ajax-begin="clearInputField" data-ajax-complete=""
@@ -33,16 +43,15 @@
             <div class="form-group">
                 <input type="submit" value="Send" id="submitButton" class="btn btn-primary" />
             </div>
-            <input type="hidden" value="@userName" name="username" />
+            <input type="hidden" value="@currentUserName" name="username" />
             <input type="hidden" name="CourseId" value="@ViewBag.CurrentCourseId" />
         </form>
     </div>
 </div>
 
 <script>
-    const userName = "@ViewBag.CurrentUserName";
+    const currentUserName = "@currentUserName";
 </script>
-
 
 @section scripts {
     <script src="~/lib/jquery/jquery.js"></script>

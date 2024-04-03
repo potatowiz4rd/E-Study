@@ -45,7 +45,6 @@ namespace E_Study.UI.Controllers
             ViewBag.CurrentCourseId = courseId;
             //var posts = await uow.PostRepository.GetPostsByCourseIdAsync(courseId);
             var response = await postService.GetAllPostsInCourseAsync(courseId);
-
             // Check if the operation was successful before passing data to the view
             if (response.IsSuccessed)
             {
@@ -64,7 +63,7 @@ namespace E_Study.UI.Controllers
         public IActionResult CreatePost(string courseId)
         {
             ViewBag.CurrentCourseId = courseId;
-            return View();
+            return PartialView("_CreatePost");
         }
 
         [HttpPost]
@@ -78,11 +77,11 @@ namespace E_Study.UI.Controllers
                 post.CourseId = courseId; // Use the CourseId passed from the form
                 await uow.PostRepository.CreateAsync(post);
                 await uow.SaveChangesAsync();
-                return RedirectToAction("Index", new { courseId });
+                return RedirectToAction("NewFeed", new { courseId });
             }
-            return BadRequest();
+            return PartialView("_CreatePost", post);
         }
-
+     
         public async Task<IActionResult> CreateComment(Comment comment)
         {
             if (ModelState.IsValid)
@@ -146,6 +145,20 @@ namespace E_Study.UI.Controllers
             {
                 var students = uow.CourseRepository.GetUsersInCourse(courseId);
                 return View(students);
+            }
+        }
+
+        public IActionResult Calendar(string courseId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                return View();
             }
         }
 

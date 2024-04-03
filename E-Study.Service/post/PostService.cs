@@ -49,7 +49,10 @@ namespace E_Study.Service.post
                 foreach (var postModel in postModels)
                 {
                     var comments = await uow.CommentRepository.GetCommentsByPostIdAsync(postModel.Id);
-                    postModel.Comments = mapper.Map<List<CommentViewModel>>(comments);
+                    if (comments != null)
+                    {
+                        postModel.Comments = mapper.Map<List<CommentViewModel>>(comments);
+                    }
                 }
 
                 response.DataList = postModels;

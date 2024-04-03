@@ -7,6 +7,8 @@
 @{
     var userId = UserManager.GetUserId(User);
     var courses = uow.CourseRepository.GetAllCourseOfUser(userId);
+    var courseId = ViewData["CurrentCourseId"];
+
     //List<Category> categories = new List<Category>(ViewBag.Categories);
 }
 <!DOCTYPE html>
@@ -27,16 +29,16 @@
     <div class="main-wrapper">
         <div class="header">
             <div class="header-left">
-                <a href="index.html" class="logo">
+                <a asp-controller="Home" asp-action="Index" class="logo">
                     <img src="~/assets/img/logo.png" alt="Logo">
                 </a>
-                <a href="index.html" class="logo logo-small">
+                <a asp-controller="Home" asp-action="Index" class="logo logo-small">
                     <img src="~/assets/img/logo-small.png" alt="Logo" width="30" height="30">
                 </a>
             </div>
             <a href="javascript:void(0);" id="toggle_btn">
                 <i class="fas fa-align-left"></i>
-            </a>            
+            </a>
             <a class="mobile_btn" id="mobile_btn">
                 <i class="fas fa-bars"></i>
             </a>
@@ -142,23 +144,17 @@
                         <li class="menu-title">
                             <span>Main Menu</span>
                         </li>
-                        <li class="submenu active">
-                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Courses</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                @if (courses != null && courses.Count() > 0)
-                                {
-                                        @foreach (var item in courses)
-                                        {
-                                        <li><a class="active" href="@Url.Action("Index","Course", new{courseId = item.Id})">@item.Name</a></li>
-                                        }
-                                }
-                            </ul>
+                        <li>
+                            <a asp-controller="Course" asp-action="NewFeed" asp-route-courseId="@ViewData["CurrentCourseId"]"><i class="fas fa-user-graduate"></i> <span> New Feed</span></a>
                         </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Profile</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                
-                            </ul>
+                        <li>
+                            <a asp-controller="Course" asp-action="Chat" asp-route-courseId="@ViewData["CurrentCourseId"]"><i class="fas fa-user-graduate"></i> <span> Chat</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Course" asp-action="Students" asp-route-courseId="@ViewData["CurrentCourseId"]"><i class="fas fa-user-graduate"></i> <span> Students</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Course" asp-action="Exams" asp-route-courseId="@ViewData["CurrentCourseId"]"><i class="fas fa-user-graduate"></i> <span> Exams</span></a>
                         </li>
                         <li class="submenu">
                             <a href="time-table.html"><i class="fas fa-table"></i> <span>Time Table</span></a>
@@ -176,7 +172,7 @@
                 <footer>
                 </footer>
             </div>
-        </div>      
+        </div>
     </div>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
     <script src="~/assets/js/popper.min.js"></script>

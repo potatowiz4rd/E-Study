@@ -25,10 +25,20 @@ namespace E_Study.UI.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var courses = _uow.CourseRepository.GetAllCourseOfUser(userId);
+            foreach (var course in courses)
+            {
+                _uow.CourseRepository.LoadUserCourses(course);
+                _uow.CourseRepository.LoadExamCourses(course);
+            }
             return View(courses);
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Chat()
         {
             return View();
         }

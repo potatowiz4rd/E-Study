@@ -16,7 +16,6 @@ namespace E_Study.Core.Config
             builder.ToTable("Posts");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Title).IsRequired();
             builder.Property(x => x.Text).IsRequired();
             builder.Property(x => x.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.Property(x => x.Votes).HasDefaultValue(0);

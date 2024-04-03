@@ -5,42 +5,89 @@
     ViewData["Title"] = "NewFeed";
 
 }
-<h1>Posts</h1>
-<a asp-action="CreatePost" asp-route-courseId="@ViewBag.CurrentCourseId" asp-controller ="Course" class="btn btn-primary">Create new post</a>
-
-<div>
-    @foreach (var post in Model)
-    {
-        <div>
-            <h3>@post.Title</h3>
-            <p>@post.Text</p>
-            <p>Posted by: @post.User.UserName</p>
-            <p>Created at: @post.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</p>
-            <h4>Comments:</h4>
-            <div id="comments-@post.Id">
-                @foreach (var comment in post.Comments)
-                {
-                    <div>
-                        <p>@comment.Text</p>
-                        <p>Posted by: @comment.User.UserName</p>
-                        <p>Created at: @comment.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</p>
-                    </div>
-                    <hr />
+@* <a asp-action="CreatePost" asp-route-courseId="@ViewBag.CurrentCourseId" asp-controller="Course" class="btn btn-primary">Create new post</a>
+ *@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <!-- Create Post Section -->
+            <div id="createPostContainer">
+                <!-- Load the create post form -->
+                @{
+                    Html.RenderPartial("_CreatePost", new E_Study.Core.Models.Post());
                 }
             </div>
 
-            <!-- Form for adding a new comment -->
-            <form class="comment-form" data-post-id="@post.Id">
-                <div class="form-group">
-                    <label for="commentText">Add a comment:</label>
-                    <textarea id="commentText" class="form-control"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <!-- Posts with Comments Section -->
+            @foreach (var post in Model)
+            {
+                <div class="card h-auto">
+                    <div class="card-header flex-grow-0">
+                        <div class="d-flex">
+                            <div class="avatar flex-shrink-0 me-3">
+                                <img src="../../assets/img/avatars/user.png" alt="User" class="rounded-circle">
+                            </div>
+                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-1">
+                                <div class="me-2">
+                                    <h5 class="mb-0">@post.User.UserName</h5>
+                                    <small class="created-at" data-creation-time="@post.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")">@post.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</small>
+                                </div>
+                                <div class="dropdown d-none d-sm-block">
+                                    <button class="btn p-0" type="button" id="eventList" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bx bx-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="sharedList">
+                                        <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <h5 class="text-truncate">@post.Text</h5>
 
+                        <img class="img-fluid" src="../../assets/img/backgrounds/event.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="card-actions">
+                                    <a href="javascript:;" class="text-muted me-3"><i class="bx bx-heart me-1"></i> 0</a>
+                                    <a href="javascript:;" class="text-muted"><i class="bx bx-message me-1"></i> 1</a>
+                                </div>
+                            </div>
+                            <br />
+                            <form class="comment-form" data-post-id="@post.Id">
+                                <div class="mb-3">
+                                    <textarea id="commentText" class="form-control" placeholder="Write your comment"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div >
+                        <div>
+                            <h4 class="card-subtitle mb-2 text-muted">Comments:</h4>
+                            <div id="comments-@post.Id">
+                                @foreach (var comment in post.Comments)
+                                {
+                                    <div class="card mb-2">
+                                        <div class="card-body">
+                                            <p class="card-text">@comment.Text</p>
+                                            <p class="card-text">Posted by: @comment.User.UserName</p>
+                                            <p class="card-text">Created at: @comment.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            }
         </div>
-        <hr />
-    }
+    </div>
 </div>
 
 @section scripts {
@@ -69,6 +116,42 @@
                         alert('Failed to add comment.');
                     }
                 });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var createdTimes = document.querySelectorAll(".created-at");
+            createdTimes.forEach(function (createdTime) {
+                var creationTime = new Date(createdTime.getAttribute("data-creation-time"));
+                var currentTime = new Date();
+                var timeDiff = currentTime - creationTime;
+
+                var seconds = Math.floor(timeDiff / 1000);
+                var minutes = Math.floor(seconds / 60);
+                var hours = Math.floor(minutes / 60);
+                var days = Math.floor(hours / 24);
+
+                var timeAgo;
+                if (days > 0) {
+                    timeAgo = days + "d ago";
+                } else if (hours > 0) {
+                    timeAgo = hours + "h ago";
+                } else if (minutes > 0) {
+                    timeAgo = minutes + "m ago";
+                } else {
+                    timeAgo = "just now";
+                }
+
+                createdTime.textContent = timeAgo;
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            // Load the create post form content asynchronously when the page is loaded
+            $.get('@Url.Action("CreatePost", "Course")', { courseId: '@ViewBag.CurrentCourseId' }, function (data) {
+                $("#createPostContainer").html(data); // Update the container with the loaded partial view
             });
         });
     </script>

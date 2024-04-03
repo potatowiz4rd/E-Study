@@ -14,5 +14,8 @@ namespace E_Study.Repository.IRepositories
         IList<User> GetUsersNotInCourse(string courseId);
         IList<Course> GetAllCourseOfUser(string userId);
         void AddUserToCourse(string userId, string courseId);
+        void LoadUserCourses(Course course);
+        void LoadExamCourses(Course course);
+
     }
 }

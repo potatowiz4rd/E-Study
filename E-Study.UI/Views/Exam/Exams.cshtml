@@ -2,52 +2,72 @@
 
 @{
     ViewData["Title"] = "Exams";
+    Layout = "_LayoutNotLoggedIn";
 }
+        <style>
+    /* CSS to change mouse pointer to pointer when hovering over table rows */
+    .clickable-row:hover {
+        cursor: pointer;
+    }
+</style>
+<div class="page-wrapper">
+<div class="page-wrapper">
+    <div class="content container-fluid">
 
-<h1>Exams</h1>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h2 class="page-title">Danh sách đề thi</h2>
 
-<p>
-    <a asp-action="CreateExam" asp-controller="Exam">Create New Exam</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaxScore)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxScore)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </div>
+                <div class="col-auto text-right float-right ml-auto">
+                    <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Xuất tài liệu</a>
+                    <a href="add-fees.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                    <a asp-action="CreateExam" asp-controller="Exam">Tạo đề mới</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Tên</th>
+                                        <th>Mô tả</th>
+                                        <th>Thời gian</th>
+                                        <th>Điểm tối đa</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                                    <tr>
+                                                        <td>
+                                                            <h3>@item.Title</h3>
+                                                        </td>
+                                                        <td>
+                                                            <a>@item.Description</a>
+                                                        </td>
+                                                        <td>
+                                                            <a>@item.Time</a>
+                                                        </td>
+                                                        <td>
+                                                            <a>@item.MaxScore</a>
+                                                        </td>
+                                                    </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

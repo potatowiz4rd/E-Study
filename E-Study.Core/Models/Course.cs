@@ -10,7 +10,8 @@ namespace E_Study.Core.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
+        public string? ImageUrl { get; set; }
         public ICollection<UserCourse> UserCourses { get; set; } = new HashSet<UserCourse>();
         public ICollection<ExamCourse> ExamCourses { get; set; } = new HashSet<ExamCourse>();
         public ICollection<PdfFile> PdfFiles { get; set; } = new List<PdfFile>();

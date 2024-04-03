@@ -10,13 +10,9 @@ namespace E_Study.Core.Models
 {
     public class User : IdentityUser
     {
-        //[MaxLength(100)]
-        //public string FullName { set; get; }
-
-        //[MaxLength(255)]
-        //public string Address { set; get; }
-
-        //[DataType(DataType.Date)]
+        public string? FirstName { set; get; }
+        public string? LastName { set; get; }
+        public string? ImageUrl { set; get; }      
         public DateTime? Birthday { set; get; }
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         public ICollection<ExamResult> ExamResults { get; set; } = new HashSet<ExamResult>();

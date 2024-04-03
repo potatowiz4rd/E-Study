@@ -20,7 +20,7 @@ namespace E_Study.Core.Config
             builder.Property(x => x.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.Property(x => x.Votes).HasDefaultValue(0);
             builder.HasOne(x => x.User).WithMany(x => x.Comments).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Post).WithMany(x => x.Comments).HasForeignKey(x => x.PostId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Post).WithMany(x => x.Comments).HasForeignKey(x => x.PostId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -59,5 +59,16 @@ namespace E_Study.Repository.Repositories
             return users;
         }
 
+        public void LoadUserCourses(Course course)
+        {
+            dataContext.Entry(course).Collection(c => c.UserCourses).Load();
+        }
+
+        public void LoadExamCourses(Course course)
+        {
+            dataContext.Entry(course).Collection(c => c.ExamCourses).Load();
+        }
+
+
     }
 }
