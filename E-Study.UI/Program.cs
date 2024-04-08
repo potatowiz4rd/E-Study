@@ -14,6 +14,7 @@ using E_Study.Service;
 using Microsoft.AspNetCore.Authentication;
 using E_Study.Service.exam;
 using E_Study.Service.qnas;
+using E_Study.Service.chatbot;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -29,13 +30,17 @@ builder.Services.AddAutoMapper((typeof(MapperConfig).Assembly));
 
 builder.Services.AddDistributedMemoryCache();
 
+builder.Services.AddHttpClient<OpenAIChatGPTService>();
+
+builder.Services.AddSingleton(new OpenAIChatGPTService(new HttpClient(), "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"));
+
 // Add session services.
-//builder.Services.AddSession(options =>
-//{
-//    options.IdleTimeout = TimeSpan.FromMinutes(60); // Set your desired session timeout
-//    options.Cookie.HttpOnly = true;
-//    options.Cookie.IsEssential = true;
-//});
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(60); // Set your desired session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // Add Context
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext")));
@@ -126,8 +131,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Add session middleware.
-//app.UseSession();
+app.UseSession();
 
 app.UseAuthentication();
 

@@ -18,6 +18,8 @@ namespace E_Study.Repository.Infrastructures
         private IExamRepository _examRepository;
         private IQnAsRepository _qnAsRepository;
         private IExamResultRepository _examResultRepository;
+        private IEventRepository _eventRepository;
+        private IGradeRepository _gradeRepository;
 
         public UnitOfWork(AppDbContext context = null)
         {
@@ -128,6 +130,30 @@ namespace E_Study.Repository.Infrastructures
                     _examResultRepository = new ExamResultRepository(_context);
                 }
                 return _examResultRepository;
+            }
+        }
+
+        public IEventRepository EventRepository
+        {
+            get
+            {
+                if (_eventRepository == null)
+                {
+                    _eventRepository = new EventRepository(_context);
+                }
+                return _eventRepository;
+            }
+        }
+
+        public IGradeRepository GradeRepository
+        {
+            get
+            {
+                if (_gradeRepository == null)
+                {
+                    _gradeRepository = new GradeRepository(_context);
+                }
+                return _gradeRepository;
             }
         }
 

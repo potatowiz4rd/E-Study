@@ -13,7 +13,7 @@ namespace E_Study.Core.Models
 
         public string ExamId { get; set; }
         public Exam Exam { get; set; }
-
+        public int? AttemptLimit { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

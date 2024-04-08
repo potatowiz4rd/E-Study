@@ -3,9 +3,23 @@
 @{
     ViewData["Title"] = "Start Exam";
 }
-
+<style>
+    /* Style for the fixed timer */
+    #timer {
+        position: fixed;
+        top: 170px; /* Adjust top position as needed */
+        right: 35px; /* Adjust right position as needed */
+        background-color: #fff; /* Background color */
+        padding: 30px; /* Padding */
+        border: 1px solid #ccc; /* Border */
+        border-radius: 5px; /* Border radius */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
+        z-index: 1000; /* Ensure it's above other content */
+        font-size: 30px; /* Font size */
+    }
+</style>
 <h1>@Model.ExamName</h1>
-
+<div id="timer"></div> <!-- Add a div to display the remaining time -->
 <form asp-action="StartExam" asp-controller="Exam" method="post">
     <input type="hidden" asp-for="StudentId" />
     <ul>
@@ -14,87 +28,103 @@
             <input type="hidden" asp-for="@Model.QnAs[i].Id" />
             <input type="hidden" asp-for="@Model.QnAs[i].ExamId" />
             <input type="hidden" asp-for="@Model.QnAs[i].Answer" />
-            <div class="mt-5">
-                <span>Câu @(i + 1)</span>
-                <h3 class="mb-3 mt-1">@Model.QnAs[i].Question</h3>
-                <!-- list group -->
-                <div class="list-group">
-                    <div class="list-group-item list-group-item-action " aria-current="true">
-                        <!-- form check -->
+            <div class="card mb-4" style="width: 70rem;">
+                <div class="card-body">
+                    <span>Câu @(i + 1)</span>
+                    <h3 class="mb-3 mt-1">@Model.QnAs[i].Question</h3>
+                    <!-- list group -->
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-action " aria-current="true">
+                            <!-- form check -->
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option1_@i" value="@Model.QnAs[i].Option1">
-                            <label class="form-check-label stretched-link" for="option1_@i">
-                                @Model.QnAs[i].Option1
-                            </label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option1_@i" value="@Model.QnAs[i].Option1">
+                                <label class="form-check-label stretched-link" for="option1_@i">
+                                    @Model.QnAs[i].Option1
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <!-- list group -->
-                    <div class="list-group-item list-group-item-action">
-                        <!-- form check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option2_@i" value="@Model.QnAs[i].Option2">
-                            <label class="form-check-label stretched-link" for="option2_@i">
-                                @Model.QnAs[i].Option2
-                            </label>
+                        <!-- list group -->
+                        <div class="list-group-item list-group-item-action">
+                            <!-- form check -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option2_@i" value="@Model.QnAs[i].Option2">
+                                <label class="form-check-label stretched-link" for="option2_@i">
+                                    @Model.QnAs[i].Option2
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <!-- list group -->
-                    <div class="list-group-item list-group-item-action">
-                        <!-- form check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option3_@i" value="@Model.QnAs[i].Option3">
-                            <label class="form-check-label stretched-link" for="option3_@i">
-                                @Model.QnAs[i].Option3
-                            </label>
+                        <!-- list group -->
+                        <div class="list-group-item list-group-item-action">
+                            <!-- form check -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option3_@i" value="@Model.QnAs[i].Option3">
+                                <label class="form-check-label stretched-link" for="option3_@i">
+                                    @Model.QnAs[i].Option3
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <!-- list group -->
-                    <div class="list-group-item list-group-item-action">
-                        <!-- form check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option4_@i" value="@Model.QnAs[i].Option4">
-                            <label class="form-check-label stretched-link" for="option4_@i">
-                                @Model.QnAs[i].Option4
-                            </label>
+                        <!-- list group -->
+                        <div class="list-group-item list-group-item-action">
+                            <!-- form check -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="QnAs[@i].SelectedAnswer" id="option4_@i" value="@Model.QnAs[i].Option4">
+                                <label class="form-check-label stretched-link" for="option4_@i">
+                                    @Model.QnAs[i].Option4
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
     </ul>
-    <div class="col d-flex justify-content-center">
-        <div class="demo-inline-spacing">
-            <!-- Basic Square Pagination -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination pagination-round pagination-primary">
-                    <li class="page-item first">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                    </li>
-                    <li class="page-item prev">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">2</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:void(0);">3</a>
-                    </li>             
-                    <li class="page-item next">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                    </li>
-                    <li class="page-item last">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                    </li>
-                </ul>
-            </nav>
-            <!--/ Basic Square Pagination -->
-        </div>
+    @* <div class="col d-flex justify-content-center">
+    <div class="demo-inline-spacing">
+    <!-- Basic Square Pagination -->
+    <nav aria-label="Page navigation">
+    <ul class="pagination pagination-round pagination-primary">
+    @for (int i = 1; i <= Model.QnAs.Count; i++)
+    {
+    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+    <a class="page-link" href="@Url.Action("StartExam", new { page = i })">@i</a>
+    </li>
+    }
+    </ul>
+    </nav>
+    <!--/ Basic Square Pagination -->
     </div>
+    </div> *@
     <div class="text-center mt-3">
         <button type="submit" name="action" class="btn btn-primary">Nộp bài</button>
     </div>
 </form>
+
+@section scripts {
+    <script>
+        // Get the remaining time from the model and convert it to total seconds
+        var remainingTimeInSeconds = Math.floor(@Model.RemainingTime.TotalSeconds);
+
+        // Display the remaining time
+        function displayTime() {
+            var minutes = Math.floor(remainingTimeInSeconds / 60);
+            var seconds = Math.floor(remainingTimeInSeconds % 60);
+            document.getElementById('timer').innerText = minutes + "m " + seconds + "s";
+        }
+
+        // Countdown timer function
+        function startTimer() {
+            var timerInterval = setInterval(function () {
+                remainingTimeInSeconds--;
+                displayTime();
+                if (remainingTimeInSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('examForm').submit(); // Automatically submit the form when time runs out
+                }
+            }, 1000); // Update timer every second
+        }
+
+        // Call the startTimer function when the page loads
+        startTimer();
+    </script>
+}

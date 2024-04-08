@@ -115,6 +115,9 @@ namespace E_Study.Service.exam
         {
             try
             {
+                //Check if the user has attempted the exam before and get the attempt count
+                var attempt = uow.ExamRepository.GetUserExamAttempts(model.StudentId, model.ExamId).Count();
+                    
                 foreach (var item in model.QnAs)
                 {
                     ExamResult examResult = new ExamResult();
@@ -123,10 +126,21 @@ namespace E_Study.Service.exam
                     examResult.ExamId = item.ExamId;
                     examResult.Answer = item.SelectedAnswer;
                     examResult.IsCorrect = item.SelectedAnswer == item.Answer;
+                    examResult.Attempt = attempt + 1;
 
                     uow.ExamResultRepository.Create(examResult);
                 }
 
+                //Create new grade for the user
+                Grade grade = new Grade
+                {
+                    ExamId = model.ExamId,
+                    UserId = model.StudentId,
+                    Score = model.QnAs.Count(q => q.SelectedAnswer == q.Answer),
+                    Attempt = attempt + 1,
+                    DateAssigned = DateTime.Now
+                };
+                uow.GradeRepository.Create(grade);
                 uow.SaveChanges(); // Save changes asynchronously
 
                 return true;
@@ -150,7 +164,6 @@ namespace E_Study.Service.exam
 
                 var exam = uow.ExamRepository.GetById(examId); // Fetch the exam details
 
-                var totalQuestions = exam.QnAs.Count(); // Total number of questions in the exam
 
                 var correctAnswers = examResults.Count(er => er.IsCorrect); // Count correct answers
 
@@ -160,9 +173,9 @@ namespace E_Study.Service.exam
                 {
                     StudentId = userId,
                     ExamName = exam.Title,
-                    TotalQuestion = totalQuestions,
                     CorrectAnswer = correctAnswers,
-                    WrongAnswer = wrongAnswers
+                    WrongAnswer = wrongAnswers,
+                    TotalQuestion = correctAnswers + wrongAnswers
                 };
 
                 return resultViewModel;

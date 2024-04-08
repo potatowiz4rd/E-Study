@@ -34,15 +34,7 @@ namespace E_Study.UI.Areas.Identity.Pages.Account
             await _signInManager.SignOutAsync();
             _logger.LogInformation("Người dùng đăng xuất");
 
-
-            return ViewComponent(MessagePage.COMPONENTNAME,
-                new MessagePage.Message()
-                {
-                    title = "Đã đăng xuất",
-                    htmlcontent = "Đăng xuất thành công",
-                    urlredirect = string.IsNullOrEmpty(returnUrl) ? "/login" : returnUrl
-                }
-            );
+            return RedirectToPage("./login");
         }
     }
 }

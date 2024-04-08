@@ -60,16 +60,25 @@ namespace E_Study.UI.Controllers
             var currentUser = userManager.GetUserId(User);
             HttpContext.Session.SetString("ExamId", examId); // Set examId in session
             var model = new StartExamViewModel();
+        
             if (currentUser != null && examId != "")
             {
                 var exam = examService.GetExamById(examId).Data;
+                
+                TimeSpan timeLimit = TimeSpan.FromMinutes(exam.Time);
+
                 model.QnAs = new List<QnAsViewModel>();
                 var response = qnAsService.GetAllQnAsInExam(examId);
                 if (exam != null && response.IsSuccessed)
                 {
+                    model.ExamId = examId;
                     model.StudentId = currentUser;
                     model.QnAs = response.Data;
                     model.ExamName = exam.Title;
+                    model.RemainingTime = timeLimit;
+                    model.CurrentPage = 1; // Set the current page
+                    model.TotalItems = exam.QnAs.Count(); // Set the total number of items
+                    model.ItemsPerPage = 1; // Set the number of items per page
                 }
                 return View(model);
             }

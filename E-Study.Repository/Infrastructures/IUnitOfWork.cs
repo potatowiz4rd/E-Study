@@ -14,6 +14,9 @@ namespace E_Study.Repository.Infrastructures
         public IExamRepository ExamRepository { get; } // read only
         public IQnAsRepository QnAsRepository { get; } // read only
         public IExamResultRepository ExamResultRepository { get; } // read only
+        public IEventRepository EventRepository { get; } // read only
+        public IGradeRepository GradeRepository { get; } // read only
+
         int SaveChanges();
         Task<int> SaveChangesAsync();
     }

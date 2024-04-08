@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Study.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240328172718_exam_3")]
-    partial class exam_3
+    [Migration("20240408150416_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,11 @@ namespace E_Study.Core.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -80,6 +82,46 @@ namespace E_Study.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses", (string)null);
+                });
+
+            modelBuilder.Entity("E_Study.Core.Models.Event", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("E_Study.Core.Models.Exam", b =>
@@ -123,6 +165,9 @@ namespace E_Study.Core.Migrations
                     b.Property<string>("CourseId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("AttemptLimit")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -139,11 +184,15 @@ namespace E_Study.Core.Migrations
             modelBuilder.Entity("E_Study.Core.Models.ExamResult", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Answer")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Attempt")
+                        .HasColumnType("int");
 
                     b.Property<string>("ExamId")
                         .IsRequired()
@@ -173,11 +222,12 @@ namespace E_Study.Core.Migrations
 
             modelBuilder.Entity("E_Study.Core.Models.Grade", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("Attempt")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateAssigned")
                         .HasColumnType("datetime2");
@@ -238,31 +288,6 @@ namespace E_Study.Core.Migrations
                     b.ToTable("Messages", (string)null);
                 });
 
-            modelBuilder.Entity("E_Study.Core.Models.PdfFile", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CourseId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Files", (string)null);
-                });
-
             modelBuilder.Entity("E_Study.Core.Models.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -278,11 +303,10 @@ namespace E_Study.Core.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -370,6 +394,15 @@ namespace E_Study.Core.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -570,7 +603,7 @@ namespace E_Study.Core.Migrations
                     b.HasOne("E_Study.Core.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("E_Study.Core.Models.User", "User")
@@ -582,6 +615,17 @@ namespace E_Study.Core.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("E_Study.Core.Models.Event", b =>
+                {
+                    b.HasOne("E_Study.Core.Models.Course", "Course")
+                        .WithMany("Events")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("E_Study.Core.Models.Exam", b =>
@@ -674,17 +718,6 @@ namespace E_Study.Core.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("E_Study.Core.Models.PdfFile", b =>
-                {
-                    b.HasOne("E_Study.Core.Models.Course", "Course")
-                        .WithMany("PdfFiles")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("E_Study.Core.Models.Post", b =>
@@ -788,11 +821,11 @@ namespace E_Study.Core.Migrations
 
             modelBuilder.Entity("E_Study.Core.Models.Course", b =>
                 {
+                    b.Navigation("Events");
+
                     b.Navigation("ExamCourses");
 
                     b.Navigation("Messages");
-
-                    b.Navigation("PdfFiles");
 
                     b.Navigation("Posts");
 

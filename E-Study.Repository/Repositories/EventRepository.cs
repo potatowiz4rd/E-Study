@@ -11,18 +11,19 @@ using System.Threading.Tasks;
 
 namespace E_Study.Repository.Repositories
 {
-    public class CommentRepository : BaseRepository<Comment>, ICommentRepository
+    public class EventRepository : BaseRepository<Event>, IEventRepository
     {
-        public CommentRepository(AppDbContext context) : base(context)
+        public EventRepository(AppDbContext context) : base(context)
         {
+
         }
 
-        public async Task<List<Comment>> GetCommentsByPostIdAsync(string postId)
+        public List<Event> GetEventsInCourse(string courseId)
         {
             // Assuming you have DbSet<Message> named DbSet in your context
-            return await dataContext.Comments
-                .Where(m => m.PostId == postId).Include(p => p.User)
-                .ToListAsync();
+            return dataContext.Events
+                .Where(m => m.CourseId == courseId)
+                .ToList();
         }
     }
 }

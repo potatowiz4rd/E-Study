@@ -1,36 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OpenAI_API.Completions;
+﻿using E_Study.Service.chatbot;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using OpenAI_API;
+using OpenAI_API.Completions;
+using System.Threading.Tasks;
 
 namespace E_Study.UI.Controllers
 {
-    public class ChatBotController : Controller
+    public class ChatBotController : ControllerBase
     {
-        [HttpPost]
-        [Route("getanswer")]
-        public IActionResult GetResult([FromBody] string prompt)
+        private readonly OpenAIChatGPTService _chatGptService;
+
+        public ChatBotController(OpenAIChatGPTService chatGptService)
         {
-            //your OpenAI API key
-            string apiKey = "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";
-            string answer = string.Empty;
-            var openai = new OpenAIAPI(apiKey);
-            CompletionRequest completion = new CompletionRequest();
-            completion.Prompt = prompt;
-            completion.Model = OpenAI_API.Models.Model.Davinci;
-            completion.MaxTokens = 400;
-            var result = openai.Completions.CreateCompletionAsync(completion);
-            if (result != null)
-            {
-                foreach (var item in result.Result.Completions)
-                {
-                    answer = item.Text;
-                }
-                return Ok(answer);
-            }
-            else
-            {
-                return BadRequest("Not found");
-            }
+            _chatGptService = chatGptService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<string>> GetChatResponse([FromBody] string message)
+        {
+            var response = await _chatGptService.GetChatResponse(message);
+            return Ok(response);
         }
     }
+
 }
+

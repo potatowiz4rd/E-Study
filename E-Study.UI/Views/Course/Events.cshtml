@@ -1,0 +1,87 @@
+﻿@model IEnumerable<E_Study.Core.Models.Event>
+
+@{
+    ViewData["Title"] = "Events";
+}
+<p>
+    <a asp-action="CreateEvent">Create New Event</a>
+</p>
+<h1>Events</h1>
+@foreach (var item in Model)
+{
+    if (@item.EventType == "File")
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="report-list-icon shadow-sm me-2">
+
+                        <img src="/assets/img/icons/misc/pdf.png" width="50" height="50" alt="Pdf">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end w-100 flex-wrap gap-2">
+                        <div class="d-flex flex-column">
+                            <span>Tệp</span>
+                            <h5 class="mb-0">@item.Text</h5>
+                            @if (!string.IsNullOrEmpty(item.FilePath))
+                            {
+                                <a class="stretched-link" href="@Url.Action("GetFile", "Course", new { filePath = item.FilePath })" target="_blank">Open File</a>
+                            }
+                        </div>
+                        <small class="text-success">New</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <h3>Tuần 1</h3>
+    }
+    else if (@item.EventType == "Meeting")
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="report-list-icon shadow-sm me-2">
+
+                        <img src="/assets/img/icons/brands/social-label.png" width="50" height="50" alt="Meet">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end w-100 flex-wrap gap-2">
+                        <div class="d-flex flex-column">
+                            <span>Học Online</span>
+                            <h5 class="mb-0">@item.Text</h5>
+                            @if (!string.IsNullOrEmpty(item.Url))
+                            {
+                                <a class="stretched-link" href="@item.Url" target="_blank">Open link</a>
+                            }
+                        </div>
+                        <small class="text-success">New</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="report-list-icon shadow-sm me-2">
+                        <img src="/assets/img/icons/brands/event-label.png" width="50" height="50" alt="Meet">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end w-100 flex-wrap gap-2">
+                        <div class="d-flex flex-column">
+                            <span>Kiểm tra</span>
+                            <h5 class="mb-0">@item.Text</h5>
+                            @if (!string.IsNullOrEmpty(item.Url))
+                            {
+                                <a class="stretched-link" href="@item.Url" target="_blank">Open link</a>
+                            }
+                        </div>
+                        <small class="text-success">New</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+}

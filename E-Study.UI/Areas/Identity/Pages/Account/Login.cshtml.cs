@@ -114,12 +114,8 @@ namespace E_Study.UI.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User đã đăng nhập");
-                    return ViewComponent(MessagePage.COMPONENTNAME, new MessagePage.Message()
-                    {
-                        title = "Đã đăng nhập",
-                        htmlcontent = "Đăng nhập thành công",
-                        urlredirect = returnUrl
-                    });
+                    return RedirectToPage("./index");
+
                 }
                 if (result.RequiresTwoFactor)
                 {

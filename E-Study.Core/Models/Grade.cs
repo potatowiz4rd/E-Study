@@ -8,7 +8,8 @@ namespace E_Study.Core.Models
 {
     public class Grade
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
+        public int Attempt { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
         public string ExamId { get; set; }

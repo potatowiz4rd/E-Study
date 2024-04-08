@@ -10,7 +10,6 @@
 const username = userName;
 const textInput = document.getElementById('messageText');
 //const whenInput = document.getElementById('when');
-const chat = document.getElementById('chat');
 const messagesQueue = [];
 
 document.getElementById('submitButton').addEventListener('click', () => {
@@ -39,23 +38,47 @@ function sendMessage() {
 function addMessageToChat(message) {
     let isCurrentUserMessage = message.userName === username;
 
-    let container = document.createElement('div');
-    container.className = isCurrentUserMessage ? "container darker" : "container";
+    let listItem = document.createElement('li');
+    listItem.className = isCurrentUserMessage ? "chat-message chat-message-right" : "chat-message";
+
+    let messageWrapper = document.createElement('div');
+    messageWrapper.className = "d-flex overflow-hidden";
 
     let sender = document.createElement('p');
-    sender.className = "sender";
     sender.innerHTML = message.userName;
 
-    let text = document.createElement('p');
-    text.innerHTML = message.text;
+    let messageTextWrapper = document.createElement('div');
+    messageTextWrapper.className = "chat-message-wrapper flex-grow-1";
 
-    //let when = document.createElement('span');
-   // when.className = isCurrentUserMessage ? "time-left" : "time-right";
-    //when.innerHTML = message.when;
+    let messageText = document.createElement('div');
+    messageText.className = "chat-message-text";
+    messageText.innerHTML = "<p class='mb-0'>" + message.text + "</p>";
 
-    container.appendChild(sender);
-    container.appendChild(text);
-    //container.appendChild(when);
-    chat.appendChild(container);
+    let messageTime = document.createElement('div');
+    messageTime.className = "text-end text-muted mt-1";
+    messageTime.innerHTML = "<i class='bx bx-check-double text-success'></i><small>" + message.dateTime + "</small>";
+
+    let avatarWrapper = document.createElement('div');
+    avatarWrapper.className = "user-avatar flex-shrink-0 ms-3";
+
+    let avatar = document.createElement('div');
+    avatar.className = "avatar avatar-sm";
+    let avatarImg = document.createElement('img');
+    avatarImg.src = "../../assets/img/avatars/user.png";
+    avatarImg.alt = "Avatar";
+    avatarImg.className = "rounded-circle";
+
+    avatar.appendChild(avatarImg);
+    avatarWrapper.appendChild(avatar);
+
+    messageTextWrapper.appendChild(messageText);
+    messageTextWrapper.appendChild(messageTime);
+
+    messageWrapper.appendChild(sender);
+    messageWrapper.appendChild(messageTextWrapper);
+    messageWrapper.appendChild(avatarWrapper);
+
+    listItem.appendChild(messageWrapper);
+
+    chat.appendChild(listItem);
 }
-

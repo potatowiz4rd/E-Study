@@ -39,6 +39,7 @@ namespace E_Study.UI.Controllers
 
         public async Task<IActionResult> NewFeed(string courseId)
         {
+            ViewBag.Current = "NewFeed";
             ViewData["CurrentCourseId"] = courseId;
             var currentUser = await userManager.GetUserAsync(User);
             ViewBag.CurrentUserName = currentUser.UserName;
@@ -135,6 +136,8 @@ namespace E_Study.UI.Controllers
 
         public IActionResult Students(string courseId)
         {
+            ViewBag.Current = "Students";
+
             ViewData["CurrentCourseId"] = courseId;
             if (courseId == null)
             {
@@ -143,13 +146,91 @@ namespace E_Study.UI.Controllers
             }
             else
             {
-                var students = uow.CourseRepository.GetUsersInCourse(courseId);
+                var students = uow.CourseRepository.GetUsersInCourse(courseId);            
                 return View(students);
             }
         }
 
-        public IActionResult Calendar(string courseId)
+        public IActionResult Events(string courseId)
         {
+            ViewBag.Current = "Events";
+
+            ViewData["CurrentCourseId"] = courseId;
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var events = uow.EventRepository.GetEventsInCourse(courseId);
+                return View(events);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult CreateEvent(string courseId)
+        {
+            ViewBag.CurrentCourseId = courseId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateEvent(Event @event, string courseId)
+        {
+            if (ModelState.IsValid)
+            {
+                // Handle file upload
+                if (@event.File != null && @event.File.Length > 0)
+                {
+                    // Create the uploads directory if it doesn't exist
+                    var uploadsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", courseId);
+                    if (!Directory.Exists(uploadsDirectory))
+                    {
+                        Directory.CreateDirectory(uploadsDirectory);
+                    }
+
+                    // Process the uploaded file
+                    var fileName = Path.GetFileName(@event.File.FileName);
+                    var filePath = Path.Combine(uploadsDirectory, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await @event.File.CopyToAsync(stream);
+                    }
+
+                    @event.FileName = fileName;
+                    @event.FilePath = filePath;
+                    @event.CourseId = courseId;
+                }
+
+                await uow.EventRepository.CreateAsync(@event);
+                await uow.SaveChangesAsync();
+                return RedirectToAction("NewFeed", new { courseId });
+            }
+            return View(@event);
+        }
+
+        public IActionResult GetFile(string filePath)
+        {
+            // Combine the base path with the provided file path
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath);
+
+            // Check if the file exists
+            if (!System.IO.File.Exists(fullPath))
+            {
+                return NotFound();
+            }
+
+            // Return the file using a file result
+            return PhysicalFile(fullPath, "application/pdf"); // Adjust the content type as needed
+        }
+
+        public IActionResult Calendar(string courseId)
+        {          
+            ViewBag.Current = "Calendar";
+
             ViewData["CurrentCourseId"] = courseId;
             if (courseId == null)
             {
@@ -164,6 +245,8 @@ namespace E_Study.UI.Controllers
 
         public IActionResult Exams(string courseId)
         {
+            ViewBag.Current = "Exams";
+
             ViewData["CurrentCourseId"] = courseId;
             if (courseId == null)
             {
@@ -208,6 +291,7 @@ namespace E_Study.UI.Controllers
 
         public async Task<IActionResult> Chat(string courseId)
         {
+            ViewBag.Current = "Chat";
             ViewData["CurrentCourseId"] = courseId;
 
             if (courseId == null)

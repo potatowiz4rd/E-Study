@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Chat";
+}
+
+<div id="chat-container">
+    <div id="chat-messages"></div>
+    <input type="text" id="message-input" placeholder="Type your message here...">
+    <button id="send-button">Send</button>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#send-button").click(function () {
+                var message = $("#message-input").val();
+                sendMessage(message);
+            });
+
+            function sendMessage(message) {
+                $.ajax({
+                    url: '@Url.Action("SendMessage", "Home")',
+                    type: 'POST',
+                    data: { message: message },
+                    success: function (response) {
+                        if (response.success) {
+                            var chatMessages = $("#chat-messages");
+                            chatMessages.append("<div class='user-message'>" + message + "</div>");
+                            chatMessages.append("<div class='bot-message'>" + response.response.choices[0].text.strip() + "</div>");
+                        } else {
+                            alert("Error: " + response.response);
+                        }
+                    },
+                    error: function () {
+                        alert("Error occurred while sending message.");
+                    }
+                });
+            }
+        });
+    </script>
+}

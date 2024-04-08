@@ -43,5 +43,12 @@ namespace E_Study.Repository.Repositories
                 .Select(uc => uc.Exam)
                 .ToList();
         }
+
+        public IEnumerable<Grade> GetUserExamAttempts(string userId, string examId)
+        {
+            return dataContext.Grades
+                .Where(g => g.UserId == userId && g.ExamId == examId)
+                .ToList();
+        }
     }
 }

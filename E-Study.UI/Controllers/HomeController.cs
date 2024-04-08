@@ -3,7 +3,11 @@ using E_Study.Repository.Infrastructures;
 using E_Study.UI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OpenAI_API.Completions;
+using OpenAI_API;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Text;
 
 namespace E_Study.UI.Controllers
 {
@@ -12,7 +16,6 @@ namespace E_Study.UI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _uow;
-
 
         public HomeController(ILogger<HomeController> logger, IUnitOfWork uow, UserManager<User> userManager)
         {
@@ -33,7 +36,7 @@ namespace E_Study.UI.Controllers
             return View(courses);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Calendar()
         {
             return View();
         }
@@ -48,5 +51,7 @@ namespace E_Study.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
     }
 }
