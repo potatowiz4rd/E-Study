@@ -82,7 +82,7 @@ namespace E_Study.UI.Controllers
             }
             return PartialView("_CreatePost", post);
         }
-     
+
         public async Task<IActionResult> CreateComment(Comment comment)
         {
             if (ModelState.IsValid)
@@ -146,7 +146,7 @@ namespace E_Study.UI.Controllers
             }
             else
             {
-                var students = uow.CourseRepository.GetUsersInCourse(courseId);            
+                var students = uow.CourseRepository.GetUsersInCourse(courseId);
                 return View(students);
             }
         }
@@ -228,7 +228,7 @@ namespace E_Study.UI.Controllers
         }
 
         public IActionResult Calendar(string courseId)
-        {          
+        {
             ViewBag.Current = "Calendar";
 
             ViewData["CurrentCourseId"] = courseId;
@@ -325,5 +325,22 @@ namespace E_Study.UI.Controllers
             }
             return BadRequest();
         }
+
+        public IActionResult ExamGrades(string courseId, string examId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var grades = uow.GradeRepository.GetGradesOfExamInCourse(courseId, examId);
+                return View(grades);
+            }
+        }
+
+        
     }
 }

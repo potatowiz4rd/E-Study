@@ -82,19 +82,28 @@
                                 <span class="badge bg-label-success me-1">Đang diễn ra</span>
                             </td>
                             <td>
+                                <a class="btn btn-outline-info" asp-action="ExamGrades" asp-controller="Course"
+                                   asp-route-courseId="@ViewData["CurrentCourseId"]"
+                                   asp-route-examId="@exam.Id">Xem điểm</a>
                                 <div class="d-inline-block">
                                     <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end m-0">
                                         <li>
+                                            <a class="dropdown-item text-primary" 
+                                            asp-action="Details" asp-controller="Exam" 
+                                            asp-route-examId="@exam.Id" 
+                                            asp-route-courseId="@ViewData["CurrentCourseId"]">Chi tiết</a>
+                                        </li>
+                                        <li>
                                             <a class="dropdown-item text-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@exam.Id">Làm thử</a>
-                                        </li>                                      
+                                        </li>
                                         <div class="dropdown-divider"></div>
                                         <li>
                                             <a href="javascript:;" class="dropdown-item text-danger delete-record">Xóa</a>
                                         </li>
-                                    </ul>
+                                    </ul>                                   
                                 </div>
                                 <a href="javascript:;" class="btn btn-sm btn-icon item-edit">
                                     <i class="bx bxs-edit">

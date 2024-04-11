@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using E_Study.Core.Data;
 using E_Study.Core.Models;
 using E_Study.Repository.Infrastructures;
 using E_Study.ViewModel;
 using E_Study.ViewModel.Responses;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +39,7 @@ namespace E_Study.Service.exam
                 {
                     var qnas = mapper.Map<QnAs>(qnasViewModel); // Map QnA ViewModel to QnA entity
                     qnas.ExamId = exam.Id; // Assign exam Id to QnA
-                   // exam.QnAs.Add(qnas); // Add QnA to the exam
+                                           // exam.QnAs.Add(qnas); // Add QnA to the exam
                 }
 
                 await uow.SaveChangesAsync();
@@ -117,7 +120,7 @@ namespace E_Study.Service.exam
             {
                 //Check if the user has attempted the exam before and get the attempt count
                 var attempt = uow.ExamRepository.GetUserExamAttempts(model.StudentId, model.ExamId).Count();
-                    
+                model.Attempt = attempt + 1;
                 foreach (var item in model.QnAs)
                 {
                     ExamResult examResult = new ExamResult();
@@ -126,23 +129,50 @@ namespace E_Study.Service.exam
                     examResult.ExamId = item.ExamId;
                     examResult.Answer = item.SelectedAnswer;
                     examResult.IsCorrect = item.SelectedAnswer == item.Answer;
-                    examResult.Attempt = attempt + 1;
+                    examResult.Attempt = model.Attempt;
 
                     uow.ExamResultRepository.Create(examResult);
                 }
+                Debug.WriteLine($"ExamId: {model.ExamId}, StudentId: {model.StudentId}, Attempt: {model.Attempt}");
+                //Create new grade for the user
+                var grade = new Grade()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    ExamId = model.ExamId,
+                    UserId = model.StudentId,
+                    Score = model.QnAs.Count(q => q.SelectedAnswer == q.Answer),
+                    Attempt = model.Attempt,
+                    DateTime = DateTime.Now
+                };
+                uow.GradeRepository.Create(grade);
+                uow.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                Console.WriteLine($"Error creating grade: {ex.Message}");
+                return false;
+            }
+        }
 
+        public bool SetGrade(StartExamViewModel model)
+        {
+            try
+            {
+                var attempt = uow.ExamRepository.GetUserExamAttempts(model.StudentId, model.ExamId).Count();
                 //Create new grade for the user
                 Grade grade = new Grade
                 {
+                    Id = Guid.NewGuid().ToString(),
                     ExamId = model.ExamId,
                     UserId = model.StudentId,
                     Score = model.QnAs.Count(q => q.SelectedAnswer == q.Answer),
                     Attempt = attempt + 1,
-                    DateAssigned = DateTime.Now
+                    DateTime = DateTime.Now
                 };
                 uow.GradeRepository.Create(grade);
-                uow.SaveChanges(); // Save changes asynchronously
-
+                uow.SaveChanges();
                 return true;
             }
             catch (Exception ex)
@@ -153,13 +183,12 @@ namespace E_Study.Service.exam
             }
         }
 
-
-        public ResultViewModel GetExamResult(string userId, string examId)
+        public ResultViewModel GetExamResult(string userId, string examId, int attempt)
         {
             try
             {
                 var examResults = uow.ExamResultRepository.GetAll()
-                    .Where(er => er.UserId == userId && er.ExamId == examId)
+                    .Where(er => er.UserId == userId && er.ExamId == examId && er.Attempt == attempt)
                     .ToList(); // Fetch exam results for the specified user and exam
 
                 var exam = uow.ExamRepository.GetById(examId); // Fetch the exam details
@@ -173,6 +202,7 @@ namespace E_Study.Service.exam
                 {
                     StudentId = userId,
                     ExamName = exam.Title,
+                    Attempt = attempt,
                     CorrectAnswer = correctAnswers,
                     WrongAnswer = wrongAnswers,
                     TotalQuestion = correctAnswers + wrongAnswers
@@ -187,7 +217,7 @@ namespace E_Study.Service.exam
             }
 
             return new ResultViewModel();
-        }
+        }     
 
     }
 }

@@ -200,9 +200,9 @@
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div>Học sinh</div>
                         </a>
-                    </li>
-                    <li class="menu-item">
-                        <a asp-controller="Exam" asp-action="ViewResult" class="menu-link">
+                    </li>                 
+                    <li class="menu-item @(ViewBag.Current == "Grades" ? "active" : "")">
+                        <a asp-controller="Course" asp-action="Grades" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-table"></i>
                             <div>Điểm số</div>
                         </a>

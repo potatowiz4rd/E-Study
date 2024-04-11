@@ -55,16 +55,31 @@ namespace E_Study.UI.Controllers
         }
 
         [HttpGet]
+        public IActionResult Details(string examId, string courseId)
+        {
+            ViewData["CurrentCourseId"] = courseId;
+            var currentUser = userManager.GetUserId(User);
+            var exam = examService.GetExamById(examId).Data;
+            if (currentUser != null && examId != "")
+            {
+                ViewBag.Grades = uow.GradeRepository.GetExamGradesOfUser(currentUser, examId);
+                return View(exam);
+            }
+
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
         public IActionResult StartExam(string examId)
         {
             var currentUser = userManager.GetUserId(User);
             HttpContext.Session.SetString("ExamId", examId); // Set examId in session
             var model = new StartExamViewModel();
-        
+
             if (currentUser != null && examId != "")
             {
                 var exam = examService.GetExamById(examId).Data;
-                
+
                 TimeSpan timeLimit = TimeSpan.FromMinutes(exam.Time);
 
                 model.QnAs = new List<QnAsViewModel>();
@@ -76,9 +91,6 @@ namespace E_Study.UI.Controllers
                     model.QnAs = response.Data;
                     model.ExamName = exam.Title;
                     model.RemainingTime = timeLimit;
-                    model.CurrentPage = 1; // Set the current page
-                    model.TotalItems = exam.QnAs.Count(); // Set the total number of items
-                    model.ItemsPerPage = 1; // Set the number of items per page
                 }
                 return View(model);
             }
@@ -88,8 +100,11 @@ namespace E_Study.UI.Controllers
         [HttpPost]
         public IActionResult StartExam(StartExamViewModel model)
         {
+            model.Attempt = HttpContext.Session.GetInt32("CurrentAttempt") ?? 0;
+
             if (examService.SetExamResult(model))
             {
+                HttpContext.Session.SetInt32("CurrentAttempt", model.Attempt);
                 return RedirectToAction("ViewResult");
             }
             return RedirectToAction("Exams");
@@ -97,15 +112,17 @@ namespace E_Study.UI.Controllers
 
         public IActionResult ViewResult()
         {
+            int currentAttempt = HttpContext.Session.GetInt32("CurrentAttempt") ?? 0;
             string examId = HttpContext.Session.GetString("ExamId");
             var currentUser = userManager.GetUserId(User);
             if (currentUser != null && examId != "")
             {
-                var model = examService.GetExamResult(currentUser, examId);
+                var model = examService.GetExamResult(currentUser, examId, currentAttempt);
                 return View(model);
             }
             return RedirectToAction("Login", "Account");
         }
+
 
     }
 }

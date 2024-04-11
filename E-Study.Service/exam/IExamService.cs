@@ -14,7 +14,9 @@ namespace E_Study.Service.exam
         ResponseResult<ExamViewModel> GetAllExamCreatedByUser(string userId);
         ResponseResult<ExamCourseViewModel> AddExamToCourse(ExamCourseViewModel model);
         ResponseResult<ExamViewModel> GetExamById(string examId);
-        ResultViewModel GetExamResult(string userId, string examId);
+        ResultViewModel GetExamResult(string userId, string examId, int attempt);
         bool SetExamResult(StartExamViewModel model);
+        bool SetGrade(StartExamViewModel model);
+
     }
 }

@@ -11,11 +11,11 @@ namespace E_Study.Core.Models
         public string Id { get; set; }
         public int Attempt { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
         public string ExamId { get; set; }
-        public Exam Exam { get; set; }
+        public Exam? Exam { get; set; }
         public double Score { get; set; }
-        public DateTime DateAssigned { get; set; }
+        public DateTime DateTime { get; set; }
         // Additional properties as needed
     }
 }

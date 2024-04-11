@@ -22,6 +22,7 @@
 <div id="timer"></div> <!-- Add a div to display the remaining time -->
 <form asp-action="StartExam" asp-controller="Exam" method="post">
     <input type="hidden" asp-for="StudentId" />
+    <input type="hidden" asp-for="ExamId" />
     <ul>
         @for (var i = 0; i < Model.QnAs.Count(); i++)
         {
@@ -79,22 +80,6 @@
             </div>
         }
     </ul>
-    @* <div class="col d-flex justify-content-center">
-    <div class="demo-inline-spacing">
-    <!-- Basic Square Pagination -->
-    <nav aria-label="Page navigation">
-    <ul class="pagination pagination-round pagination-primary">
-    @for (int i = 1; i <= Model.QnAs.Count; i++)
-    {
-    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
-    <a class="page-link" href="@Url.Action("StartExam", new { page = i })">@i</a>
-    </li>
-    }
-    </ul>
-    </nav>
-    <!--/ Basic Square Pagination -->
-    </div>
-    </div> *@
     <div class="text-center mt-3">
         <button type="submit" name="action" class="btn btn-primary">Nộp bài</button>
     </div>
