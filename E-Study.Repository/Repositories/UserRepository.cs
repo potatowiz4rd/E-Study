@@ -28,6 +28,15 @@ namespace E_Study.Repository.Repositories
 
             return users;
         }
+        public async Task<IList<User>> GetUsersInCourseAsync(string courseId)
+        {
+            var users = await dataContext.UserCourses
+                .Where(uc => uc.CourseId == courseId)
+                .Select(uc => uc.User)
+                .ToListAsync();
+
+            return users;
+        }
 
         public IList<User> GetUsersNotInCourse(string courseId)
         {

@@ -51,5 +51,7 @@ namespace E_Study.Service.chatbot
             // For production, you might want to handle various failure scenarios more robustly.
             return "Failed to get a response from ChatGPT API.";
         }
+
+
     }
 }

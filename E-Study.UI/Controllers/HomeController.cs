@@ -27,13 +27,19 @@ namespace E_Study.UI.Controllers
         public IActionResult Index()
         {
             var userId = _userManager.GetUserId(User);
-            var courses = _uow.CourseRepository.GetAllCourseOfUser(userId);
-            foreach (var course in courses)
+
+            if (userId != null)
             {
-                _uow.CourseRepository.LoadUserCourses(course);
-                _uow.CourseRepository.LoadExamCourses(course);
+                var courses = _uow.CourseRepository.GetAllCourseOfUser(userId);
+                foreach (var course in courses)
+                {
+                    _uow.CourseRepository.LoadUserCourses(course);
+                    _uow.CourseRepository.LoadExamCourses(course);
+                }
+                return View(courses);
             }
-            return View(courses);
+            
+            return Redirect("/login");
         }
 
         public IActionResult Calendar()
@@ -52,6 +58,6 @@ namespace E_Study.UI.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        
+
     }
 }

@@ -12,5 +12,7 @@ namespace E_Study.Repository.IRepositories
     {
         IList<User> GetUsersInCourse(string courseId);
         IList<User> GetUsersNotInCourse(string courseId);
+        Task<IList<User>> GetUsersInCourseAsync(string courseId);
+
     }
 }

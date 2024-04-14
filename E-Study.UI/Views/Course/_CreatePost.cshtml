@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create Post";
 }
 
-<div class="card mb-3">
+@* <div class="card mb-3">
     <div class="card-body">
         <form id="postForm" id="createPostForm" asp-action="CreatePost" asp-controller="Course" method="post">
             <div class="form-group">
@@ -16,3 +16,53 @@
         </form>
     </div>
 </div>
+ *@
+<div class="mt-2">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#modalCenter">
+        <span class="tf-icons bx bx-edit me-1"></span>Tạo bài viết mới
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Tạo bài viết</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="postForm" id="createPostForm" asp-action="CreatePost" asp-controller="Course" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col mb-3">
+                                <label for="posText" class="form-label">Nội dung</label>
+                                <textarea asp-for="Text" id="postText" class="form-control" rows="3" placeholder="Bạn đang nghĩ gì?"></textarea>
+                                <span asp-validation-for="Text" class="text-danger"></span>
+                            </div>
+                            <input type="hidden" name="courseId" value="@ViewBag.CurrentCourseId" />                       
+                        </div>
+                        @* <div class="row g-2">
+                            <div class="col mb-0">
+                                <label for="emailWithTitle" class="form-label">Email</label>
+                                <input type="email" id="emailWithTitle" class="form-control" placeholder="xxxx@xxx.xx">
+                            </div>
+                            <div class="col mb-0">
+                                <label for="dobWithTitle" class="form-label">DOB</label>
+                                <input type="date" id="dobWithTitle" class="form-control">
+                            </div>
+                        </div> *@
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="inputGroupFile02">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Đăng bài</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

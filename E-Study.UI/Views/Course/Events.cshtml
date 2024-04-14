@@ -4,7 +4,7 @@
     ViewData["Title"] = "Events";
 }
 <p>
-    <a asp-action="CreateEvent">Create New Event</a>
+    <a asp-action="CreateEvent" asp-route-courseId="@ViewBag.CurrentCourseId">Create New Event</a>
 </p>
 <h1>Events</h1>
 @foreach (var item in Model)

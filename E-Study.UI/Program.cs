@@ -135,8 +135,6 @@ app.UseSession();
 
 app.UseAuthentication();
 
-app.UseMiddleware<AuthenticationMiddleware>();
-
 app.UseRouting();
 
 app.UseAuthorization();

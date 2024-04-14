@@ -3,8 +3,6 @@
 }
 
 <div class="container-xxl flex-grow-1 container-p-y">
-
-
     <h4>
         <span class="text-muted fw-light">Bài tập /</span> Chi tiết
     </h4>
@@ -43,10 +41,30 @@
                     </div>
                     <hr class="mb-4 mt-2">
                     <h5>Lịch sử làm bài</h5>
-                    <p class="mb-4">
+                    <table>
+                        <tr>
+                            <th>Đợt</th>
+                            <th>Điểm</th>
+                            <th>Thời gian</th>
+                        </tr>
+                        @foreach (var grade in ViewBag.Grades)
+                        {
 
-                    </p>
+                            <tr>
+                                <td>
+                                    <a>@grade.Attempt</a>
+                                </td>
+                                <td>
+                                    <a>@grade.Score</a>
+                                </td>
+                                <td>
+                                    <a>@grade.DateTime</a>
+                                </td>
+                            </tr>
 
+                        }
+                    </table>
+                   
                     <hr class="my-4">
                     <div class="d-flex justify-content-center align-items-center">
                         <a class="btn btn-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@Model.Id">

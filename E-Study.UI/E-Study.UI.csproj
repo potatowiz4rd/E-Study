@@ -37,6 +37,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="Middlewares\" />
     <Folder Include="wwwroot\assets\css\assets\css\assets\css\assets\css\" />
     <Folder Include="wwwroot\assets\css\assets\css\assets\css\assets\img\" />
     <Folder Include="wwwroot\assets\css\assets\css\assets\css\assets\js\" />

@@ -172,6 +172,8 @@ namespace E_Study.UI.Controllers
         public IActionResult CreateEvent(string courseId)
         {
             ViewBag.CurrentCourseId = courseId;
+            ViewData["CurrentCourseId"] = courseId;
+
             return View();
         }
 
@@ -207,7 +209,7 @@ namespace E_Study.UI.Controllers
 
                 await uow.EventRepository.CreateAsync(@event);
                 await uow.SaveChangesAsync();
-                return RedirectToAction("NewFeed", new { courseId });
+                return RedirectToAction("Events", new { courseId });
             }
             return View(@event);
         }
@@ -341,6 +343,14 @@ namespace E_Study.UI.Controllers
             }
         }
 
-        
+        public async Task<IActionResult> Contacts(string courseId)
+        {
+            if (ModelState.IsValid)
+            {
+                var users = await uow.UserRepository.GetUsersInCourseAsync(courseId);
+                return PartialView("_Contacts", users);
+            }
+            return Redirect("/login");
+        }
     }
 }
