@@ -3,10 +3,14 @@
 @{
     ViewData["Title"] = "Events";
 }
-<p>
-    <a asp-action="CreateEvent" asp-route-courseId="@ViewBag.CurrentCourseId">Create New Event</a>
-</p>
+
 <h1>Events</h1>
+<div id="createEventContainer">
+                <!-- Load the create event form -->
+                @{
+                    Html.RenderPartial("_CreateEvent", new E_Study.Core.Models.Event());
+                }
+            </div>
 @foreach (var item in Model)
 {
     if (@item.EventType == "File")

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using OpenAI_API;
+using OpenAI_API.Chat;
 using OpenAI_API.Completions;
 using System.Threading.Tasks;
 
@@ -17,38 +18,35 @@ namespace E_Study.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> GetChatResponse([FromBody] string message)
+        public async Task<ActionResult> GetChatResponse(string message)
         {
-            var response = await _chatGptService.GetChatResponse(message);
+            var api = new OpenAIAPI("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");
+            var chat = api.Chat.CreateConversation();
+            chat.Model = OpenAI_API.Models.Model.ChatGPTTurbo;
+            chat.RequestParameters.Temperature = 0;
+
+            /// give instruction as System
+            chat.AppendSystemMessage("You are an assistant of a online studying website who helps teachers and students answer their questions.");
+
+            // give a few examples as user and assistant
+            chat.AppendUserInput("At which age children in Viet Name start going to school? five or six years old");
+            chat.AppendExampleChatbotOutput("Six");
+            chat.AppendUserInput("At which age student learn calculus?");
+            chat.AppendExampleChatbotOutput("At the age of 16 to 17, advanced students on academic tracks may take calculus as an option.");
+
+            // now let's ask it a question
+            chat.AppendUserInput(message);
+            // and get the response
+            string response = await chat.GetResponseFromChatbotAsync();
+         
+            // the entire chat history is available in chat.Messages
+            foreach (ChatMessage msg in chat.Messages)
+            {
+                Console.WriteLine($"{msg.Role}: {msg.Content}");
+            }
+
             return Ok(response);
         }
-
-        [HttpPost]
-        [Route("getanswer")]
-        public async Task<IActionResult> GetResult([FromBody] string prompt)
-        {
-            try
-            {
-                // Your OpenAI API key
-                var api = new OpenAIAPI("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");
-
-                var chat = api.Chat.CreateConversation();
-                chat.AppendUserInput("How to make a hamburger?");
-
-                await chat.StreamResponseFromChatbotAsync(res =>
-                {
-                    Console.Write(res);
-                });
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                // Return a bad request with the error message
-                return BadRequest($"Error: {ex.Message}");
-            }
-        }
-
-
 
     }
 

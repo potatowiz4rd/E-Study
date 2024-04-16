@@ -1,0 +1,67 @@
+﻿@model E_Study.Core.Models.Event
+
+@{
+}
+<div class="mt-2">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#modalCenter">
+        <span class="tf-icons bx bx-edit me-1"></span>Thêm sự kiện
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Tạo sự kiện</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-action="CreateEvent" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col mb-3">
+                                <div class="form-group">
+                                    <label for="EventType">Event Type</label>
+                                    <select class="form-control" id="EventType" name="EventType" required>
+                                        <option value="">Select Event Type</option>
+                                        <option value="File">File</option>
+                                        <option value="Meeting">Meeting Url</option>
+                                        <option value="Exam">Thông báo</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Text" class="control-label"></label>
+                                    <input asp-for="Text" class="form-control" />
+                                    <span asp-validation-for="Text" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Url" class="control-label"></label>
+                                    <input asp-for="Url" class="form-control" />
+                                    <span asp-validation-for="Url" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StartDate">Start Date</label>
+                                    <input type="datetime-local" class="form-control" id="StartDate" name="StartDate">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EndDate">End Date</label>
+                                    <input type="datetime-local" class="form-control" id="EndDate" name="EndDate">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="File">Upload File</label>
+                                    <input type="file" class="form-control" id="File" name="File">
+                                </div>
+                                <input type="hidden" name="courseId" value="@ViewBag.CurrentCourseId" />                                
+                            </div>
+                        </div>                                         
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Hoàn tất</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
