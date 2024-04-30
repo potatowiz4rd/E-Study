@@ -128,7 +128,22 @@ namespace E_Study.Service.exam
                     examResult.QnAsId = item.Id;
                     examResult.ExamId = item.ExamId;
                     examResult.Answer = item.SelectedAnswer;
-                    examResult.IsCorrect = item.SelectedAnswer == item.Answer;
+
+                    // Check correctness based on question type
+                    if (item.Type == "Multiple Choice")
+                    {
+                        // For multiple-choice questions, check if all selected answers match the correct answers
+                        var correctAnswers = item.Answer.Split(',').ToList(); // Assuming correct answers are comma-separated
+                        var selectedAnswers = item.SelectedAnswer.Split(',').ToList(); // Assuming selected answers are comma-separated
+                        examResult.IsCorrect = correctAnswers.All(selectedAnswers.Contains) && correctAnswers.Count == selectedAnswers.Count;
+                    }
+                    else
+                    {
+                        // For single-choice questions, check if the selected answer matches the correct answer
+                        examResult.IsCorrect = item.SelectedAnswer == item.Answer;
+                    }
+
+                    //examResult.IsCorrect = item.SelectedAnswer == item.Answer;
                     examResult.Attempt = model.Attempt;
 
                     uow.ExamResultRepository.Create(examResult);
@@ -140,7 +155,21 @@ namespace E_Study.Service.exam
                     Id = Guid.NewGuid().ToString(),
                     ExamId = model.ExamId,
                     UserId = model.StudentId,
-                    Score = model.QnAs.Count(q => q.SelectedAnswer == q.Answer),
+                    Score = model.QnAs.Count(q => {
+                        // Check if the answer is correct based on the question type
+                        if (q.Type == "Multiple Choice")
+                        {
+                            // For multiple-choice questions, split the correct answers and selected answers
+                            var correctAnswers = q.Answer.Split(',').ToList(); // Assuming correct answers are comma-separated
+                            var selectedAnswers = q.SelectedAnswer.Split(',').ToList(); // Assuming selected answers are comma-separated
+                                                                                        // Count if all selected answers are contained in the correct answers and vice versa
+                            return correctAnswers.All(selectedAnswers.Contains) && correctAnswers.Count == selectedAnswers.Count;
+                        }
+                        else
+                        {
+                            return q.SelectedAnswer == q.Answer;
+                        }                                          
+                    }),
                     Attempt = model.Attempt,
                     DateTime = DateTime.Now
                 };
@@ -217,7 +246,7 @@ namespace E_Study.Service.exam
             }
 
             return new ResultViewModel();
-        }     
+        }
 
     }
 }

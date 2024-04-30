@@ -11,6 +11,7 @@ namespace E_Study.ViewModel
         public string Id { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public string Type { get; set; }
         public string ExamId { get; set; }
         public ExamViewModel Exam { get; set; }
         public string Option1 { get; set; }

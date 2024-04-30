@@ -1,17 +1,11 @@
 ﻿@model IEnumerable<E_Study.Core.Models.Exam>
 
-@{
-    ViewData["Title"] = "Exams";
-}
-
-<h1>Bài kiểm tra</h1>
-
-<div class="card">
+<div class="card h-100">
     <div class="card-datatable table-responsive">
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
             <div class="card-header flex-column flex-md-row">
                 <div class="head-label text-center">
-                    <h5 class="card-title mb-0">Danh sách</h5>
+                    <h3 class="card-title mb-0 font-weight-bold">Exams in this course</h3>
                 </div>
                 <div class="dt-action-buttons text-end pt-3 pt-md-0">
                     <div class="dt-buttons btn-group flex-wrap">
@@ -19,17 +13,15 @@
                             <button class="btn buttons-collection dropdown-toggle btn-label-primary me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
                                 <span>
                                     <i class="bx bx-export me-sm-1"></i>
-                                    <span class="d-none d-sm-inline-block">Xuất File</span>
+                                    <span class="d-none d-sm-inline-block">Export</span>
                                 </span>
                             </button>
                         </div>
-                        <button class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                        <a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="btn btn-secondary create-new btn-primary">
                             <span>
-                                <i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">
-                                    <a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]">Thêm bài kiểm tra</a>
-                                </span>
+                                <i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add An Exam</span>
                             </span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -64,11 +56,6 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-start align-items-center user-name">
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar me-2">
-                                            <span class="avatar-initial rounded-circle bg-label-success">2</span>
-                                        </div>
-                                    </div>
                                     <div class="d-flex flex-column">
                                         <span class="emp_name text-truncate">@exam.Title</span>
                                         <small class="emp_post text-truncate text-muted">@exam.Title</small>
@@ -91,10 +78,10 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end m-0">
                                         <li>
-                                            <a class="dropdown-item text-primary" 
-                                            asp-action="Details" asp-controller="Exam" 
-                                            asp-route-examId="@exam.Id" 
-                                            asp-route-courseId="@ViewData["CurrentCourseId"]">Chi tiết</a>
+                                            <a class="dropdown-item text-primary"
+                                               asp-action="Details" asp-controller="Exam"
+                                               asp-route-examId="@exam.Id"
+                                               asp-route-courseId="@ViewData["CurrentCourseId"]">Chi tiết</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item text-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@exam.Id">Làm thử</a>
@@ -103,7 +90,7 @@
                                         <li>
                                             <a href="javascript:;" class="dropdown-item text-danger delete-record">Xóa</a>
                                         </li>
-                                    </ul>                                   
+                                    </ul>
                                 </div>
                                 <a href="javascript:;" class="btn btn-sm btn-icon item-edit">
                                     <i class="bx bxs-edit">
@@ -116,16 +103,16 @@
 
                 </tbody>
             </table>
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                        <ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="next" tabindex="-1" class="page-link">Next</a></li></ul>
-                    </div>
-                </div>
+            @* <div class="row">
+            <div class="col-sm-12 col-md-6">
+            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div>
             </div>
+            <div class="col-sm-12 col-md-6">
+            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            <ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="next" tabindex="-1" class="page-link">Next</a></li></ul>
+            </div>
+            </div>
+            </div> *@
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
                 <div class="me-1">
                     <h3 class="mb-1">@Model.Title</h3>
-                    <p class="mb-1"><span class="fw-medium">Đăng bởi: Devonne Wallbridge </span></p>
+                    <p class="mb-1"><span class="fw-medium">Đăng bởi: </span></p>
                 </div>
                 <div class="d-flex align-items-center">
                     <span class="badge bg-label-danger">Đang diễn ra</span>
@@ -35,18 +35,21 @@
                             <p class="text-nowrap "><i class='bx bx-file bx-sm me-2'></i>Sử dụng tài liệu: Không</p>
                         </div>
                         <div>
-                            <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Số câu: 19</p>
-                            <p class="text-nowrap "><i class='bx bxs-watch bx-sm me-2'></i>Thời gian: 15 phút</p>
+                            <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Số câu: 3</p>
+                            <p class="text-nowrap "><i class='bx bxs-watch bx-sm me-2'></i>Thời gian: 45 phút</p>
                         </div>
                     </div>
                     <hr class="mb-4 mt-2">
                     <h5>Lịch sử làm bài</h5>
-                    <table>
+                    <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead>
                         <tr>
                             <th>Đợt</th>
                             <th>Điểm</th>
                             <th>Thời gian</th>
                         </tr>
+                        </thead>
                         @foreach (var grade in ViewBag.Grades)
                         {
 
@@ -64,10 +67,10 @@
 
                         }
                     </table>
-                   
+                    </div>
                     <hr class="my-4">
                     <div class="d-flex justify-content-center align-items-center">
-                        <a class="btn btn-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@Model.Id">
+                        <a class="btn btn-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@Model.Id" asp-route-courseId="@ViewData["CurrentCourseId"]">
                             Bắt đầu làm
                         </a>
                     </div>

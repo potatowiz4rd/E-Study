@@ -140,7 +140,7 @@
                                 </g>
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">E-Study</span>
+                        <span class="app-brand-text demo fw-bolder ms-2">Indigo</span>
                     </a>
 
                     <a asp-action="Index" asp-controller="Home" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -228,7 +228,6 @@
                 </ul>
             </aside>
             <!-- / Menu -->
-            
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
@@ -645,13 +644,10 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    <!-- Content -->                  
+                    <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
                         @RenderBody()
-                        @await Html.PartialAsync("_ChatPartial")
-
-
                     </div>
                     <!-- / Content -->
                     <!-- Footer -->
@@ -668,8 +664,8 @@
             <!-- / Layout page -->
         </div>
 
-        <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
+        <!-- Overlay -->
     </div>
 
 
@@ -695,6 +691,20 @@
     <script src="/assets/js/dashboards-analytics.js"></script>
     <script src="/assets/js/app-chat.js"></script>
     <script src="/assets/js/script.js"></script>
+
+    <script type="text/javascript">
+        (function (d, t) {
+            var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            v.onload = function () {
+                window.voiceflow.chat.load({
+                    verify: { projectID: '662e90806982794949befbf1' },
+                    url: 'https://general-runtime.voiceflow.com',
+                    versionID: 'production'
+                });
+            }
+            v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+        })(document, 'script');
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

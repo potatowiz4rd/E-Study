@@ -70,8 +70,9 @@ namespace E_Study.UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult StartExam(string examId)
+        public IActionResult StartExam(string examId, string courseId)
         {
+            ViewData["CurrentCourseId"] = courseId;
             var currentUser = userManager.GetUserId(User);
             HttpContext.Session.SetString("ExamId", examId); // Set examId in session
             var model = new StartExamViewModel();
@@ -100,12 +101,14 @@ namespace E_Study.UI.Controllers
         [HttpPost]
         public IActionResult StartExam(StartExamViewModel model)
         {
+            string courseId = Request.Form["courseId"];
+            string examId = HttpContext.Session.GetString("ExamId");
             model.Attempt = HttpContext.Session.GetInt32("CurrentAttempt") ?? 0;
 
             if (examService.SetExamResult(model))
             {
                 HttpContext.Session.SetInt32("CurrentAttempt", model.Attempt);
-                return RedirectToAction("ViewResult");
+                return RedirectToAction("Details", "Exam", new { examId = examId, courseId = courseId });
             }
             return RedirectToAction("Exams");
         }

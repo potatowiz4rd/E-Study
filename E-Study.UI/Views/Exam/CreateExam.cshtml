@@ -1,71 +1,240 @@
 ﻿@model E_Study.ViewModel.ExamViewModel
 @{
     ViewData["Title"] = "CreateExam";
+    Layout = "_LayoutNotLoggedIn";
 }
-<h1>CreateExam</h1>
-<h4>Exam</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateExam" asp-controller="Exam" method="post">
-            <!-- Exam details -->
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxScore" class="control-label"></label>
-                <input asp-for="MaxScore" class="form-control" />
-                <span asp-validation-for="MaxScore" class="text-danger"></span>
-            </div>                               
+<h4>
+    <span class="text-muted fw-light">Đề kiểm tra /</span> Tạo đề
+</h4>
+<div class="bs-stepper wizard-numbered mt-2">
+    <div class="bs-stepper-header">
+        <div class="step active" data-target="#account-details">
+            <button type="button" class="step-trigger" aria-selected="true">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label mt-1">
+                    <span class="bs-stepper-title">Thông Tin Cơ Bản</span>
+                    <span class="bs-stepper-subtitle">Thêm thông tin cho bài kiểm tra</span>
+                </span>
+            </button>
+        </div>
+        <div class="line">
+            <i class="bx bx-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#personal-info">
+            <button type="button" class="step-trigger" aria-selected="false">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label mt-1">
+                    <span class="bs-stepper-title">Câu Hỏi</span>
+                    <span class="bs-stepper-subtitle">Thêm câu hỏi cho bài kiểm tra</span>
+                </span>
 
-            <!-- Add QnAs -->
-            <div id="qnaContainer">
-                <div class="form-group qna">
-                    <label for="question" class="control-label">Question</label>
-                    <input type="text" name="QnAs[0].Question" class="form-control" />
-                    <label for="answer" class="control-label">Answer</label>
-                    <input type="text" name="QnAs[0].Answer" class="form-control" />
-                    <label for="option1" class="control-label">Option 1</label>
-                    <input type="text" name="QnAs[0].Option1" class="form-control" />
-                    <label for="option2" class="control-label">Option 2</label>
-                    <input type="text" name="QnAs[0].Option2" class="form-control" />
-                    <label for="option3" class="control-label">Option 3</label>
-                    <input type="text" name="QnAs[0].Option3" class="form-control" />
-                    <label for="option4" class="control-label">Option 4</label>
-                    <input type="text" name="QnAs[0].Option4" class="form-control" />
-                    <button type="button" class="btn btn-sm btn-danger remove-qna">Remove</button>
+            </button>
+        </div>
+        <div class="line">
+            <i class="bx bx-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#social-links">
+            <button type="button" class="step-trigger" aria-selected="false">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label mt-1">
+                    <span class="bs-stepper-title">Chọn Lớp (Tùy chọn)</span>
+                    <span class="bs-stepper-subtitle">Thêm bài kiểm tra vào lớp của bạn</span>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="bs-stepper-content">
+        <form asp-action="CreateExam" asp-controller="Exam" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- Account Details -->
+            <div id="account-details" class="content active dstepper-block">
+                <div class="content-header mb-3">
+                    <h6 class="mb-0">Thông tin bài kiểm tra</h6>
+                    <small>Hãy điền thông tin cho bài kiểm tra.</small>
+                </div>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label asp-for="Title" class="control-label">Tên bài kiểm tra</label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="Description" class="control-label">Mô tả</label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="Time" class="control-label">Thời gian (phút)</label>
+                        <input asp-for="Time" class="form-control" />
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="MaxScore" class="control-label">Điểm tối đa</label>
+                        <input asp-for="MaxScore" class="form-control" />
+                        <span asp-validation-for="MaxScore" class="text-danger"></span>
+                    </div>                    
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="button" class="btn btn-label-secondary btn-prev" disabled="">
+                            <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                            <span class="align-middle d-sm-inline-block d-none">Trở Lại</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-next">
+                            <span class="align-middle d-sm-inline-block d-none me-sm-1">Tiếp Theo</span>
+                            <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <button type="button" id="addQna" class="btn btn-sm btn-primary">Add QnA</button>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <!-- Personal Info -->
+            <div id="personal-info" class="content">
+                <div class="content-header mb-3">
+                    <h6 class="mb-0">Personal Info</h6>
+                    <small>Enter Your Personal Info.</small>
+                </div>
+                <!-- Add QnAs -->
+                <div id="qnaContainer">
+                    <div class="form-group qna">
+                        <select class="form-select" name="QnAs[0].Type" aria-label="(Chọn loại câu hỏi)">
+                            <option selected>Chọn loại câu hỏi</option>
+                            <option value="Single Choice">Single Choice</option>
+                            <option value="Multiple Choice">Multiple Choice</option>
+                            <option value="Enter Answer">Enter Answer</option>
+                        </select>
+                       
+                        <label for="question" class="control-label">Question</label>
+                        <input type="text" name="QnAs[0].Question" class="form-control" />
+                        <label for="answer" class="control-label">Answer</label>
+                        <input type="text" name="QnAs[0].Answer" class="form-control" />
+                        <label for="option1" class="control-label">Option 1</label>
+                        <input type="text" name="QnAs[0].Option1" class="form-control" />
+                        <label for="option2" class="control-label">Option 2</label>
+                        <input type="text" name="QnAs[0].Option2" class="form-control" />
+                        <label for="option3" class="control-label">Option 3</label>
+                        <input type="text" name="QnAs[0].Option3" class="form-control" />
+                        <label for="option4" class="control-label">Option 4</label>
+                        <input type="text" name="QnAs[0].Option4" class="form-control" />
+                        <button type="button" class="btn btn-sm btn-danger remove-qna">Remove</button>
+                    </div>
+                </div>
+                <button type="button" id="addQna" class="btn btn-sm btn-primary">Add QnA</button>
+                <div class="col-12 d-flex justify-content-between">
+                    <button type="button" class="btn btn-label-secondary btn-prev" disabled="">
+                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                        <span class="align-middle d-sm-inline-block d-none">Trở Lại</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next">
+                        <span class="align-middle d-sm-inline-block d-none me-sm-1">Tiếp Theo</span>
+                        <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Social Links -->
+            <div id="social-links" class="content">
+                <div class="content-header mb-3">
+                    <h6 class="mb-0">Social Links</h6>
+                    <small>Enter Your Social Links.</small>
+                </div>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="form-label" for="twitter">Twitter</label>
+                        <input type="text" id="twitter" class="form-control" placeholder="https://twitter.com/abc">
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label" for="facebook">Facebook</label>
+                        <input type="text" id="facebook" class="form-control" placeholder="https://facebook.com/abc">
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label" for="google">Google+</label>
+                        <input type="text" id="google" class="form-control" placeholder="https://plus.google.com/abc">
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label" for="linkedin">LinkedIn</label>
+                        <input type="text" id="linkedin" class="form-control" placeholder="https://linkedin.com/abc">
+                    </div>
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary btn-prev">
+                            <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                            <span class="align-middle d-sm-inline-block d-none">Trở Lại</span>
+                        </button>
+                        <div class="form-group">
+                            <button type="submit" value="Create" class="btn btn-primary btn-next">
+                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Hoàn Tất</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
+@* <div class="col-12">
+    <div class="card">
+        <h5 class="card-header">Form Repeater</h5>
+        <div class="card-body">
+            <form class="form-repeater">
+                <div data-repeater-list="group-a">
+                    <div data-repeater-item="">
+                        <div class="row">
+                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-1">Username</label>
+                                <input type="text" id="form-repeater-1-1" class="form-control" placeholder="john.doe">
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-2">Password</label>
+                                <input type="password" id="form-repeater-1-2" class="form-control" placeholder="············">
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-3">Gender</label>
+                                <select id="form-repeater-1-3" class="form-select">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-4">Profession</label>
+                                <select id="form-repeater-1-4" class="form-select">
+                                    <option value="Designer">Designer</option>
+                                    <option value="Developer">Developer</option>
+                                    <option value="Tester">Tester</option>
+                                    <option value="Manager">Manager</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                <button class="btn btn-label-danger mt-4" data-repeater-delete="">
+                                    <i class="bx bx-x me-1"></i>
+                                    <span class="align-middle">Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="mb-0">
+                    <button class="btn btn-primary" data-repeater-create="">
+                        <i class="bx bx-plus me-1"></i>
+                        <span class="align-middle">Add</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ *@
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             var qnaIndex = 1;
 
             $('#addQna').click(function () {
                 var qnaHtml = '<div class="form-group qna">' +
+                    '<select class="form-select" name="QnAs[' + qnaIndex + '].Type" aria-label="(Chọn loại câu hỏi)">' +
+                    '<option selected>Chọn loại câu hỏi</option>' +
+                    '<option value="Single Choice">Single Choice</option>' +
+                    '<option value="Multiple Choice">Multiple Choice</option>' +
+                    '<option value="Enter Answer">Enter Answer</option>' +
+                    '</select>' +
                     '<label for="question" class="control-label">Question</label>' +
                     '<input type="text" name="QnAs[' + qnaIndex + '].Question" class="form-control" />' +
                     '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Question"></span>' +

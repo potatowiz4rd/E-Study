@@ -16,6 +16,8 @@ namespace E_Study.Core.Config
             builder.ToTable("QnAs");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Question).IsRequired();
+            builder.Property(x => x.Type).IsRequired();
             builder.Property(x => x.Option1).IsRequired().HasMaxLength(500);
             builder.Property(x => x.Option2).IsRequired().HasMaxLength(500);
             builder.Property(x => x.Option3).IsRequired().HasMaxLength(500);
