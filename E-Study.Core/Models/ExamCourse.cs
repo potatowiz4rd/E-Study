@@ -10,9 +10,10 @@ namespace E_Study.Core.Models
     {
         public string CourseId { get; set; }
         public Course Course { get; set; }
-
         public string ExamId { get; set; }
         public Exam Exam { get; set; }
+        public string? EventId { get; set; }
+        public Event? Event { get; set; }
         public int? AttemptLimit { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

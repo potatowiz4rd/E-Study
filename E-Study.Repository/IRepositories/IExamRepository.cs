@@ -14,5 +14,7 @@ namespace E_Study.Repository.IRepositories
         IEnumerable<Exam> GetAllExamsOfUser(string userId);
         void AddExamToCourse(string examId, string courseId, DateTime startDate, DateTime endDate);
         IEnumerable<Grade> GetUserExamAttempts(string userId, string examId);
+        IEnumerable<ExamCourse> GetExamCoursesInCourse(string courseId);
+
     }
 }

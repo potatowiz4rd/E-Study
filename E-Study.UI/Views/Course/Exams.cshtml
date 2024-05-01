@@ -82,10 +82,7 @@
                                                asp-action="Details" asp-controller="Exam"
                                                asp-route-examId="@exam.Id"
                                                asp-route-courseId="@ViewData["CurrentCourseId"]">Chi tiết</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item text-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@exam.Id">Làm thử</a>
-                                        </li>
+                                        </li>                                     
                                         <div class="dropdown-divider"></div>
                                         <li>
                                             <a href="javascript:;" class="dropdown-item text-danger delete-record">Xóa</a>

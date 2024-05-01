@@ -156,7 +156,7 @@ namespace E_Study.UI.Controllers
         public IActionResult Events(string courseId)
         {
             ViewBag.Current = "Events";
-
+            ViewBag.Exams = uow.ExamRepository.GetExamCoursesInCourse(courseId);
             ViewData["CurrentCourseId"] = courseId;
             if (courseId == null)
             {

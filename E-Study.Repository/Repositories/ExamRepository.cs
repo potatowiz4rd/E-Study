@@ -44,6 +44,13 @@ namespace E_Study.Repository.Repositories
                 .ToList();
         }
 
+        public IEnumerable<ExamCourse> GetExamCoursesInCourse(string courseId)
+        {
+            return dataContext.ExamCourses
+                .Where(uc => uc.CourseId == courseId).Include(uc => uc.Exam)
+                .ToList();
+        }
+
         public IEnumerable<Grade> GetUserExamAttempts(string userId, string examId)
         {
             return dataContext.Grades

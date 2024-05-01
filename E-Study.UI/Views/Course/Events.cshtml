@@ -5,89 +5,186 @@
 }
 
 <h4>
-    Sự kiện
+    Events
 </h4>
 <div id="createEventContainer">
-                <!-- Load the create event form -->
-                @{
-                    Html.RenderPartial("_CreateEvent", new E_Study.Core.Models.Event());
-                }
-            </div>
-@foreach (var item in Model)
-{
-    if (@item.EventType == "File")
+    <!-- Load the create event form -->
+    @{
+        Html.RenderPartial("_CreateEvent", new E_Study.Core.Models.Event());
+    }
+</div>
+<div class="row mb-4 g-4">
+    @foreach (var item in Model)
     {
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-start">
-                    <div class="report-list-icon shadow-sm me-2">
+        if (@item.EventType == "File")
+        {
+            <div class="col-12 col-xl-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
+                            <img class="img-fluid w-60" src="../../assets/img/illustrations/girl-app-academy.png" alt="Card girl image">
+                        </div>
+                        <h4 class="mb-2 pb-1">File</h4>
+                        <p class="small">@item.Text</p>
+                        <div class="row mb-3 g-3">
+                            <div class="col-6">
+                                <div class="d-flex">
+                                    <div class="avatar flex-shrink-0 me-2">
+                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
+                                        <small>Date</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex">
+                                    <div class="avatar flex-shrink-0 me-2">
+                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-nowrap">32 minutes</h6>
+                                        <small>Duration</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(item.FilePath))
+                        {
+                            <a class="stretched-link btn btn-primary w-100" href="@Url.Action("GetFile", "Course", new { filePath = item.FilePath })" target="_blank">View File</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else if (@item.EventType == "Meeting")
+        {          
+            <div class="col-12 col-xl-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
+                            <img class="img-fluid w-60" src="../../assets/img/illustrations/man-with-laptop-light.png" alt="Card girl image">
+                        </div>
+                        <h4 class="mb-2 pb-1">Online Meeting</h4>
+                        <p class="small">@item.Text</p>
+                        <div class="row mb-3 g-3">
+                            <div class="col-6">
+                                <div class="d-flex">
+                                    <div class="avatar flex-shrink-0 me-2">
+                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-nowrap">@item.StartDate?.ToString("MMM dd hh:mm tt")</h6>
+                                        <small>Date</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex">
+                                    <div class="avatar flex-shrink-0 me-2">
+                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-nowrap">32 minutes</h6>
+                                        <small>Duration</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+                        @if (!string.IsNullOrEmpty(item.Url))
+                        {
+                            <a class="stretched-link btn btn-primary w-100" href="@item.Url" target="_blank">Join Meeting</a>
+                        }
+                    </div>
+                </div>
+            </div>
 
-                        <img src="/assets/img/icons/misc/pdf.png" width="50" height="50" alt="Pdf">
-                    </div>
-                    <div class="d-flex justify-content-between align-items-end w-100 flex-wrap gap-2">
-                        <div class="d-flex flex-column">
-                            <span>Tệp</span>
-                            <h5 class="mb-0">@item.Text</h5>
-                            @if (!string.IsNullOrEmpty(item.FilePath))
-                            {
-                                <a class="stretched-link" href="@Url.Action("GetFile", "Course", new { filePath = item.FilePath })" target="_blank">Open File</a>
-                            }
+        }
+        else
+        {         
+            <div class="col-12 col-xl-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
+                            <img class="img-fluid w-60" src="../../assets/img/illustrations/sitting-girl-with-laptop-dark.png" alt="Card girl image">
                         </div>
-                        <small class="text-success">New</small>
+                        <h4 class="mb-2 pb-1">Notification</h4>
+                        <p class="small">@item.Text</p>
+                        <div class="row mb-3 g-3">
+                            <div class="col-6">
+                                <div class="d-flex">
+                                    <div class="avatar flex-shrink-0 me-2">
+                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
+                                        <small>Date</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex">
+                                    <div class="avatar flex-shrink-0 me-2">
+                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-nowrap">32 minutes</h6>
+                                        <small>Duration</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                      
                     </div>
                 </div>
             </div>
-        </div>
-        <br />
-        <h3>Tuần 1</h3>
-    }
-    else if (@item.EventType == "Meeting")
-    {
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-start">
-                    <div class="report-list-icon shadow-sm me-2">
 
-                        <img src="/assets/img/icons/brands/social-label.png" width="50" height="50" alt="Meet">
-                    </div>
-                    <div class="d-flex justify-content-between align-items-end w-100 flex-wrap gap-2">
-                        <div class="d-flex flex-column">
-                            <span>Học Online</span>
-                            <h5 class="mb-0">@item.Text</h5>
-                            @if (!string.IsNullOrEmpty(item.Url))
-                            {
-                                <a class="stretched-link" href="@item.Url" target="_blank">Open link</a>
-                            }
-                        </div>
-                        <small class="text-success">New</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
+        }
     }
-    else
+</div>
+
+<h4>
+    Exams
+</h4>
+<div class="row mb-4 g-4">
+    @foreach (var exam in ViewBag.Exams)
     {
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-start">
-                    <div class="report-list-icon shadow-sm me-2">
-                        <img src="/assets/img/icons/brands/event-label.png" width="50" height="50" alt="Meet">
-                    </div>
-                    <div class="d-flex justify-content-between align-items-end w-100 flex-wrap gap-2">
-                        <div class="d-flex flex-column">
-                            <span>Kiểm tra</span>
-                            <h5 class="mb-0">@item.Text</h5>
-                            @if (!string.IsNullOrEmpty(item.Url))
-                            {
-                                <a class="stretched-link" href="@item.Url" target="_blank">Open link</a>
-                            }
+        <div class="col-12 col-xl-4 col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <h4 class="mb-2 pb-1">@exam.Exam.Title</h4>
+                    <p class="small">@exam.Exam.Description</p>
+                    <div class="row mb-3 g-3">
+                        <div class="col-6">
+                            <div class="d-flex">
+                                <div class="avatar flex-shrink-0 me-2">
+                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-nowrap">@exam.StartDate.ToString("MMM dd hh:mm tt")</h6>
+                                    <small>Date</small>
+                                </div>
+                            </div>
                         </div>
-                        <small class="text-success">New</small>
+                        <div class="col-6">
+                            <div class="d-flex">
+                                <div class="avatar flex-shrink-0 me-2">
+                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-nowrap">@exam.Exam.Time Minutes</h6>
+                                    <small>Duration</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <a class="btn btn-primary w-100"
+                       asp-action="Details" asp-controller="Exam"
+                       asp-route-examId="@exam.Exam.Id"
+                       asp-route-courseId="@ViewData["CurrentCourseId"]">View Exam</a>
                 </div>
             </div>
         </div>
-        <br />
     }
-}
+</div>

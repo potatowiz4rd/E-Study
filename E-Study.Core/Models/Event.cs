@@ -19,6 +19,7 @@ namespace E_Study.Core.Models
         public string? Url { get; set; }
         public string CourseId { get; set; }
         public Course Course { get; set; }
+        public ExamCourse? ExamCourse { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
