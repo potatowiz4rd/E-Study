@@ -12,6 +12,7 @@ namespace E_Study.ViewModel
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        
         public ICollection<UserCourseViewModel> UserCourses { get; set; } = new HashSet<UserCourseViewModel>();
         //public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         //public ICollection<PdfFile> PdfFiles { get; set; } = new List<PdfFile>();

@@ -2,53 +2,57 @@
 @{
 }
 
-<div class="container-xxl flex-grow-1 container-p-y">
-    <h4>
+@* <h4>
         <span class="text-muted fw-light">Bài tập /</span> Chi tiết
     </h4>
-
-    <div class="card mt-5">
-        <div class="card-body row">
-            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
-                <div class="me-1">
-                    <h3 class="mb-1">@Model.Title</h3>
-                    <p class="mb-1"><span class="fw-medium">Đăng bởi: </span></p>
-                </div>
-                <div class="d-flex align-items-center">
-                    <span class="badge bg-label-danger">Đang diễn ra</span>
-                    <i class='bx bx-share-alt bx-sm mx-4'></i>
-                    <i class='bx bx-bookmarks bx-sm'></i>
-                </div>
+ *@
+<div class="card h-100">
+    <div class="card-body row">
+        <div class="d-flex align-items-center justify-content-between mt-0 ms-0 mb-0">
+            <a href="javascript: history.go(-1)" class="text-light">
+                <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+                <span style="font-size: 1.2rem;">Back</span>
+            </a>
+        </div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+            <div class="me-1">
+                <h3 class="mb-1">@Model.Title</h3>
+                <p class="mb-1"><span class="fw-medium"></span></p>
             </div>
-            <div class="card academy-content shadow-none border">
-                <div class="card-body">
-                    <h5 class="mb-2">Mô tả</h5>
-                    <p class="mb-0 pt-1">
-                        @Model.Description
-                    </p>
-                    <hr class="my-4">
-                    <h5>Chi tiết</h5>
-                    <div class="d-flex flex-wrap">
-                        <div class="me-5">
-                            <p class="text-nowrap"><i class='bx bx-check-double bx-sm me-2'></i>Điểm tối đa: @Model.MaxScore</p>
-                            <p class="text-nowrap"><i class='bx bxs-flag-alt bx-sm me-2'></i>Languages: English</p>
-                            <p class="text-nowrap "><i class='bx bx-file bx-sm me-2'></i>Sử dụng tài liệu: Không</p>
-                        </div>
-                        <div>
-                            <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Số câu: 3</p>
-                            <p class="text-nowrap "><i class='bx bxs-watch bx-sm me-2'></i>Thời gian: 45 phút</p>
-                        </div>
+            <div class="d-flex align-items-center">
+                <span class="badge bg-label-danger">Unfinished</span>
+                <i class='bx bx-share-alt bx-sm mx-4'></i>
+                <i class='bx bx-bookmarks bx-sm'></i>
+            </div>
+        </div>
+        <div class="card academy-content shadow-none border">
+            <div class="card-body">
+                <h5 class="mb-2">Description</h5>
+                <p class="mb-0 pt-1">
+                    @Model.Description
+                </p>
+                <hr class="my-4">
+                <h5>Details</h5>
+                <div class="d-flex flex-wrap">
+                    <div class="me-5">
+                        <p class="text-nowrap"><i class='bx bx-check-double bx-sm me-2'></i>Maximum Point: @Model.MaxScore</p>
+                        <p class="text-nowrap"><i class='bx bxs-flag-alt bx-sm me-2'></i>Languages: English</p>
                     </div>
-                    <hr class="mb-4 mt-2">
-                    <h5>Lịch sử làm bài</h5>
-                    <div class="table-responsive text-nowrap">
+                    <div>
+                        <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Number of Questions: 3</p>
+                        <p class="text-nowrap "><i class='bx bxs-watch bx-sm me-2'></i>Time Limit: @Model.Time minutes</p>
+                    </div>
+                </div>
+                <hr class="mb-4 mt-2">
+                <h5>Result History</h5>
+                <div class="table-responsive text-nowrap">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>Đợt</th>
-                            <th>Điểm</th>
-                            <th>Thời gian</th>
-                        </tr>
+                            <tr>
+                                <th>Attempt</th>
+                                <th>Point</th>
+                                <th>Date Submit</th>
+                            </tr>
                         </thead>
                         @foreach (var grade in ViewBag.Grades)
                         {
@@ -58,7 +62,7 @@
                                     <a>@grade.Attempt</a>
                                 </td>
                                 <td>
-                                    <a>@grade.Score</a>
+                                    <a>@grade.Score/10</a>
                                 </td>
                                 <td>
                                     <a>@grade.DateTime</a>
@@ -67,19 +71,15 @@
 
                         }
                     </table>
-                    </div>
-                    <hr class="my-4">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <a class="btn btn-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@Model.Id" asp-route-courseId="@ViewData["CurrentCourseId"]">
-                            Bắt đầu làm
-                        </a>
-                    </div>
                 </div>
+                
             </div>
-
+        </div>
+         <hr class="my-4" />
+        <div class="d-flex justify-content-center align-items-center">
+            <a class="btn btn-primary" asp-action="StartExam" asp-controller="Exam" asp-route-examId="@Model.Id" asp-route-courseId="@ViewData["CurrentCourseId"]">
+                Start Exam
+            </a>
         </div>
     </div>
-
-
-
 </div>

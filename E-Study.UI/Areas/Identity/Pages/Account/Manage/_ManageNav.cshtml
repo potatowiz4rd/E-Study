@@ -1,15 +1,52 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
+﻿@using E_Study.Core.Models;
+
+@inject SignInManager<User> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
-</ul>
+<div class="col-12 col-lg-4">
+    <div class="d-flex justify-content-between flex-column mb-3 mb-md-0">
+        <ul class="nav nav-align-left nav-pills flex-column">
+            <li class="nav-item mb-1">
+                <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+                    <i class="bx bx-user me-2"></i>
+                    <span class="align-middle">Profile</span>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">
+                    <i class="bx bx-envelope me-2"></i>
+                    <span class="align-middle">Email</span>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">
+                    <i class="bx bx-lock-alt me-2"></i>
+                    <span class="align-middle">Password</span>
+                </a>
+            </li>
+            @if (hasExternalLogins)
+            {
+                <li id="external-logins" class="nav-item">
+                    <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">
+                        <i class="bx bx-store me-2"></i>
+                        <span class="align-middle">External Logins</span>
+                    </a>
+                </li>
+            }
+            <li class="nav-item mb-1">
+                <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">
+                    <i class="bx bx-key me-2"></i>
+                    <span class="align-middle">2FA Authentication</span>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">
+                    <i class="bx bx-data me-2"></i>
+                    <span class="align-middle">Personal Data</span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</div>

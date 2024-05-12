@@ -56,9 +56,18 @@ namespace E_Study.UI.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [MaxLength(100)]
+            public string FirstName { set; get; }
+            [MaxLength(100)]
+            public string LastName { set; get; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [DataType(DataType.Date)]
+            [Display(Name = "Birthday d/m/y")]
+            public DateTime? Birthday { set; get; }
         }
 
         private async Task LoadAsync(User user)
@@ -70,7 +79,10 @@ namespace E_Study.UI.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 PhoneNumber = phoneNumber,
+                Birthday = user.Birthday    
             };
         }
 
@@ -110,6 +122,11 @@ namespace E_Study.UI.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Birthday = Input.Birthday;
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

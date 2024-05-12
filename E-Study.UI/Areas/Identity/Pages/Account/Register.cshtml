@@ -1,6 +1,7 @@
 ﻿@page "/register/"
 @model RegisterModel
 @{
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
 }
 <div class="authentication-inner">
     <!-- Register -->
@@ -45,12 +46,12 @@
                         </svg>
 
                     </span>
-                    <span class="app-brand-text demo text-body fw-bold">E-study</span>
+                    <span class="app-brand-text demo fw-bolder ms-2">Indigo</span>
                 </a>
             </div>
             <!-- /Logo -->
-            <h4 class="mb-2">Tạo tài khoản mới</h4>
-            <p class="mb-4">Vui lòng điền thông tin tài khoản</p>
+            <h4 class="mb-2">Create new account</h4>
+            <p class="mb-4">It's quick and easy!</p>
 
             <form id="account" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -75,14 +76,13 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-primary d-grid w-100" type="submit">Đăng ký</button>
+                    <button class="btn btn-primary d-grid w-100" type="submit">Confirm</button>
                 </div>
             </form>
 
             <p class="text-center">
-                <span>Bạn đã có tài khoản?</span>
-                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"><span>Đăng nhập</span></a>
-                </a>
+                <span>Already have an account?</span>
+                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"><span>Login</span></a>
             </p>
 
             <div class="divider my-4">

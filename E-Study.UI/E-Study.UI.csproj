@@ -12,18 +12,30 @@
     <Compile Remove="wwwroot\assets\css\html-template\**" />
     <Compile Remove="wwwroot\assets\img\assets\**" />
     <Compile Remove="wwwroot\assets\img\html-template\**" />
+    <Compile Remove="wwwroot\assets\js\assets\**" />
+    <Compile Remove="wwwroot\assets\js\html-template\**" />
     <Content Remove="wwwroot\assets\css\assets\**" />
     <Content Remove="wwwroot\assets\css\html-template\**" />
     <Content Remove="wwwroot\assets\img\assets\**" />
     <Content Remove="wwwroot\assets\img\html-template\**" />
+    <Content Remove="wwwroot\assets\js\assets\**" />
+    <Content Remove="wwwroot\assets\js\html-template\**" />
     <EmbeddedResource Remove="wwwroot\assets\css\assets\**" />
     <EmbeddedResource Remove="wwwroot\assets\css\html-template\**" />
     <EmbeddedResource Remove="wwwroot\assets\img\assets\**" />
     <EmbeddedResource Remove="wwwroot\assets\img\html-template\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\assets\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\html-template\**" />
     <None Remove="wwwroot\assets\css\assets\**" />
     <None Remove="wwwroot\assets\css\html-template\**" />
     <None Remove="wwwroot\assets\img\assets\**" />
     <None Remove="wwwroot\assets\img\html-template\**" />
+    <None Remove="wwwroot\assets\js\assets\**" />
+    <None Remove="wwwroot\assets\js\html-template\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\_CreateCoursePartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,8 +57,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
-    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="4.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="MimeKit" Version="4.3.0" />
     <PackageReference Include="OpenAI" Version="1.11.0" />
@@ -57,31 +67,9 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Middlewares\" />
-    <Folder Include="wwwroot\assets\js\assets\css\assets\css\" />
-    <Folder Include="wwwroot\assets\js\assets\css\assets\img\" />
-    <Folder Include="wwwroot\assets\js\assets\css\assets\js\" />
-    <Folder Include="wwwroot\assets\js\assets\css\assets\plugins\fontawesome\css\" />
-    <Folder Include="wwwroot\assets\js\assets\css\html-template\" />
-    <Folder Include="wwwroot\assets\js\assets\img\assets\css\" />
-    <Folder Include="wwwroot\assets\js\assets\img\assets\img\" />
-    <Folder Include="wwwroot\assets\js\assets\img\assets\js\" />
-    <Folder Include="wwwroot\assets\js\assets\img\assets\plugins\fontawesome\css\" />
-    <Folder Include="wwwroot\assets\js\assets\img\html-template\" />
-    <Folder Include="wwwroot\assets\js\assets\js\assets\css\" />
-    <Folder Include="wwwroot\assets\js\assets\js\assets\img\" />
-    <Folder Include="wwwroot\assets\js\assets\js\assets\js\" />
-    <Folder Include="wwwroot\assets\js\assets\js\assets\plugins\fontawesome\css\" />
-    <Folder Include="wwwroot\assets\js\assets\js\html-template\" />
-    <Folder Include="wwwroot\assets\js\assets\plugins\fontawesome\css\assets\css\" />
-    <Folder Include="wwwroot\assets\js\assets\plugins\fontawesome\css\assets\img\" />
-    <Folder Include="wwwroot\assets\js\assets\plugins\fontawesome\css\assets\js\" />
-    <Folder Include="wwwroot\assets\js\assets\plugins\fontawesome\css\assets\plugins\fontawesome\css\" />
-    <Folder Include="wwwroot\assets\js\assets\plugins\fontawesome\css\html-template\" />
-    <Folder Include="wwwroot\assets\js\html-template\assets\css\" />
-    <Folder Include="wwwroot\assets\js\html-template\assets\img\" />
-    <Folder Include="wwwroot\assets\js\html-template\assets\js\" />
-    <Folder Include="wwwroot\assets\js\html-template\assets\plugins\fontawesome\css\" />
-    <Folder Include="wwwroot\assets\js\html-template\html-template\" />
+    <Folder Include="wwwroot\uploads\16e482b0-d21b-43f5-a49e-85c80b335d78\" />
+    <Folder Include="wwwroot\uploads\5ece88fd-10c6-4fbf-ba3c-d6899b2256ae\" />
+    <Folder Include="wwwroot\uploads\6dacb7ab-d630-4991-a37a-3701cbe8c136\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -108,6 +96,18 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\_CreateCoursePartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\_CreateCoursePartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Course\_CreateCoursePartial.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -33,7 +33,7 @@ namespace E_Study.Repository.Infrastructures
             // Context.Entry<TEntity>(entity).State = EntityState.Deleted;
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var entity = dbSet.Find(id);
             dbSet.Remove(entity);

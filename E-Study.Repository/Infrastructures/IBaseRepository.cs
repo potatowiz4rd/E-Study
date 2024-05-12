@@ -20,7 +20,7 @@
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        void Delete(int id);
+        void Delete(string id);
 
         /// <summary>
         /// Change state of entity to modified

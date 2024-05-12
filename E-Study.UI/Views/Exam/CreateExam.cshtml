@@ -4,7 +4,7 @@
     Layout = "_LayoutNotLoggedIn";
 }
 <h4>
-    <span class="text-muted fw-light">Đề kiểm tra /</span> Tạo đề
+    <span class="text-muted fw-light">Quiz /</span> Create quiz
 </h4>
 <div class="bs-stepper wizard-numbered mt-2">
     <div class="bs-stepper-header">
@@ -12,8 +12,8 @@
             <button type="button" class="step-trigger" aria-selected="true">
                 <span class="bs-stepper-circle">1</span>
                 <span class="bs-stepper-label mt-1">
-                    <span class="bs-stepper-title">Thông Tin Cơ Bản</span>
-                    <span class="bs-stepper-subtitle">Thêm thông tin cho bài kiểm tra</span>
+                    <span class="bs-stepper-title">Basic info</span>
+                    <span class="bs-stepper-subtitle">Quiz information</span>
                 </span>
             </button>
         </div>
@@ -24,8 +24,8 @@
             <button type="button" class="step-trigger" aria-selected="false">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label mt-1">
-                    <span class="bs-stepper-title">Câu Hỏi</span>
-                    <span class="bs-stepper-subtitle">Thêm câu hỏi cho bài kiểm tra</span>
+                    <span class="bs-stepper-title">Question</span>
+                    <span class="bs-stepper-subtitle">Add questions</span>
                 </span>
 
             </button>
@@ -37,8 +37,8 @@
             <button type="button" class="step-trigger" aria-selected="false">
                 <span class="bs-stepper-circle">3</span>
                 <span class="bs-stepper-label mt-1">
-                    <span class="bs-stepper-title">Chọn Lớp (Tùy chọn)</span>
-                    <span class="bs-stepper-subtitle">Thêm bài kiểm tra vào lớp của bạn</span>
+                    <span class="bs-stepper-title">Assign</span>
+                    <span class="bs-stepper-subtitle">Add quiz to existing course</span>
                 </span>
             </button>
         </div>
@@ -49,37 +49,37 @@
             <!-- Account Details -->
             <div id="account-details" class="content active dstepper-block">
                 <div class="content-header mb-3">
-                    <h6 class="mb-0">Thông tin bài kiểm tra</h6>
-                    <small>Hãy điền thông tin cho bài kiểm tra.</small>
+                    <h6 class="mb-0">Quiz info</h6>
+                    <small>Enter your quiz details</small>
                 </div>
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <label asp-for="Title" class="control-label">Tên bài kiểm tra</label>
+                        <label asp-for="Title" class="control-label">Quiz name</label>
                         <input asp-for="Title" class="form-control" />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="Description" class="control-label">Mô tả</label>
+                        <label asp-for="Description" class="control-label">Description</label>
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="Time" class="control-label">Thời gian (phút)</label>
+                        <label asp-for="Time" class="control-label">Time limit (minute)</label>
                         <input asp-for="Time" class="form-control" />
                         <span asp-validation-for="Time" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="MaxScore" class="control-label">Điểm tối đa</label>
+                        <label asp-for="MaxScore" class="control-label">Max point</label>
                         <input asp-for="MaxScore" class="form-control" />
                         <span asp-validation-for="MaxScore" class="text-danger"></span>
-                    </div>                    
+                    </div>
                     <div class="col-12 d-flex justify-content-between">
                         <button type="button" class="btn btn-label-secondary btn-prev" disabled="">
                             <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                            <span class="align-middle d-sm-inline-block d-none">Trở Lại</span>
+                            <span class="align-middle d-sm-inline-block d-none">Back</span>
                         </button>
                         <button type="button" class="btn btn-primary btn-next">
-                            <span class="align-middle d-sm-inline-block d-none me-sm-1">Tiếp Theo</span>
+                            <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                             <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
                         </button>
                     </div>
@@ -88,42 +88,88 @@
             <!-- Personal Info -->
             <div id="personal-info" class="content">
                 <div class="content-header mb-3">
-                    <h6 class="mb-0">Personal Info</h6>
-                    <small>Enter Your Personal Info.</small>
+                    <h6 class="mb-0">Questions and Answers</h6>
+                    <small>Create questions for your quiz.</small>
                 </div>
                 <!-- Add QnAs -->
+
                 <div id="qnaContainer">
-                    <div class="form-group qna">
-                        <select class="form-select" name="QnAs[0].Type" aria-label="(Chọn loại câu hỏi)">
-                            <option selected>Chọn loại câu hỏi</option>
-                            <option value="Single Choice">Single Choice</option>
-                            <option value="Multiple Choice">Multiple Choice</option>
-                            <option value="Enter Answer">Enter Answer</option>
-                        </select>
-                       
-                        <label for="question" class="control-label">Question</label>
-                        <input type="text" name="QnAs[0].Question" class="form-control" />
-                        <label for="answer" class="control-label">Answer</label>
-                        <input type="text" name="QnAs[0].Answer" class="form-control" />
-                        <label for="option1" class="control-label">Option 1</label>
-                        <input type="text" name="QnAs[0].Option1" class="form-control" />
-                        <label for="option2" class="control-label">Option 2</label>
-                        <input type="text" name="QnAs[0].Option2" class="form-control" />
-                        <label for="option3" class="control-label">Option 3</label>
-                        <input type="text" name="QnAs[0].Option3" class="form-control" />
-                        <label for="option4" class="control-label">Option 4</label>
-                        <input type="text" name="QnAs[0].Option4" class="form-control" />
-                        <button type="button" class="btn btn-sm btn-danger remove-qna">Remove</button>
+                    <!-- Initially display one QnAs form for Question 1 -->
+                    <div class="qna" data-index="0">
+                        <h4 class="mb-3">Question 1</h4>
+                        <div class="form-group">
+                            <!-- First Row: Question -->
+                            <div class="mb-3">
+                                <label class="form-label" for="question">Question</label>
+                                <input type="text" class="form-control" name="QnAs[0].Question" />
+                            </div>
+                        </div>
+
+                        <!-- Second Row: Question Type and Answer -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label class="control-label" for="questionType">Question Type</label>
+                                    <select class="form-select" name="QnAs[0].Type">
+                                        <option selected value="Single Choice">Single Choice</option>
+                                        <option value="Multiple Choice">Multiple Choice</option>
+                                        <option value="Enter Answer">Enter Answer</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="control-label" for="answer">Answer</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Answer" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third Row: Options -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="mb-3 col-md-3">
+                                    <label class="control-label" for="option1">Option 1</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option1" />
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="control-label" for="option2">Option 2</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option2" />
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="control-label" for="option3">Option 3</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option3" />
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="control-label" for="option4">Option 4</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option4" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons Row -->
+                        <div class="row row-cols-auto">
+                            <div class="mb-3 col">
+                                <button type="button" class="btn btn-primary add-qna">
+                                    <i class="bx bx-plus me-1"></i>
+                                    <span class="align-middle">Add</span>
+                                </button>
+                            </div>
+                            <div class="mb-3 col">
+                                <button type="button" class="btn btn-label-danger remove-qna">
+                                    <i class="bx bx-x me-1"></i>
+                                    <span class="align-middle">Delete</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button type="button" id="addQna" class="btn btn-sm btn-primary">Add QnA</button>
+
                 <div class="col-12 d-flex justify-content-between">
                     <button type="button" class="btn btn-label-secondary btn-prev" disabled="">
                         <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                        <span class="align-middle d-sm-inline-block d-none">Trở Lại</span>
+                        <span class="align-middle d-sm-inline-block d-none">Back</span>
                     </button>
                     <button type="button" class="btn btn-primary btn-next">
-                        <span class="align-middle d-sm-inline-block d-none me-sm-1">Tiếp Theo</span>
+                        <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                         <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
                     </button>
                 </div>
@@ -154,11 +200,11 @@
                     <div class="col-12 d-flex justify-content-between">
                         <button type="button" class="btn btn-primary btn-prev">
                             <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                            <span class="align-middle d-sm-inline-block d-none">Trở Lại</span>
+                            <span class="align-middle d-sm-inline-block d-none">Back</span>
                         </button>
                         <div class="form-group">
                             <button type="submit" value="Create" class="btn btn-primary btn-next">
-                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Hoàn Tất</span>
+                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Finish</span>
                                 <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
                             </button>
                         </div>
@@ -169,99 +215,102 @@
     </div>
 </div>
 
-@* <div class="col-12">
-    <div class="card">
-        <h5 class="card-header">Form Repeater</h5>
-        <div class="card-body">
-            <form class="form-repeater">
-                <div data-repeater-list="group-a">
-                    <div data-repeater-item="">
-                        <div class="row">
-                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                                <label class="form-label" for="form-repeater-1-1">Username</label>
-                                <input type="text" id="form-repeater-1-1" class="form-control" placeholder="john.doe">
-                            </div>
-                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                                <label class="form-label" for="form-repeater-1-2">Password</label>
-                                <input type="password" id="form-repeater-1-2" class="form-control" placeholder="············">
-                            </div>
-                            <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
-                                <label class="form-label" for="form-repeater-1-3">Gender</label>
-                                <select id="form-repeater-1-3" class="form-select">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
-                                <label class="form-label" for="form-repeater-1-4">Profession</label>
-                                <select id="form-repeater-1-4" class="form-select">
-                                    <option value="Designer">Designer</option>
-                                    <option value="Developer">Developer</option>
-                                    <option value="Tester">Tester</option>
-                                    <option value="Manager">Manager</option>
-                                </select>
-                            </div>
-                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                <button class="btn btn-label-danger mt-4" data-repeater-delete="">
-                                    <i class="bx bx-x me-1"></i>
-                                    <span class="align-middle">Delete</span>
-                                </button>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-                <div class="mb-0">
-                    <button class="btn btn-primary" data-repeater-create="">
-                        <i class="bx bx-plus me-1"></i>
-                        <span class="align-middle">Add</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
- *@
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function () {
-            var qnaIndex = 1;
-
-            $('#addQna').click(function () {
-                var qnaHtml = '<div class="form-group qna">' +
-                    '<select class="form-select" name="QnAs[' + qnaIndex + '].Type" aria-label="(Chọn loại câu hỏi)">' +
-                    '<option selected>Chọn loại câu hỏi</option>' +
-                    '<option value="Single Choice">Single Choice</option>' +
-                    '<option value="Multiple Choice">Multiple Choice</option>' +
-                    '<option value="Enter Answer">Enter Answer</option>' +
-                    '</select>' +
-                    '<label for="question" class="control-label">Question</label>' +
-                    '<input type="text" name="QnAs[' + qnaIndex + '].Question" class="form-control" />' +
-                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Question"></span>' +
-                    '<label for="answer" class="control-label">Answer</label>' +
-                    '<input type="text" name="QnAs[' + qnaIndex + '].Answer" class="form-control" />' +
-                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Answer"></span>' +
-                    '<label for="option1" class="control-label">Option 1</label>' +
-                    '<input type="text" name="QnAs[' + qnaIndex + '].Option1" class="form-control" />' +
-                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option1"></span>' +
-                    '<label for="option2" class="control-label">Option 2</label>' +
-                    '<input type="text" name="QnAs[' + qnaIndex + '].Option2" class="form-control" />' +
-                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option2"></span>' +
-                    '<label for="option3" class="control-label">Option 3</label>' +
-                    '<input type="text" name="QnAs[' + qnaIndex + '].Option3" class="form-control" />' +
-                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option3"></span>' +
-                    '<label for="option4" class="control-label">Option 4</label>' +
-                    '<input type="text" name="QnAs[' + qnaIndex + '].Option4" class="form-control" />' +
-                    '<span class="text-danger" data-valmsg-for="QnAs[' + qnaIndex + '].Option4"></span>' +
-                    '<button type="button" class="btn btn-sm btn-danger remove-qna">Remove</button>' +
-                    '</div>';
-                $('#qnaContainer').append(qnaHtml);
-                qnaIndex++;
+            // Add QnAs
+            $("#qnaContainer").on("click", ".add-qna", function () {
+                var $lastQnA = $(".qna:last");
+                var newIndex = parseInt($lastQnA.data("index")) + 1;
+                var $newQnA = $lastQnA.clone();
+                $newQnA.attr("data-index", newIndex);
+                $newQnA.find("h4").text("Question " + (newIndex + 1));
+                $newQnA.find("input[type=text]").each(function () {
+                    var originalName = $(this).attr("name");
+                    var newName = originalName.replace(/\[([0-9]+)\]/, "[" + newIndex + "]");
+                    $(this).attr("name", newName);
+                    $(this).val("");
+                    var newId = $(this).attr("id");
+                    if (newId) {
+                        var newId = newId.replace(/\d+/, newIndex);
+                        $(this).attr("id", newId);
+                    }
+                });
+                $newQnA.find("select").each(function () {
+                    var originalName = $(this).attr("name");
+                    var newName = originalName.replace(/\[([0-9]+)\]/, "[" + newIndex + "]");
+                    $(this).attr("name", newName);
+                    $(this).val("");
+                    var newId = $(this).attr("id");
+                    if (newId) {
+                        var newId = newId.replace(/\d+/, newIndex);
+                        $(this).attr("id", newId);
+                    }
+                });
+                $newQnA.insertAfter($lastQnA);
+                updateDeleteButtonState(); // Update delete button state after adding
             });
 
-            $(document).on('click', '.remove-qna', function () {
-                $(this).closest('.qna').remove();
+            // Remove QnAs
+            $("#qnaContainer").on("click", ".remove-qna", function () {
+                $(this).closest(".qna").remove();
+                // Re-index QnAs after removing
+                $(".qna").each(function (index) {
+                    $(this).attr("data-index", index);
+                    $(this).find("h4").text("Question " + (index + 1));
+                    $(this).find("input[type=text]").each(function () {
+                        var originalName = $(this).attr("name");
+                        var newName = originalName.replace(/\[([0-9]+)\]/, "[" + index + "]");
+                        $(this).attr("name", newName);
+                        var newId = $(this).attr("id");
+                        if (newId) {
+                            var newId = newId.replace(/\d+/, index);
+                            $(this).attr("id", newId);
+                        }
+                    });
+                    $(this).find("select").each(function () {
+                        var originalName = $(this).attr("name");
+                        var newName = originalName.replace(/\[([0-9]+)\]/, "[" + index + "]");
+                        $(this).attr("name", newName);
+                        var newId = $(this).attr("id");
+                        if (newId) {
+                            var newId = newId.replace(/\d+/, index);
+                            $(this).attr("id", newId);
+                        }
+                    });
+                });
+                updateDeleteButtonState(); // Update delete button state after removing
             });
+
+            // Function to update delete button state
+            function updateDeleteButtonState() {
+                var $deleteButton = $(".remove-qna");
+                if ($deleteButton.length === 1) {
+                    $deleteButton.prop("disabled", true);
+                } else {
+                    $deleteButton.prop("disabled", false);
+                }
+            }
+
+            // Event listener for question type change
+            $("#qnaContainer").on("change", "[name^='QnAs'][name$='.Type']", function () {
+                var $optionsInputs = $(this).closest(".qna").find("[name^='QnAs'][name$='Option']");
+                if ($(this).val() === "Enter Answer") {
+                    // Hide option inputs and set their values to the answer input
+                    $optionsInputs.closest(".form-group").hide();
+                    $optionsInputs.val($(this).closest(".qna").find("[name^='QnAs'][name$='.Answer']").val());
+                } else {
+                    // Show option inputs
+                    $optionsInputs.closest(".form-group").show();
+                }
+            });
+
+            // Initial state
+            updateDeleteButtonState();
         });
     </script>
+
+
 }

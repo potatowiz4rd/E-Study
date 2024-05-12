@@ -2,6 +2,7 @@
 using E_Study.Repository.Infrastructures;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_Study.UI.Controllers
 {
@@ -21,7 +22,29 @@ namespace E_Study.UI.Controllers
             return View();
         }
 
-       
+        [HttpGet]
+        public IActionResult AddUserToCourse(string courseId)
+        {
+            ViewBag.CourseId = courseId;
+            ViewBag.Users = new SelectList(uow.UserRepository.GetAll(), "Id", "UserName");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddUserToCourse(UserCourse userCourse)
+        {
+            if (ModelState.IsValid)
+            {
+                uow.UserCourseRepository.Create(userCourse);
+                uow.SaveChanges();
+
+                return RedirectToAction("Detail", new { id = userCourse.CourseId });
+            }
+
+            ViewBag.Users = new SelectList(uow.UserRepository.GetAll(), "Id", "UserName");
+            return View(userCourse);
+        }
+
 
     }
 }

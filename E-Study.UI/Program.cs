@@ -54,6 +54,7 @@ builder.Services.AddTransient<IPostService, PostService>();
 //builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<IExamService, ExamService>();
 builder.Services.AddTransient<IQnAsService, QnAsService>();
+builder.Services.AddTransient<ICourseService, CourseService>();
 //builder.Services.AddTransient<IAccountService, AccountService>();
 //builder.Services.AddTransient<IFileService, FileService>();
 

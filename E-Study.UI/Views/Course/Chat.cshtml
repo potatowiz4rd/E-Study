@@ -25,7 +25,7 @@
                 <!-- Chats -->
                 <ul class="list-unstyled chat-contact-list pt-1" id="chat-list">
                     <li class="chat-contact-list-item chat-contact-list-item-title">
-                        <h5 class="text-primary mb-0">Chats</h5>
+                        <h5 class="text-primary mb-0">Inboxes</h5>
                     </li>
                     <li class="chat-contact-list-item chat-list-item-0 d-none">
                         <h6 class="text-muted mb-0">No Chats Found</h6>
@@ -43,18 +43,7 @@
                             <small class="text-muted mb-auto">4 Minutes</small>
                         </a>
                     </li>
-                    <li class="chat-contact-list-item">
-                        <a class="d-flex align-items-center">
-                            <div class="flex-shrink-0 avatar avatar-busy">
-                                <span class="avatar-initial rounded-circle bg-label-success">AI</span>
-                            </div>
-                            <div class="chat-contact-info flex-grow-1 ms-3">
-                                <h6 class="chat-contact-name text-truncate m-0">Chatbot</h6>
-                                <p class="chat-contact-status text-truncate mb-0 text-muted">What can i do for y...</p>
-                            </div>
-                            <small class="text-muted mb-auto">1 Minutes</small>
-                        </a>
-                    </li>
+                  
                 </ul>
             </div>
         </div>
@@ -67,7 +56,7 @@
                         <div class="d-flex overflow-hidden align-items-center">
                             <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-contacts"></i>
                             <div class="flex-shrink-0 avatar">
-                                <img src="../../assets/img/avatars/user.png" alt="Avatar" class="rounded-circle" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right">
+                                <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-right">
                             </div>
                             <div class="chat-contact-info flex-grow-1 ms-3">
                                 <h6 class="m-0">CourseName</h6>
@@ -99,7 +88,6 @@
                                     {
                                     <li class="chat-message chat-message-right">
                                         <div class="d-flex overflow-hidden">
-                                            <p>@message.Username</p>
                                             <div class="chat-message-wrapper flex-grow-1">
                                                 <div class="chat-message-text">
                                                     <p class="mb-0">@message.Text</p>
@@ -109,11 +97,7 @@
                                                     <small>@message.DateTime.ToString()</small>
                                                 </div>
                                             </div>
-                                            <div class="user-avatar flex-shrink-0 ms-3">
-                                                <div class="avatar avatar-sm">
-                                                    <img src="../../assets/img/avatars/user.png" alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </li>
                                     }
@@ -121,16 +105,12 @@
                                     {
                                     <li class="chat-message">
                                         <div class="d-flex overflow-hidden">
-                                            <p>@message.Username</p>
                                             <div class="user-avatar flex-shrink-0 me-3">
                                                 <div class="avatar avatar-sm">
-                                                    <img src="../../assets/img/avatars/user.png" alt="Avatar" class="rounded-circle">
+                                                    <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
                                                 </div>
                                             </div>
                                             <div class="chat-message-wrapper flex-grow-1">
-                                                <div class="chat-message-text">
-                                                    <p class="mb-0">zzzzzzzzzzzzzzzzzzzzz</p>
-                                                </div>
                                                 <div class="chat-message-text mt-2">
                                                     <p class="mb-0">@message.Text</p>
                                                 </div>
@@ -147,22 +127,28 @@
                 </ul>
             </div>
             <!-- Chat message form -->
-                
-            <div class="chat-history-footer">              
-                    <form asp-action="SendMessage" data-ajax-begin="clearInputField" data-ajax-complete=""
-                          data-ajax-failure="alert('Fail')" data-ajax-success="sendMessage"
-                          data-ajax="true" data-ajax-method="POST">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <input name="Text" class="form-control" id="messageText" />
-                        </div>
-                        <div class="form-group message-actions d-flex align-items-center" >
-                            <input type="submit" value="Send" id="submitButton" class="btn btn-primary" />
-                        </div>
-                        <input type="hidden" value="@userName" name="username" />
-                        <input type="hidden" name="CourseId" value="@ViewBag.CurrentCourseId" />
-                    </form>
-            </div>        
+
+            <div class="chat-history-footer">
+                <form asp-action="SendMessage" class="d-flex justify-content-between align-items-center" data-ajax-begin="clearInputField" data-ajax-complete=""
+                      data-ajax-failure="alert('Fail')" data-ajax-success="sendMessage"
+                      data-ajax="true" data-ajax-method="POST">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input name="Text" class="form-control message-input border-0 me-3 shadow-none" id="messageText" />
+                    </div>
+                        @* <div class="form-group message-actions d-flex align-items-center">
+                    <input type="submit" value="Send" id="submitButton" class="btn btn-primary" />
+                    </div> *@
+
+                    <button class="btn btn-primary form-group message-actions d-flex send-msg-btn" type="submit" value="Send" id="submitButton">
+                        <i class="bx bx-paper-plane me-md-1 me-0"></i>
+                        <span class="align-middle d-md-inline-block d-none">Send</span>
+                    </button>
+
+                    <input type="hidden" value="@userName" name="username" />
+                    <input type="hidden" name="CourseId" value="@ViewBag.CurrentCourseId" />
+                </form>
+            </div>
         </div>
     </div>
     <!-- /Chat History -->
@@ -174,9 +160,6 @@
 
     @section scripts {
     <script src="/assets/js/app-chat.js"></script>
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/lib/js/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/chat.js"></script>

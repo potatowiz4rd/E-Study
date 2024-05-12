@@ -1,116 +1,76 @@
-﻿@model IEnumerable<E_Study.Core.Models.Exam>
+﻿@model IEnumerable<E_Study.Core.Models.ExamCourse>
 
-<div class="card h-100">
-    <div class="card-datatable table-responsive">
-        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-            <div class="card-header flex-column flex-md-row">
-                <div class="head-label text-center">
-                    <h3 class="card-title mb-0 font-weight-bold">Exams in this course</h3>
-                </div>
-                <div class="dt-action-buttons text-end pt-3 pt-md-0">
-                    <div class="dt-buttons btn-group flex-wrap">
-                        <div class="btn-group">
-                            <button class="btn buttons-collection dropdown-toggle btn-label-primary me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
-                                <span>
-                                    <i class="bx bx-export me-sm-1"></i>
-                                    <span class="d-none d-sm-inline-block">Export</span>
-                                </span>
-                            </button>
-                        </div>
-                        <a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="btn btn-secondary create-new btn-primary">
-                            <span>
-                                <i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add An Exam</span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <div class="dataTables_length" id="DataTables_Table_0_length">
-                        <label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select"><option value="7">7</option><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="75">75</option><option value="100">100</option></select> entries</label>
-                    </div>
-                </div><div class="col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label></div></div>
-            </div>
-            <table class="datatables-basic table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1391px;">
-                <thead>
-                    <tr>
-                        <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 57px; display: none;" aria-label=""></th>
-                        <th class="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all" rowspan="1" colspan="1" style="width: 48px;" data-col="1" aria-label=""><input type="checkbox" class="form-check-input"></th>
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 142px;" aria-label="Name: activate to sort column ascending">Tiêu đề</th>
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 147px;" aria-label="Email: activate to sort column ascending">Mô tả</th>
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 130px;" aria-label="Date: activate to sort column ascending">Thời gian(phút)</th>
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 172px;" aria-label="Salary: activate to sort column ascending">Điểm tối đa</th>
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 167px;" aria-label="Status: activate to sort column ascending">Trạng thái</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 174px;" aria-label="Actions"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var exam in Model)
-                    {
-                        <tr class="odd">
-                            <td class="  control" tabindex="0" style="display: none;">
-                            </td>
-                            <td class="  dt-checkboxes-cell">
-                                <input type="checkbox" class="dt-checkboxes form-check-input">
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-start align-items-center user-name">
-                                    <div class="d-flex flex-column">
-                                        <span class="emp_name text-truncate">@exam.Title</span>
-                                        <small class="emp_post text-truncate text-muted">@exam.Title</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>@exam.Description</td>
-                            <td>@exam.Time</td>
-                            <td>@exam.MaxScore</td>
-                            <td>
-                                <span class="badge bg-label-success me-1">Đang diễn ra</span>
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-info" asp-action="ExamGrades" asp-controller="Course"
-                                   asp-route-courseId="@ViewData["CurrentCourseId"]"
-                                   asp-route-examId="@exam.Id">Xem điểm</a>
-                                <div class="d-inline-block">
-                                    <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end m-0">
-                                        <li>
-                                            <a class="dropdown-item text-primary"
-                                               asp-action="Details" asp-controller="Exam"
-                                               asp-route-examId="@exam.Id"
-                                               asp-route-courseId="@ViewData["CurrentCourseId"]">Chi tiết</a>
-                                        </li>                                     
-                                        <div class="dropdown-divider"></div>
-                                        <li>
-                                            <a href="javascript:;" class="dropdown-item text-danger delete-record">Xóa</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <a href="javascript:;" class="btn btn-sm btn-icon item-edit">
-                                    <i class="bx bxs-edit">
-
-                                    </i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
-            @* <div class="row">
-            <div class="col-sm-12 col-md-6">
-            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-            <ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="next" tabindex="-1" class="page-link">Next</a></li></ul>
-            </div>
-            </div>
-            </div> *@
-        </div>
-    </div>
+<h4>
+    Assignments
+</h4>
+<div class="mt-2 mb-4">
+<a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="btn btn-secondary create-new btn-primary">
+    <span>
+        <i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">New Assignment</span>
+    </span>
+</a>
 </div>
-
+<div class="row mb-4 g-4">
+    @foreach (var exam in Model)
+    {
+        <div class="col-12 col-xl-4 col-md-6">
+            <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <div class="card-title mb-0">
+                            <h4 class="m-0 me-2">@exam.Exam.Title</h4>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn p-0" type="button" id="popularInstructors" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularInstructors">
+                                <a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                                <a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                <div class="card-body">
+                    <p class="medium">@exam.Exam.Description</p>
+                    <div class="row mb-4 g-3">
+                        <div class="col-6">
+                            <div class="d-flex">
+                                <div class="avatar flex-shrink-0 me-2">
+                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-nowrap">@exam.StartDate.ToString("MMM dd hh:mm tt")</h6>
+                                    <small>Date</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex">
+                                <div class="avatar flex-shrink-0 me-2">
+                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-nowrap">@exam.Exam.Time Minutes</h6>
+                                    <small>Duration</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <!-- Adjust column size based on your preference -->
+                            <a class="btn btn-primary w-100"
+                               asp-action="Details" asp-controller="Exam"
+                               asp-route-examId="@exam.Exam.Id"
+                               asp-route-courseId="@ViewData["CurrentCourseId"]">View Exam</a>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <a class="btn btn-label-primary w-100" asp-action="ExamGrades" asp-controller="Course"
+                               asp-route-courseId="@ViewData["CurrentCourseId"]"
+                               asp-route-examId="@exam.Exam.Id">View Grades</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

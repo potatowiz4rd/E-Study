@@ -5,14 +5,16 @@
     <div class="card h-100">
         <div class="card-datatable table-responsive">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <a href="javascript: history.go(-1)">
-                    <i class="fa-solid fa-angle-left"></i>
-                    <i class="menu-icon tf-icons bx bxs-chevron-left"></i>
-                    <span class="d-none d-sm-inline-block">Back</span>
-                </a>
+
+                <div class="d-flex align-items-center justify-content-between mt-3 ms-4 mb-0">
+                    <a href="javascript: history.go(-1)" class="text-light">
+                        <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+                        <span style="font-size: 1.2rem;">Back</span>
+                    </a>
+                </div>
                 <div class="card-header flex-column flex-md-row">
                     <div class="head-label text-center">
-                        <h5 class="card-title mb-0">@Model.First().Exam.Title</h5>
+                        <h3 class="card-title mb-0">@Model.First().Exam.Title</h3>
                     </div>
                     <div class="dt-action-buttons text-end pt-3 pt-md-0">
                         <div class="dt-buttons btn-group flex-wrap">
@@ -45,6 +47,7 @@
                     <thead>
                         <tr>
                             <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 57px; display: none;" aria-label=""></th>
+                            <th class="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all" rowspan="1" colspan="1" style="width: 48px;" data-col="1" aria-label=""><input type="checkbox" class="form-check-input"></th>
                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 142px;" aria-label="Name: activate to sort column ascending">Name</th>
                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 147px;" aria-label="Email: activate to sort column ascending">Attempt</th>
                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 130px;" aria-label="Date: activate to sort column ascending">Status</th>
@@ -58,6 +61,9 @@
                         {
                             <tr class="odd">
                                 <td class="  control" tabindex="0" style="display: none;">
+                                </td>
+                                <td class="  dt-checkboxes-cell">
+                                    <input type="checkbox" class="dt-checkboxes form-check-input">
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-start align-items-center user-name">
@@ -74,7 +80,7 @@
                                 </td>
                                 <td>@student.Attempt</td>
                                 <td>
-                                    <span class="badge  bg-label-info">Applied</span>
+                                    <span class="badge bg-label-info">Finished</span>
                                 </td>
                                 <td>@student.DateTime</td>
                                 <td>@student.Score</td>

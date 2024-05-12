@@ -19,24 +19,21 @@ namespace E_Study.UI.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IPostService postService;
         private readonly IExamService examService;
+        private readonly ICourseService courseService;
         public readonly UserManager<User> userManager;
         public CourseController(IUnitOfWork uow,
             IWebHostEnvironment webHostEnvironment,
             UserManager<User> userManager,
             IPostService postService,
-            IExamService examService)
+            IExamService examService,
+            ICourseService courseService)
         {
             this.uow = uow;
             this.webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.postService = postService;
             this.examService = examService;
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
+            this.courseService = courseService;
         }
 
         public async Task<IActionResult> NewFeed(string courseId)
@@ -46,6 +43,7 @@ namespace E_Study.UI.Controllers
             var currentUser = await userManager.GetUserAsync(User);
             ViewBag.CurrentUserName = currentUser.UserName;
             ViewBag.CurrentCourseId = courseId;
+
             //var posts = await uow.PostRepository.GetPostsByCourseIdAsync(courseId);
             var response = await postService.GetAllPostsInCourseAsync(courseId);
             // Check if the operation was successful before passing data to the view
@@ -216,21 +214,6 @@ namespace E_Study.UI.Controllers
             return View(@event);
         }
 
-        public IActionResult GetFile(string filePath)
-        {
-            // Combine the base path with the provided file path
-            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath);
-
-            // Check if the file exists
-            if (!System.IO.File.Exists(fullPath))
-            {
-                return NotFound();
-            }
-
-            // Return the file using a file result
-            return PhysicalFile(fullPath, "application/pdf"); // Adjust the content type as needed
-        }
-
         public IActionResult Calendar(string courseId)
         {
             ViewBag.Current = "Calendar";
@@ -247,6 +230,83 @@ namespace E_Study.UI.Controllers
             }
         }
 
+        public IActionResult Files(string courseId)
+        {
+            ViewBag.Current = "Files";
+            ViewData["CurrentCourseId"] = courseId;
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var events = uow.EventRepository.GetEventsInCourse(courseId);
+                return View(events);
+            }
+        }
+
+        public IActionResult GetFile(string filePath)
+        {
+            // Combine the base path with the provided file path
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath);
+
+            // Check if the file exists
+            if (!System.IO.File.Exists(fullPath))
+            {
+                return NotFound();
+            }
+
+            // Return the file using a file result
+            return PhysicalFile(fullPath, "application/pdf"); // Adjust the content type as needed
+        }
+
+        public IActionResult UploadFile(string courseId)
+        {
+            ViewBag.CurrentCourseId = courseId;
+            ViewData["CurrentCourseId"] = courseId;
+
+            return PartialView("_UploadFile");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadFile(Event @event, string courseId)
+        {
+            if (ModelState.IsValid)
+            {
+                // Handle file upload
+                if (@event.File != null && @event.File.Length > 0)
+                {
+                    // Create the uploads directory if it doesn't exist
+                    var uploadsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", courseId);
+                    if (!Directory.Exists(uploadsDirectory))
+                    {
+                        Directory.CreateDirectory(uploadsDirectory);
+                    }
+
+                    // Process the uploaded file
+                    var fileName = Path.GetFileName(@event.File.FileName);
+                    var filePath = Path.Combine(uploadsDirectory, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await @event.File.CopyToAsync(stream);
+                    }
+                    @event.EventType = "File";
+                    @event.Text = "New File";
+                    //@event.FileName = fileName;
+                    @event.FilePath = filePath;
+                    @event.CourseId = courseId;
+                }
+
+                await uow.EventRepository.CreateAsync(@event);
+                await uow.SaveChangesAsync();
+                return RedirectToAction("Files", new { courseId });
+            }
+            return View(@event);
+        }
+
         public IActionResult Exams(string courseId)
         {
             ViewBag.Current = "Exams";
@@ -259,7 +319,8 @@ namespace E_Study.UI.Controllers
             }
             else
             {
-                var exams = uow.ExamRepository.GetExamsInCourse(courseId);
+                var exams = uow.ExamRepository.GetExamCoursesInCourse(courseId);
+                //var exams = uow.ExamRepository.GetExamsInCourse(courseId);
                 return View(exams);
             }
         }
@@ -343,47 +404,55 @@ namespace E_Study.UI.Controllers
                 var grades = uow.GradeRepository.GetGradesOfExamInCourse(courseId, examId);
                 return View(grades);
             }
+        }    
+
+        public IActionResult CourseSettings(string courseId)
+        {
+            ViewBag.Current = "CourseSettings";
+
+            ViewData["CurrentCourseId"] = courseId;
+            if (courseId == null)
+            {
+                // Handle the case where CourseId is null
+                return RedirectToAction("Index", "Home"); // Redirect to a default page
+            }
+            else
+            {
+                var course = uow.CourseRepository.GetById(courseId);
+                return View(course);
+            }
         }
 
-        public async Task<IActionResult> Contacts(string courseId)
+        public IActionResult CreateCoursePartial()
         {
-            if (ModelState.IsValid)
-            {
-                var users = await uow.UserRepository.GetUsersInCourseAsync(courseId);
-                return PartialView("_Contacts", users);
-            }
-            return Redirect("/login");
+            return PartialView("_CreateCoursePartial");
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetChatResponse(string message)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCoursePartial(Course course)
         {
-            var api = new OpenAIAPI("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");
-            var chat = api.Chat.CreateConversation();
-            chat.Model = OpenAI_API.Models.Model.ChatGPTTurbo;
-            chat.RequestParameters.Temperature = 0;
-
-            /// give instruction as System
-            chat.AppendSystemMessage("You are an assistant of a online studying website who helps teachers and students answer their questions.");
-
-            // give a few examples as user and assistant
-            chat.AppendUserInput("At which age children in Viet Name start going to school? five or six years old");
-            chat.AppendExampleChatbotOutput("Six");
-            chat.AppendUserInput("At which age student learn calculus?");
-            chat.AppendExampleChatbotOutput("At the age of 16 to 17, advanced students on academic tracks may take calculus as an option.");
-
-            // now let's ask it a question
-            chat.AppendUserInput(message);
-            // and get the response
-            string response = await chat.GetResponseFromChatbotAsync();
-
-            // the entire chat history is available in chat.Messages
-            foreach (ChatMessage msg in chat.Messages)
+            if (ModelState.IsValid)
             {
-                Console.WriteLine($"{msg.Role}: {msg.Content}");
-            }
+                var currentUser = await userManager.GetUserAsync(User);
+                var userId = currentUser.Id;
+                uow.CourseRepository.Create(course);
+                uow.CourseRepository.AddUserToCourse(userId, course.Id);
+                uow.SaveChanges();
+                return RedirectToAction("Index", "Home");
 
-            return Ok(response);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCourse(string courseId)
+        {
+            uow.CourseRepository.Delete(courseId);
+            uow.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
+
+
