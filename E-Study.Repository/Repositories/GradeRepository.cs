@@ -34,6 +34,7 @@ namespace E_Study.Repository.Repositories
                 .Include(g => g.Exam)
                 .Include(g => g.User)
                 .Where(g => g.Exam != null && g.Exam.ExamCourses.Any(ec => ec.CourseId == courseId) && g.ExamId == examId)
+                .OrderBy(g => g.Attempt)
                 .ToList();
         }
 
@@ -44,6 +45,7 @@ namespace E_Study.Repository.Repositories
                 .Include(g => g.Exam)
                 .Include(g => g.User)
                 .Where(g => g.UserId == userId)
+                .OrderBy(g => g.Attempt)
                 .ToList();
         }
 
@@ -54,6 +56,7 @@ namespace E_Study.Repository.Repositories
                 .Include(g => g.Exam)
                 .Include(g => g.User)
                 .Where(g => g.UserId == userId && g.ExamId == examId)
+                .OrderBy(g => g.Attempt)
                 .ToList();
         }
     }

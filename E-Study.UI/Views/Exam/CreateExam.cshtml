@@ -3,6 +3,10 @@
     ViewData["Title"] = "CreateExam";
     Layout = "_LayoutNotLoggedIn";
 }
+<a href="javascript: history.go(-1)" class="text-light mb-3">
+    <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+    <span style="font-size: 1.2rem;">Back</span>
+</a>
 <h4>
     <span class="text-muted fw-light">Quiz /</span> Create quiz
 </h4>
@@ -30,7 +34,7 @@
 
             </button>
         </div>
-        <div class="line">
+       @*  <div class="line">
             <i class="bx bx-chevron-right"></i>
         </div>
         <div class="step" data-target="#social-links">
@@ -41,7 +45,7 @@
                     <span class="bs-stepper-subtitle">Add quiz to existing course</span>
                 </span>
             </button>
-        </div>
+        </div> *@
     </div>
     <div class="bs-stepper-content">
         <form asp-action="CreateExam" asp-controller="Exam" method="post">
@@ -55,28 +59,28 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label asp-for="Title" class="control-label">Quiz name</label>
-                        <input asp-for="Title" class="form-control" />
+                        <input asp-for="Title" class="form-control" placeholder="Your quiz's name..." />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="Description" class="control-label">Description</label>
-                        <input asp-for="Description" class="form-control" />
+                        <input asp-for="Description" class="form-control" placeholder="Describe your quiz..." />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="Time" class="control-label">Time limit (minute)</label>
-                        <input asp-for="Time" class="form-control" />
+                        <input asp-for="Time" class="form-control" placeholder="Quiz completion limit in minute" />
                         <span asp-validation-for="Time" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="MaxScore" class="control-label">Max point</label>
-                        <input asp-for="MaxScore" class="form-control" />
+                        <input asp-for="MaxScore" class="form-control" placeholder="Quiz's maximum point..." />
                         <span asp-validation-for="MaxScore" class="text-danger"></span>
                     </div>
                     <div class="col-12 d-flex justify-content-between">
-                        <button type="button" class="btn btn-label-secondary btn-prev" disabled="">
+                        <button type="button" class="btn btn-label-danger btn-prev">
                             <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                            <span class="align-middle d-sm-inline-block d-none">Back</span>
+                            <span class="align-middle d-sm-inline-block d-none">Cancel</span>
                         </button>
                         <button type="button" class="btn btn-primary btn-next">
                             <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
@@ -101,7 +105,7 @@
                             <!-- First Row: Question -->
                             <div class="mb-3">
                                 <label class="form-label" for="question">Question</label>
-                                <input type="text" class="form-control" name="QnAs[0].Question" />
+                                <input type="text" class="form-control" name="QnAs[0].Question" placeholder="Enter your question..." />
                             </div>
                         </div>
 
@@ -111,14 +115,14 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="control-label" for="questionType">Question Type</label>
                                     <select class="form-select" name="QnAs[0].Type">
-                                        <option selected value="Single Choice">Single Choice</option>
+                                        <option selected value="Single Choice">Single Choice (Default)</option>
                                         <option value="Multiple Choice">Multiple Choice</option>
                                         <option value="Enter Answer">Enter Answer</option>
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="control-label" for="answer">Answer</label>
-                                    <input type="text" class="form-control" name="QnAs[0].Answer" />
+                                    <input type="text" class="form-control" name="QnAs[0].Answer" placeholder="The correct answer to this question..." />
                                 </div>
                             </div>
                         </div>
@@ -127,20 +131,20 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="mb-3 col-md-3">
-                                    <label class="control-label" for="option1">Option 1</label>
-                                    <input type="text" class="form-control" name="QnAs[0].Option1" />
+                                    <label class="control-label" for="option1">Option A</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option1" placeholder="Enter option A..." />
                                 </div>
                                 <div class="mb-3 col-md-3">
-                                    <label class="control-label" for="option2">Option 2</label>
-                                    <input type="text" class="form-control" name="QnAs[0].Option2" />
+                                    <label class="control-label" for="option2">Option B</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option2" placeholder="Enter option B..." />
                                 </div>
                                 <div class="mb-3 col-md-3">
-                                    <label class="control-label" for="option3">Option 3</label>
-                                    <input type="text" class="form-control" name="QnAs[0].Option3" />
+                                    <label class="control-label" for="option3">Option C</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option3" placeholder="Enter option C..." />
                                 </div>
                                 <div class="mb-3 col-md-3">
-                                    <label class="control-label" for="option4">Option 4</label>
-                                    <input type="text" class="form-control" name="QnAs[0].Option4" />
+                                    <label class="control-label" for="option4">Option D</label>
+                                    <input type="text" class="form-control" name="QnAs[0].Option4" placeholder="Enter option D..." />
                                 </div>
                             </div>
                         </div>
@@ -150,7 +154,7 @@
                             <div class="mb-3 col">
                                 <button type="button" class="btn btn-primary add-qna">
                                     <i class="bx bx-plus me-1"></i>
-                                    <span class="align-middle">Add</span>
+                                    <span class="align-middle">Add Next Question</span>
                                 </button>
                             </div>
                             <div class="mb-3 col">
@@ -160,21 +164,24 @@
                                 </button>
                             </div>
                         </div>
+                        <hr />
                     </div>
                 </div>
 
                 <div class="col-12 d-flex justify-content-between">
-                    <button type="button" class="btn btn-label-secondary btn-prev" disabled="">
+                    <button type="button" class="btn btn-primary btn-prev">
                         <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
                         <span class="align-middle d-sm-inline-block d-none">Back</span>
                     </button>
-                    <button type="button" class="btn btn-primary btn-next">
-                        <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
-                        <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
-                    </button>
+                    <div class="form-group">
+                        <button type="submit" value="Create" class="btn btn-label-success btn-next">
+                            <span class="align-middle d-sm-inline-block d-none me-sm-1">Finish</span>
+                            <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <!-- Social Links -->
+            @* <!-- Social Links -->
             <div id="social-links" class="content">
                 <div class="content-header mb-3">
                     <h6 class="mb-0">Social Links</h6>
@@ -203,14 +210,14 @@
                             <span class="align-middle d-sm-inline-block d-none">Back</span>
                         </button>
                         <div class="form-group">
-                            <button type="submit" value="Create" class="btn btn-primary btn-next">
+                            <button type="submit" value="Create" class="btn btn-label-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Finish</span>
                                 <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </form>
     </div>
 </div>

@@ -16,7 +16,7 @@
 <div class="row mb-4 g-4">
     @foreach (var item in Model)
     {
-        if (@item.EventType == "File")
+        @* if (@item.EventType == "File")
         {
             <div class="col-12 col-xl-4 col-md-6">
                 <div class="card h-100">
@@ -25,30 +25,8 @@
                             <img class="img-fluid w-60" src="../../assets/img/illustrations/girl-app-academy.png" alt="Card girl image">
                         </div>
                         <h4 class="mb-2 pb-1">File</h4>
-                        <p class="small">@item.Text</p>
-                        <div class="row mb-3 g-3">
-                            <div class="col-6">
-                                <div class="d-flex">
-                                    <div class="avatar flex-shrink-0 me-2">
-                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
-                                        <small>Date</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-flex">
-                                    <div class="avatar flex-shrink-0 me-2">
-                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">32 minutes</h6>
-                                        <small>Duration</small>
-                                    </div>
-                                </div>
-                            </div>
+                        <p class="medium">@item.FileName</p>
+                        <div class="row mb-3 g-3">                       
                         </div>
                         @if (!string.IsNullOrEmpty(item.FilePath))
                         {
@@ -57,8 +35,8 @@
                     </div>
                 </div>
             </div>
-        }
-        else if (@item.EventType == "Meeting")
+        } *@
+        if (@item.EventType == "Meeting")
         {          
             <div class="col-12 col-xl-4 col-md-6">
                 <div class="card h-100">
@@ -79,18 +57,7 @@
                                         <small>Date</small>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-flex">
-                                    <div class="avatar flex-shrink-0 me-2">
-                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">32 minutes</h6>
-                                        <small>Duration</small>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>                       
                         @if (!string.IsNullOrEmpty(item.Url))
                         {
@@ -101,7 +68,7 @@
             </div>
 
         }
-        else
+        @* else
         {         
             <div class="col-12 col-xl-4 col-md-6">
                 <div class="card h-100">
@@ -112,34 +79,13 @@
                         <h4 class="mb-2 pb-1">Notification</h4>
                         <p class="small">@item.Text</p>
                         <div class="row mb-3 g-3">
-                            <div class="col-6">
-                                <div class="d-flex">
-                                    <div class="avatar flex-shrink-0 me-2">
-                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
-                                        <small>Date</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-flex">
-                                    <div class="avatar flex-shrink-0 me-2">
-                                        <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 text-nowrap">32 minutes</h6>
-                                        <small>Duration</small>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>                      
                     </div>
                 </div>
             </div>
 
-        }
+        } *@
     }
 </div>
 

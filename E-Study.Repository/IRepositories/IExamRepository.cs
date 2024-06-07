@@ -15,6 +15,9 @@ namespace E_Study.Repository.IRepositories
         void AddExamToCourse(string examId, string courseId, DateTime startDate, DateTime endDate);
         IEnumerable<Grade> GetUserExamAttempts(string userId, string examId);
         IEnumerable<ExamCourse> GetExamCoursesInCourse(string courseId);
+        Task DeleteExamAsync(string examId);
+        Exam GetExamWithQnAsId(string examId);
+
 
     }
 }

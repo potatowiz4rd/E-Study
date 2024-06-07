@@ -295,7 +295,7 @@ namespace E_Study.UI.Controllers
                     }
                     @event.EventType = "File";
                     @event.Text = "New File";
-                    //@event.FileName = fileName;
+                    @event.FileName = fileName;
                     @event.FilePath = filePath;
                     @event.CourseId = courseId;
                 }
@@ -404,7 +404,7 @@ namespace E_Study.UI.Controllers
                 var grades = uow.GradeRepository.GetGradesOfExamInCourse(courseId, examId);
                 return View(grades);
             }
-        }    
+        }
 
         public IActionResult CourseSettings(string courseId)
         {
@@ -451,6 +451,77 @@ namespace E_Study.UI.Controllers
             uow.CourseRepository.Delete(courseId);
             uow.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteExamCourse(string examId, string courseId)
+        {
+            try
+            {
+                // Log or place a breakpoint here to ensure the method is called
+                Console.WriteLine($"Attempting to delete ExamCourse with ExamId: {examId} and CourseId: {courseId}");
+
+                var assignment = uow.ExamCourseRepository.GetById(examId, courseId);
+
+                uow.ExamCourseRepository.Delete(assignment);
+
+                // Log or check if the object was found and deleted
+                Console.WriteLine("Deletion method called");
+
+                uow.SaveChanges();
+
+                // Log success
+                Console.WriteLine("Changes saved successfully");
+
+                return RedirectToAction("Exams", new { courseId });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine($"Error occurred: {ex.Message}");
+                return RedirectToAction("Exams", new { courseId, error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddUsersToCourse(string courseId)
+        {
+            ViewBag.CurrentCourseId = courseId;
+            ViewData["CurrentCourseId"] = courseId;
+
+            var users = await uow.UserRepository.GetUsersNotInCourse(courseId);
+            return PartialView("_AddUsersToCourse", users);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUsersToCourse(string courseId, List<string> userIds)
+        {
+            var course = await uow.CourseRepository.GetByIdAsync(courseId);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var userId in userIds)
+            {
+                var userCourse = new UserCourse
+                {
+                    CourseId = courseId,
+                    UserId = userId
+                };
+                uow.UserCourseRepository.Create(userCourse);
+            }
+
+            await uow.SaveChangesAsync();
+            return RedirectToAction("Students", new { id = courseId });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteEvent(string eventId, string courseId)
+        {
+            uow.EventRepository.Delete(eventId);
+            uow.SaveChanges();
+            return RedirectToAction("Files", new { courseId });
         }
     }
 }

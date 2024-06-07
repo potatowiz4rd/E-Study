@@ -17,12 +17,7 @@ namespace E_Study.Core.Config
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Text).IsRequired().HasMaxLength(50);
-            builder.HasOne(x => x.Course).WithMany(x => x.Events).HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.ExamCourse)
-               .WithOne(x => x.Event)
-               .HasForeignKey<ExamCourse>(x => x.EventId)
-               .IsRequired(false)
-               .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(x => x.Course).WithMany(x => x.Events).HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);            
 
         }
     }

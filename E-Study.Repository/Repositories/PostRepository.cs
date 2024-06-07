@@ -23,6 +23,7 @@ namespace E_Study.Repository.Repositories
             // Assuming you have DbSet<Message> named DbSet in your context
             return await dataContext.Posts
                 .Where(m => m.CourseId == courseId).Include(p => p.User)
+                .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
         }
     

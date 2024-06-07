@@ -32,6 +32,8 @@ namespace E_Study.UI.Controllers
 
         public IActionResult Exams()
         {
+            ViewBag.Current = "Exams";
+
             var currentUser = userManager.GetUserId(User);
             var result = examService.GetAllExamCreatedByUser(currentUser);
             var exams = result.DataList;
@@ -41,6 +43,8 @@ namespace E_Study.UI.Controllers
         [HttpGet]
         public IActionResult CreateExam()
         {
+            ViewBag.Current = "Exams";
+
             ExamViewModel examViewModel = new ExamViewModel { QnAs = new List<QnAsViewModel>() };
             return View(examViewModel);
         }
@@ -67,6 +71,16 @@ namespace E_Study.UI.Controllers
             }
 
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult QuizDetails(string examId)
+        {
+            ViewBag.Current = "Exams";
+
+            var exam = examService.GetExamById(examId).Data;
+            
+            return View(exam);
         }
 
         [HttpGet]
@@ -126,6 +140,12 @@ namespace E_Study.UI.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteExam(string examId)
+        {
+            await uow.ExamRepository.DeleteExamAsync(examId);
+            return RedirectToAction("Exams"); // Adjust the redirect action as needed
+        }
 
     }
 }

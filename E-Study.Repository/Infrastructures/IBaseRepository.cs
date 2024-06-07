@@ -26,6 +26,9 @@
         /// Change state of entity to modified
         /// </summary>
         /// <param name="entity"></param>
+
+        void Delete(params object[] keyValues);
+
         void Update(TEntity entity);
 
         /// <summary>

@@ -38,15 +38,21 @@ namespace E_Study.Repository.Repositories
             return users;
         }
 
-        public IList<User> GetUsersNotInCourse(string courseId)
+        public async Task<IList<User>> GetUsersNotInCourse(string courseId)
         {
-            // Fetch the users associated with the course
-            var users = dataContext.UserCourses
-                .Where(uc => uc.CourseId != courseId)
-                .Select(uc => uc.User)
-                .ToList();
+            // Fetch all users
+            var allUsers = await dataContext.Users.ToListAsync();
 
-            return users;
+            // Fetch the user IDs associated with the specified course
+            var usersInCourseIds = await dataContext.UserCourses
+                .Where(uc => uc.CourseId == courseId)
+                .Select(uc => uc.UserId)
+                .ToListAsync();
+
+            // Return users not in the specified course
+            var usersNotInCourse = allUsers.Where(u => !usersInCourseIds.Contains(u.Id)).ToList();
+
+            return usersNotInCourse;
         }
 
     }

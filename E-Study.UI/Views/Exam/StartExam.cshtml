@@ -7,19 +7,29 @@
     /* Style for the fixed timer */
     #timer {
         position: fixed;
-        top: 170px; /* Adjust top position as needed */
+        top: 22%;
+        transform: translateY(-50%);
         right: 35px; /* Adjust right position as needed */
         background-color: #fff; /* Background color */
-        padding: 30px; /* Padding */
+        padding: 15px; /* Padding */
         border: 1px solid #ccc; /* Border */
         border-radius: 5px; /* Border radius */
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
         z-index: 1000; /* Ensure it's above other content */
-        font-size: 30px; /* Font size */
+        font-size: 20px; /* Font size */
+    }
+
+    /* Style for the "Time Left" text */
+    #time-left {
+        font-weight: bold; /* Bold text */
+        margin-bottom: 5px; /* Margin below the text */
     }
 </style>
-<h1>Bài kiểm tra: @Model.ExamName</h1>
-<div id="timer"></div> <!-- Add a div to display the remaining time -->
+<h1>@Model.ExamName</h1>
+<div id="timer">
+    <div id="time-left">Time Left:</div>
+    <div id="countdown">00:00:00</div> <!-- Add a div to display the remaining time -->
+</div>
 <form asp-action="StartExam" asp-controller="Exam" method="post">
     <input type="hidden" name="courseId" value="@ViewData["CurrentCourseId"]"/>
     <input type="hidden" asp-for="StudentId" />
@@ -33,12 +43,12 @@
             <div class="card mb-4" style="width: 70rem;">
 
                 <div class="card-body">
-                    <span>Câu @(i + 1)</span>
+                    <span>Question @(i + 1)</span>
                     <h3 class="mb-3 mt-1">@Model.QnAs[i].Question</h3>
                     <!-- list group -->
                     @if (Model.QnAs[i].Type.ToString() == "Single Choice")
                     {
-                        <label class="form-label">Chọn 1 đáp án</label>
+                        <label class="form-label">Choose one of the answers below</label>
                         <div class="list-group">
                             <div class="list-group-item list-group-item-action " aria-current="true">
 
@@ -85,7 +95,7 @@
                     }
                     else if (Model.QnAs[i].Type.ToString() == "Multiple Choice")
                     {
-                        <label class="form-label">Chọn ít nhất 1 đáp án</label>
+                        <label class="form-label">Choose at least one answer</label>
                         <div class="list-group">
                             <div class="list-group-item list-group-item-action " aria-current="true">
 
@@ -132,8 +142,8 @@
                     else
                     {
                         <div class="form-group">
-                            <label class="form-label" for="option1_@i">Điền câu trả lời của bạn</label>
-                            <input class="form-control" name="QnAs[@i].SelectedAnswer" type="text" value="">
+                            <label class="form-label" for="option1_@i">Enter your answer</label>
+                            <input class="form-control" name="QnAs[@i].SelectedAnswer" type="text" value="" placeholder="Your answer here...">
                         </div>
                     }
                 </div>
@@ -141,7 +151,7 @@
         }
     </ul>
     <div class="text-center mt-3">
-        <button type="submit" name="action" class="btn btn-primary">Nộp bài</button>
+        <button type="submit" name="action" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit?')">Finish</button>
     </div>
 </form>
 
@@ -152,9 +162,13 @@
 
         // Display the remaining time
         function displayTime() {
-            var minutes = Math.floor(remainingTimeInSeconds / 60);
-            var seconds = Math.floor(remainingTimeInSeconds % 60);
-            document.getElementById('timer').innerText = minutes + "m " + seconds + "s";
+            var hours = Math.floor(remainingTimeInSeconds / 3600);
+            var minutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
+            var seconds = remainingTimeInSeconds % 60;
+            var timeString = hours.toString().padStart(2, '0') + ":" +
+                minutes.toString().padStart(2, '0') + ":" +
+                seconds.toString().padStart(2, '0');
+            document.getElementById('countdown').innerText = timeString;
         }
 
         // Countdown timer function
@@ -173,3 +187,4 @@
         startTimer();
     </script>
 }
+

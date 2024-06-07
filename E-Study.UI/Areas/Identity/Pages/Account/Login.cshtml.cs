@@ -48,17 +48,17 @@ namespace E_Study.UI.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Không để trống")]
-            [Display(Name = "Nhập username hoặc email của bạn")]
-            [StringLength(100, MinimumLength = 1, ErrorMessage = "Nhập đúng thông tin")]
+            [Required(ErrorMessage = "The field is empty")]
+            [Display(Name = "Username or Email")]
+            [StringLength(100, MinimumLength = 1, ErrorMessage = "Incorrect Username or Password")]
             public string UserNameOrEmail { set; get; }
 
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Mật khẩu")]
+            [Display(Name = "Password")]
             public string Password { get; set; }
 
-            [Display(Name = "Nhớ thông tin đăng nhập?")]
+            [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
 

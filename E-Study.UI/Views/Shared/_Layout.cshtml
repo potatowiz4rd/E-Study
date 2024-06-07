@@ -79,12 +79,13 @@
     <link rel="stylesheet" href="/assets/vendor/libs/animate-css/animate.css">
     <link rel="stylesheet" href="/assets/vendor/libs/sweetalert2/sweetalert2.css">
     <link rel="stylesheet" href="/assets/vendor/libs/dropzone/dropzone.css">
+    <link rel="stylesheet" href="/assets/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
 
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
-
     <!-- Page CSS -->
     <link rel="stylesheet" href="/assets/vendor/css/pages/app-chat.css">
     <link rel="stylesheet" href="/assets/vendor/css/pages/app-calendar.css" />
@@ -182,62 +183,110 @@
                             <h5 class="card-text mb-2">@currentCourse.Name</h5>
                         </div>
                     </li>
-                    @*                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Lớp học</span></li>
-                    *@                    <!-- Cards -->
-                    <li class="menu-item @(ViewBag.Current == "NewFeed" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="NewFeed" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
-                            <div>Discussion</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Events" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Events" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-calendar"></i>
-                            <div>Activities</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Calendar" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Calendar" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-calendar"></i>
-                            <div>Calendar</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Exams" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Exams" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class='menu-icon tf-icons bx bx-book-open'></i>
-                            <div>Assignments</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Files" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Files" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class='menu-icon tf-icons bx bx-file'></i>
-                            <div>Files</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Chat" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Chat" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-chat"></i>
-                            <div>Chat</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Students" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Students" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div>Users</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "Grades" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="Grades" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-table"></i>
-                            <div>Grades</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @(ViewBag.Current == "CourseSettings" ? "active" : "")">
-                        <a asp-controller="Course" asp-action="CourseSettings" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
-                            <i class="bx bx-cog fs-4"></i>
-                            <div>Course Settings</div>
-                        </a>
-                    </li>
+                    @if (currentRole == "Teacher")
+                    {
+                        <li class="menu-item @(ViewBag.Current == "NewFeed" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="NewFeed" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
+                                <div>Discussion</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Events" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Events" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                                <div>Activities</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Exams" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Exams" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class='menu-icon tf-icons bx bx-book-open'></i>
+                                <div>Assignments</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Files" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Files" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class='menu-icon tf-icons bx bx-file'></i>
+                                <div>Files</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Chat" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Chat" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-chat"></i>
+                                <div>Chat</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Students" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Students" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-user"></i>
+                                <div>Users</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Calendar" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Calendar" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                                <div>Calendar</div>
+                            </a>
+                        </li>
+                        @* <li class="menu-item @(ViewBag.Current == "Grades" ? "active" : "")">
+                    <a asp-controller="Course" asp-action="Grades" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-table"></i>
+                    <div>Grades</div>
+                    </a>
+                    </li> *@
+                        <li class="menu-item @(ViewBag.Current == "CourseSettings" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="CourseSettings" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon bx bx-cog fs-4"></i>
+                                <div>Course Settings</div>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="menu-item @(ViewBag.Current == "NewFeed" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="NewFeed" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
+                                <div>Discussion</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Events" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Events" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                                <div>Activities</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Files" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Files" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class='menu-icon tf-icons bx bx-file'></i>
+                                <div>Files</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Chat" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Chat" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-chat"></i>
+                                <div>Chat</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Students" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Students" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-user"></i>
+                                <div>Course members</div>
+                            </a>
+                        </li>
+                        <li class="menu-item @(ViewBag.Current == "Calendar" ? "active" : "")">
+                            <a asp-controller="Course" asp-action="Calendar" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                                <div>Calendar</div>
+                            </a>
+                        </li>
+                        @* <li class="menu-item @(ViewBag.Current == "Grades" ? "active" : "")">
+                    <a asp-controller="Course" asp-action="Grades" asp-route-courseId="@ViewData["CurrentCourseId"]" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-table"></i>
+                    <div>Grades</div>
+                    </a>
+                    </li> *@
+
+                    }
+
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -651,6 +700,9 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
+    @* <script src="../../assets/vendor/libs/jquery/jquery.js"></script> *@
+
+
     <script src="/lib/jquery/jquery.js"></script>
     <script src="/assets/vendor/libs/popper/popper.js"></script>
     <script src="/assets/vendor/js/bootstrap.js"></script>
@@ -658,7 +710,6 @@
     <script src="/assets/vendor/libs/typeahead-js/typeahead.js"></script>
     <script src="/assets/vendor/js/menu.js"></script>
     <script src="/assets/vendor/libs/hammer/hammer.js"></script>
-
     <!-- endbuild -->
     <!-- Vendors JS -->
     <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
@@ -666,6 +717,10 @@
     <script src="/assets/vendor/libs/%40form-validation/popular.js"></script>
     <script src="/assets/vendor/libs/%40form-validation/bootstrap5.js"></script>
     <script src="/assets/vendor/libs/%40form-validation/auto-focus.js"></script>
+    <script src="/assets/vendor/libs/moment/moment.js"></script>
+    <script src="/assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/vendor/libs/select2/select2.js"></script>
 
     <!-- Main JS -->
     <script src="/assets/js/main.js"></script>

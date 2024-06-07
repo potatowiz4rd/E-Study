@@ -5,9 +5,9 @@
     <div class="card h-100">
         <div class="card-datatable table-responsive">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-
                 <div class="d-flex align-items-center justify-content-between mt-3 ms-4 mb-0">
-                    <a href="javascript: history.go(-1)" class="text-light">
+
+                    <a asp-action="Exams" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]">
                         <span class="fa-solid fa-angle-left bx-sm me-1"></span>
                         <span style="font-size: 1.2rem;">Back</span>
                     </a>
@@ -47,91 +47,80 @@
                     <thead>
                         <tr>
                             <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 57px; display: none;" aria-label=""></th>
-                            <th class="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all" rowspan="1" colspan="1" style="width: 48px;" data-col="1" aria-label=""><input type="checkbox" class="form-check-input"></th>
-                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 142px;" aria-label="Name: activate to sort column ascending">Name</th>
-                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 147px;" aria-label="Email: activate to sort column ascending">Attempt</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 30px;" data-col="1" aria-label="">#</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 180px;" aria-label="Name: activate to sort column ascending">Name</th>
+                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;" aria-label="Name: activate to sort column ascending">Username</th>
+                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 30px;" aria-label="Email: activate to sort column ascending">Attempt</th>
                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 130px;" aria-label="Date: activate to sort column ascending">Status</th>
-                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 172px;" aria-label="Salary: activate to sort column ascending">Date</th>
-                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 167px;" aria-label="Status: activate to sort column ascending">Point</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 180px;" aria-label="Salary: activate to sort column ascending">Date Submit</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 50px;" aria-label="Status: activate to sort column ascending">Point</th>
                             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 174px;" aria-label="Actions">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var student in Model)
+                        @if (Model != null && Model.Count() > 0)
                         {
-                            <tr class="odd">
-                                <td class="  control" tabindex="0" style="display: none;">
-                                </td>
-                                <td class="  dt-checkboxes-cell">
-                                    <input type="checkbox" class="dt-checkboxes form-check-input">
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-start align-items-center user-name">
-                                        <div class="avatar-wrapper">
-                                            <div class="avatar me-2">
-                                                <span class="avatar-initial rounded-circle bg-label-success">2</span>
-                                            </div>
+                            int index = 1; // Initialize the index counter
+                            @foreach (var student in Model)
+                            {
+                                <tr class="odd">
+                                    <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 57px; display: none;" aria-label=""></th>
+                                    <td>@index</td>
+                                    <td class="sorting_1">@student.User.FirstName @student.User.LastName</td>
+                                    <td>@student.User.UserName</td>
+                                    <td>@student.Attempt</td>
+                                    <td>
+                                        <span class="badge bg-label-info">Finished</span>
+                                    </td>
+                                    <td class="sorting_1">@student.DateTime</td>
+                                    <td>@student.Score</td>
+                                    <td>
+                                        <div class="d-inline-block">
+                                            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end m-0">
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item">Details</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item">Archive</a>
+                                                </li>
+                                                <div class="dropdown-divider"></div>
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <div class="d-flex flex-column">
-                                            <span class="emp_name text-truncate">@student.User.UserName</span>
-                                            <small class="emp_post text-truncate text-muted">@student.User.UserName</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>@student.Attempt</td>
-                                <td>
-                                    <span class="badge bg-label-info">Finished</span>
-                                </td>
-                                <td>@student.DateTime</td>
-                                <td>@student.Score</td>
-                                <td>
-                                    <div class="d-inline-block">
-                                        <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        <a href="javascript:;" class="btn btn-sm btn-icon item-edit">
+                                            <i class="bx bxs-edit">
+
+                                            </i>
                                         </a>
-                                        <ul class="dropdown-menu dropdown-menu-end m-0">
-                                            <li>
-                                                <a href="javascript:;" class="dropdown-item">Details</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;" class="dropdown-item">Archive</a>
-                                            </li>
-                                            <div class="dropdown-divider"></div>
-                                            <li>
-                                                <a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a href="javascript:;" class="btn btn-sm btn-icon item-edit">
-                                        <i class="bx bxs-edit">
-
-                                        </i>
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
                         }
-
                     </tbody>
                 </table>
-                @* <div class="row">
-            <div class="col-sm-12 col-md-6">
-            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-            <ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="next" tabindex="-1" class="page-link">Next</a></li></ul>
-            </div>
-            </div>
-            </div> *@
+                <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 1 of 1 entries</div></div><div class="col-sm-12 col-md-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="next" tabindex="-1" class="page-link">Next</a></li></ul></div></div></div>
             </div>
         </div>
+
     </div>
 }
 else
 {
-    <p>Error showing grades.</p>
+    <a asp-action="Exams" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="mb-2">
+        <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+        <span style="font-size: 1.2rem;">Back</span>
+    </a>
+    <h3>No Grades in this Exam.</h3>
 }
+
 @section scripts {
-    <script src="/assets/js/tables-datatables-basic.js"></script>
+@*     <script src="/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+ *@    <script src="/assets/js/tables-datatables-basic.js"></script>
 
 }

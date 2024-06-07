@@ -17,6 +17,14 @@ namespace E_Study.Repository.Repositories
         {
         }
 
+        public Exam GetExamWithQnAsId(string examId)
+        {
+            return dataContext.Exams
+                                  .Include(e => e.QnAs)
+                                  .FirstOrDefault(e => e.Id == examId);
+            // If you want to return the exam, you can store it in a field or property.
+        }
+
         public void AddExamToCourse(string examId, string courseId, DateTime startDate, DateTime endDate)
         {
             //complete this function that will add an exam to a course
@@ -56,6 +64,38 @@ namespace E_Study.Repository.Repositories
             return dataContext.Grades
                 .Where(g => g.UserId == userId && g.ExamId == examId)
                 .ToList();
+        }
+
+        public async Task DeleteExamAsync(string examId)
+        {
+            // Fetch the exam along with related entities
+            var exam = await dataContext.Exams
+                .Include(e => e.QnAs)
+                .ThenInclude(q => q.ExamResults)
+                .Include(e => e.ExamResults)
+                .Include(e => e.ExamCourses)
+                .FirstOrDefaultAsync(e => e.Id == examId);
+
+            if (exam != null)
+            {
+                // Remove related ExamResults
+                dataContext.ExamResults.RemoveRange(exam.ExamResults);
+
+                // Remove related QnAs and their ExamResults
+                foreach (var qna in exam.QnAs)
+                {
+                    dataContext.ExamResults.RemoveRange(qna.ExamResults);
+                    dataContext.QnAs.Remove(qna);
+                }
+
+                // Remove related ExamCourses
+                dataContext.ExamCourses.RemoveRange(exam.ExamCourses);
+
+                // Remove the exam itself
+                dataContext.Exams.Remove(exam);
+
+                await dataContext.SaveChangesAsync();
+            }
         }
     }
 }

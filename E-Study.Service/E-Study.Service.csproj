@@ -19,4 +19,8 @@
     <ProjectReference Include="..\E-Study.ViewModel\E-Study.ViewModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="grade\" />
+  </ItemGroup>
+
 </Project>

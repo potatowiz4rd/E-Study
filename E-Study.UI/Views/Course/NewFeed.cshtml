@@ -19,7 +19,7 @@
                 @{
                     Html.RenderPartial("_CreatePost", new E_Study.Core.Models.Post());
                 }
-            </div>            
+            </div>
             <!-- Posts with Comments Section -->
             @foreach (var post in Model)
             {
@@ -36,8 +36,8 @@
 
                             <div class="d-flex w-100 flex-wrap flex-grow-1 align-items-center justify-content-between">
                                 <div class="me-2">
-                                    <h5 class="mb-0">@(post.User.FirstName + " " + post.User.LastName)</h5>
-                                    <small class="created-at" data-creation-time="@post.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")">@post.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</small>
+                                    <h5 class="mb-0 fw-bold">@(post.User.FirstName + " " + post.User.LastName)</h5>
+                                    <small class="created-at fw-light" data-creation-time="@post.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")">@post.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</small>
                                 </div>
                                 <div class="dropdown d-none d-sm-block">
                                     <button class="btn p-0" type="button" id="eventList" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,69 +52,77 @@
                             </div>
                         </div>
                         <br />
-                        <p class="text-truncate">@post.Text</p>
-                        <img class="img-fluid flex-grow-1" src="../../assets/img/backgrounds/event.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="card-actions">
-                                    <a href="javascript:;" class="text-muted me-3"><i class="bx bx-heart me-1"></i> 0</a>
-                                    <a href="javascript:;" class="text-muted"><i class="bx bx-message me-1"></i> 1</a>
-                                </div>
+                        <p class="fw-normal">@post.Text</p>
+                        @*    <img class="img-fluid flex-grow-1" src="../../assets/img/backgrounds/event.jpg" alt="Card image cap">
+                    *@
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="card-actions">
+                                <a href="javascript:;" class="text-muted me-3"><i class="bx bx-heart me-1"></i> 0</a>
+                                <a href="javascript:;" class="text-muted"><i class="bx bx-message me-1"></i> @post.Comments.Count</a>
                             </div>
-                            <div class="divider">
-                                <div class="divider-text">Comments</div>
-                            </div>
-                            <div id="comments-@post.Id">
-                                @foreach (var comment in post.Comments)
-                                {
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="d-flex flex-start mb-4">
-                                                <div class="avatar avatar-md avatar-online flex-shrink-0 me-4 " width="50"
+                        </div>
+                        <div class="divider">
+                            <div class="divider-text">Comments</div>
+                        </div>
+                        <div id="comments-@post.Id">
+                            @foreach (var comment in post.Comments)
+                            {
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex flex-start mb-4">
+                                            <div class="avatar avatar-md avatar-online flex-shrink-0 me-4 " width="50"
+                                                 height="50">
+                                                <div class="avatar avatar-md" width="50"
                                                      height="50">
-                                                    <div class="avatar avatar-md" width="50"
-                                                         height="50">
-                                                        <span class="avatar-initial rounded-circle bg-label-success">
-                                                            <span class="avatar-initial rounded-circle bg-label-success">@comment.User.LastName.Substring(0, 1)</span>
-                                                        </span>
-                                                    </div>
+                                                    <span class="avatar-initial rounded-circle bg-label-success">
+                                                        <span class="avatar-initial rounded-circle bg-label-success">@comment.User.LastName.Substring(0, 1)</span>
+                                                    </span>
                                                 </div>
-                                                <div class="flex-grow-1 flex-shrink-1">
-                                                    <div>
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <p class="mb-1">
-                                                                @comment.User.FirstName @comment.User.LastName - <span class="created-at small" data-creation-time="@comment.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")">@comment.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</span>
-                                                            </p>
-                                                            <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
-                                                        </div>
-                                                        <p class="small mb-0">
-                                                            @comment.Text
+                                            </div>
+                                            <div class="flex-grow-1 flex-shrink-1">
+                                                <div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1">
+                                                            @comment.User.FirstName @comment.User.LastName - <span class="created-at small fw-light" data-creation-time="@comment.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")">@comment.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</span>
                                                         </p>
+                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
                                                     </div>
-
+                                                    <p class="small mb-0">
+                                                        @comment.Text
+                                                    </p>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
-
-                                }
-                            </div>
-                            <form class="comment-form" data-post-id="@post.Id">
-                                <div class="mb-0 mt-2">
-                                    <div class="d-flex flex-row align-items-start">
-                                        <img class="rounded-circle me-2" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
-                                        <input class="form-control ml-1 shadow-none textarea" id="commentText" rows="1" placeholder="Write your comment"></input>
-                                    </div>
                                 </div>
 
-                                @* <button type="submit" class="btn btn-primary btn-sm shadow-none">
-                            Post comment
-                            </button> *@
-                                <input type="submit" hidden />
-
-                            </form>
-
+                            }
                         </div>
+                        <form class="comment-form" data-post-id="@post.Id">
+                            <div class="mb-0 mt-2">
+                                <div class="d-flex flex-row align-items-start">
+                                    @*                                     <img class="rounded-circle me-2" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                                *@
+                                    <div class="avatar avatar-sm me-2" width="50"
+                                         height="50">
+                                        <span class="avatar-initial rounded-circle bg-label-success">
+                                            <span class="avatar-initial rounded-circle bg-label-success">C</span>
+                                        </span>
+                                    </div>
+                                    <input class="form-control ml-1 shadow-none textarea" id="commentText" rows="1" placeholder="Write your comment here..."></input>
+                                </div>
+                            </div>
+
+                            @* <button type="submit" class="btn btn-primary btn-sm shadow-none">
+                        Post comment
+                        </button> *@
+                            <input type="submit" hidden />
+
+                        </form>
+
                     </div>
 
                 </div>
@@ -151,7 +159,7 @@
                             '<div class="avatar avatar-md avatar-online flex-shrink-0 me-4" width="50" height="50">' +
                             '<div class="avatar avatar-md" width="50" height="50">' +
                             '<span class="avatar-initial rounded-circle bg-label-success">' +
-                            '<span class="avatar-initial rounded-circle bg-label-success">' + response.userName[0] + '</span>' +
+                            '<span class="avatar-initial rounded-circle bg-label-success">' + 'C' + '</span>' +
                             '</span>' +
                             '</div>' +
                             '</div>' +
@@ -159,7 +167,7 @@
                             '<div>' +
                             '<div class="d-flex justify-content-between align-items-center">' +
                             '<p class="mb-1">' +
-                            response.userName + ' - <span class="created-at small">' + "Just now" + '</span>' +
+                            "Hoàng Quốc Cường" + ' - <span class="created-at small">' + "Just now" + '</span>' +
                             '</p>' +
                             '<a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>' +
                             '</div>' +

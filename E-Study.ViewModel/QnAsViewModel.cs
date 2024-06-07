@@ -18,7 +18,7 @@ namespace E_Study.ViewModel
         public string Option2 { get; set; }
         public string Option3 { get; set; }
         public string Option4 { get; set; }
-        public string SelectedAnswer { get; set; }
+        public string? SelectedAnswer { get; set; }
 
     }
 }

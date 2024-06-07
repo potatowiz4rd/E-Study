@@ -25,6 +25,7 @@ public partial class AppDbContext : IdentityDbContext<User>
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Grade).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(QnAs).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserCourse).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ChatMessage).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Message).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(User).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Comment).Assembly);
@@ -64,6 +65,7 @@ public partial class AppDbContext : IdentityDbContext<User>
     public DbSet<User> Users { get; set; }
     public DbSet<UserCourse> UserCourses { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Event> Events { get; set; }

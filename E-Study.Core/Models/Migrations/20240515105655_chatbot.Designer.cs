@@ -4,6 +4,7 @@ using E_Study.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Study.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240515105655_chatbot")]
+    partial class chatbot
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,19 +171,12 @@ namespace E_Study.Core.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EventId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ExamId", "CourseId");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("EventId")
-                        .IsUnique()
-                        .HasFilter("[EventId] IS NOT NULL");
 
                     b.ToTable("ExamCourses", (string)null);
                 });
@@ -661,11 +656,6 @@ namespace E_Study.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Study.Core.Models.Event", "Event")
-                        .WithOne("ExamCourse")
-                        .HasForeignKey("E_Study.Core.Models.ExamCourse", "EventId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("E_Study.Core.Models.Exam", "Exam")
                         .WithMany("ExamCourses")
                         .HasForeignKey("ExamId")
@@ -673,8 +663,6 @@ namespace E_Study.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
-
-                    b.Navigation("Event");
 
                     b.Navigation("Exam");
                 });
@@ -852,11 +840,6 @@ namespace E_Study.Core.Migrations
                     b.Navigation("Posts");
 
                     b.Navigation("UserCourses");
-                });
-
-            modelBuilder.Entity("E_Study.Core.Models.Event", b =>
-                {
-                    b.Navigation("ExamCourse");
                 });
 
             modelBuilder.Entity("E_Study.Core.Models.Exam", b =>

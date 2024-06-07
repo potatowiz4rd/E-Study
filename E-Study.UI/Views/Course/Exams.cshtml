@@ -4,31 +4,35 @@
     Assignments
 </h4>
 <div class="mt-2 mb-4">
-<a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="btn btn-secondary create-new btn-primary">
-    <span>
-        <i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">New Assignment</span>
-    </span>
-</a>
+    <a asp-action="AddExamToCourse" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="btn btn-secondary create-new btn-primary">
+        <span>
+            <i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">New Assignment</span>
+        </span>
+    </a>
 </div>
 <div class="row mb-4 g-4">
     @foreach (var exam in Model)
     {
         <div class="col-12 col-xl-4 col-md-6">
             <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <div class="card-title mb-0">
-                            <h4 class="m-0 me-2">@exam.Exam.Title</h4>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn p-0" type="button" id="popularInstructors" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularInstructors">
-                                <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                <a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
-                            </div>
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="card-title mb-0">
+                        <h4 class="m-0 me-2">@exam.Exam.Title</h4>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn p-0" type="button" id="popularInstructors" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularInstructors">
+                            <a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                            <form method="post" action="@Url.Action("DeleteExamCourse", "Course", new { @examId = exam.ExamId, @courseId = exam.CourseId })">
+                                <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Are you sure you want to delete this assignment?')">Delete</button>
+                                
+
+                            </form>
                         </div>
                     </div>
+                </div>
                 <div class="card-body">
                     <p class="medium">@exam.Exam.Description</p>
                     <div class="row mb-4 g-3">

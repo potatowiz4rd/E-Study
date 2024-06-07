@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace E_Study.Repository.IRepositories
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IExamCourseRepository : IBaseRepository<ExamCourse>
     {
-        IList<User> GetUsersInCourse(string courseId);
-        Task<IList<User>> GetUsersInCourseAsync(string courseId);
-        Task<IList<User>> GetUsersNotInCourse(string courseId);
+        void Delete(string examId, string courseId);
+
     }
 }

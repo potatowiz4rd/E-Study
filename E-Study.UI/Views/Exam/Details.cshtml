@@ -9,7 +9,11 @@
 <div class="card h-100">
     <div class="card-body row">
         <div class="d-flex align-items-center justify-content-between mt-0 ms-0 mb-0">
-            <a href="javascript: history.go(-1)" class="text-light">
+            @* <a href="javascript: history.go(-1)" class="text-light">
+                <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+                <span style="font-size: 1.2rem;">Back</span>
+            </a> *@
+            <a asp-action="Events" asp-controller="Course" asp-route-courseId="@ViewData["CurrentCourseId"]" class="text-light mb-2">
                 <span class="fa-solid fa-angle-left bx-sm me-1"></span>
                 <span style="font-size: 1.2rem;">Back</span>
             </a>
@@ -36,10 +40,10 @@
                 <div class="d-flex flex-wrap">
                     <div class="me-5">
                         <p class="text-nowrap"><i class='bx bx-check-double bx-sm me-2'></i>Maximum Point: @Model.MaxScore</p>
-                        <p class="text-nowrap"><i class='bx bxs-flag-alt bx-sm me-2'></i>Languages: English</p>
+                        <p class="text-nowrap"><i class='bx bxs-flag-alt bx-sm me-2'></i>Languages: Vietnamese</p>
                     </div>
                     <div>
-                        <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Number of Questions: 3</p>
+                        <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Number of Questions: 5</p>
                         <p class="text-nowrap "><i class='bx bxs-watch bx-sm me-2'></i>Time Limit: @Model.Time minutes</p>
                     </div>
                 </div>
@@ -62,7 +66,7 @@
                                     <a>@grade.Attempt</a>
                                 </td>
                                 <td>
-                                    <a>@grade.Score/10</a>
+                                    <a>@grade.Score/5</a>
                                 </td>
                                 <td>
                                     <a>@grade.DateTime</a>

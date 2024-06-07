@@ -100,7 +100,7 @@ namespace E_Study.Service.exam
             ResponseResult<ExamViewModel> response = new ResponseResult<ExamViewModel>();
             try
             {
-                var exam = uow.ExamRepository.GetById(examId);
+                var exam = uow.ExamRepository.GetExamWithQnAsId(examId);
                 var examModel = mapper.Map<ExamViewModel>(exam);
                 response.IsSuccessed = true;
                 response.Data = examModel;
@@ -129,18 +129,25 @@ namespace E_Study.Service.exam
                     examResult.ExamId = item.ExamId;
                     examResult.Answer = item.SelectedAnswer;
 
-                    // Check correctness based on question type
-                    if (item.Type == "Multiple Choice")
+                    if (string.IsNullOrEmpty(item.SelectedAnswer))
                     {
-                        // For multiple-choice questions, check if all selected answers match the correct answers
-                        var correctAnswers = item.Answer.Split(',').ToList(); // Assuming correct answers are comma-separated
-                        var selectedAnswers = item.SelectedAnswer.Split(',').ToList(); // Assuming selected answers are comma-separated
-                        examResult.IsCorrect = correctAnswers.All(selectedAnswers.Contains) && correctAnswers.Count == selectedAnswers.Count;
+                        examResult.IsCorrect = false;
                     }
                     else
                     {
-                        // For single-choice questions, check if the selected answer matches the correct answer
-                        examResult.IsCorrect = item.SelectedAnswer == item.Answer;
+                        // Check correctness based on question type
+                        if (item.Type == "Multiple Choice")
+                        {
+                            // For multiple-choice questions, check if all selected answers match the correct answers
+                            var correctAnswers = item.Answer.Split(',').ToList(); // Assuming correct answers are comma-separated
+                            var selectedAnswers = item.SelectedAnswer.Split(',').ToList(); // Assuming selected answers are comma-separated
+                            examResult.IsCorrect = correctAnswers.All(selectedAnswers.Contains) && correctAnswers.Count == selectedAnswers.Count;
+                        }
+                        else
+                        {
+                            // For single-choice questions, check if the selected answer matches the correct answer
+                            examResult.IsCorrect = item.SelectedAnswer == item.Answer;
+                        }
                     }
 
                     //examResult.IsCorrect = item.SelectedAnswer == item.Answer;
@@ -157,6 +164,12 @@ namespace E_Study.Service.exam
                     UserId = model.StudentId,
                     Score = model.QnAs.Count(q => {
                         // Check if the answer is correct based on the question type
+                        if (string.IsNullOrEmpty(q.SelectedAnswer))
+                        {
+                            return false;
+                        }
+
+                        // Check if the answer is correct based on the question type
                         if (q.Type == "Multiple Choice")
                         {
                             // For multiple-choice questions, split the correct answers and selected answers
@@ -168,7 +181,7 @@ namespace E_Study.Service.exam
                         else
                         {
                             return q.SelectedAnswer == q.Answer;
-                        }                                          
+                        }
                     }),
                     Attempt = model.Attempt,
                     DateTime = DateTime.Now

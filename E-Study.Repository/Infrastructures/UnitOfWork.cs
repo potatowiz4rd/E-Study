@@ -20,6 +20,8 @@ namespace E_Study.Repository.Infrastructures
         private IExamResultRepository _examResultRepository;
         private IEventRepository _eventRepository;
         private IGradeRepository _gradeRepository;
+        private IExamCourseRepository _examCourseRepository;
+
 
         public UnitOfWork(AppDbContext context = null)
         {
@@ -157,6 +159,17 @@ namespace E_Study.Repository.Infrastructures
             }
         }
 
+        public IExamCourseRepository ExamCourseRepository
+        {
+            get
+            {
+                if (_examCourseRepository == null)
+                {
+                    _examCourseRepository = new ExamCourseRepository(_context);
+                }
+                return _examCourseRepository;
+            }
+        }
         public void Dispose()
         {
             _context.Dispose();

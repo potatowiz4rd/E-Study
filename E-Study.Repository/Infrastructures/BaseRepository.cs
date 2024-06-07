@@ -39,6 +39,15 @@ namespace E_Study.Repository.Infrastructures
             dbSet.Remove(entity);
         }
 
+        public void Delete(params object[] keyValues)
+        {
+            var entity = dbSet.Find(keyValues);
+            if (entity != null)
+            {
+                dbSet.Remove(entity);
+            }
+        }
+
         public TEntity GetById(params object[] primaryKey)
         {
             return dbSet.Find(primaryKey);

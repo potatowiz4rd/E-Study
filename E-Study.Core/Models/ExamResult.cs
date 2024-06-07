@@ -16,7 +16,7 @@ namespace E_Study.Core.Models
         public Exam Exam { get; set; }
         public string QnAsId { get; set; }
         public QnAs QnAs { get; set; }
-        public string Answer { get; set; }
+        public string? Answer { get; set; }
         public bool IsCorrect { get; set; }
     }
 }

@@ -20,7 +20,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col mb-3">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label for="EventType">Event Type</label>
                                     <select class="form-control" id="EventType" name="EventType" required>
                                         <option value="">Select Event Type</option>
@@ -30,25 +30,25 @@
                                         <!-- Add more options as needed -->
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label asp-for="Text" class="control-label"></label>
-                                    <input asp-for="Text" class="form-control" />
+                                    <input asp-for="Text" class="form-control"/>
                                     <span asp-validation-for="Text" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="Url" class="control-label"></label>
-                                    <input asp-for="Url" class="form-control" />
+                                <div class="form-group mb-3">
+                                    <label asp-for="Url" class="control-label">Meeting URL (Optional)</label>
+                                    <input asp-for="Url" class="form-control"/>
                                     <span asp-validation-for="Url" class="text-danger"></span>
                                 </div>                             
-                                <div class="form-group">
-                                    <label asp-for="StartDate">Start Date</label>
+                                <div class="form-group mb-3">
+                                    <label asp-for="StartDate">Start Date (Optional)</label>
                                     <input type="datetime-local" class="form-control" id="StartDate" name="StartDate">
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="EndDate">End Date</label>
+                                <div class="form-group mb-3">
+                                    <label asp-for="EndDate">End Date (Optional)</label>
                                     <input type="datetime-local" class="form-control" id="EndDate" name="EndDate">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label asp-for="File">Upload File</label>
                                     <input type="file" class="form-control" id="File" name="File">
                                 </div>

@@ -28,6 +28,8 @@ namespace E_Study.UI.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Current = "Index";
+
             var userId = _userManager.GetUserId(User);
 
             if (userId != null)

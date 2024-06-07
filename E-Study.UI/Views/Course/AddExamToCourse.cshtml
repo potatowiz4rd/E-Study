@@ -3,38 +3,38 @@
 @{
     ViewData["Title"] = "AddExamToCourse";
 }
+<div class="d-flex align-items-center justify-content-between mt-0 ms-0 mb-0">
+    <a href="javascript: history.go(-1)" class="text-light">
+        <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+        <span style="font-size: 1.2rem;">Back</span>
+    </a>
+</div>
 
-<h1>AddExamToCourse</h1>
-
-<h4>ExamCourse</h4>
+<h4>Assign a new exam</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddExamToCourse" asp-controller="Course" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="courseId" value="@ViewData["CurrentCourseId"]">
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="ExamId" class="control-label"></label>
-                <select asp-for="ExamId" class ="form-control" asp-items="@ViewBag.Exams"></select>
+                <select asp-for="ExamId" class="form-control" asp-items="@ViewBag.Exams"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="EndDate" class="control-label"></label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+<button type="button" class="btn btn-label-secondary">Cancel</button>

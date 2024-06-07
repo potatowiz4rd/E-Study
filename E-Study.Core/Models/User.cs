@@ -18,6 +18,7 @@ namespace E_Study.Core.Models
         public ICollection<ExamResult> ExamResults { get; set; } = new HashSet<ExamResult>();
         public ICollection<UserCourse> UserCourses { get; set; } = new HashSet<UserCourse>();
         public ICollection<Message> Messages { get; set; } = new List<Message>();
+        public ICollection<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
         public ICollection<Post> Posts { get; set; } = new List<Post>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public ICollection<Grade> Grades { get; set; } = new List<Grade>();

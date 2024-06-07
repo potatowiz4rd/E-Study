@@ -1,0 +1,34 @@
+﻿@model E_Study.ViewModel.ExamViewModel
+
+@{
+    ViewData["Title"] = "QuizDetails";
+    Layout = "_LayoutNotLoggedIn";
+}
+<a href="javascript: history.go(-1)" class="text-light">
+    <span class="fa-solid fa-angle-left bx-sm me-1"></span>
+    <span style="font-size: 1.2rem;">Back</span>
+</a>
+<h1>@Model.Title</h1>
+<p>@Model.Description</p>
+<p><strong>Time:</strong> @Model.Time minutes</p>
+<p><strong>Max Score:</strong> @Model.MaxScore</p>
+
+<h2>Questions and Answers</h2>
+@foreach (var qna in Model.QnAs)
+{
+    <div class="card mb-3">
+        <div class="card-header">
+            <strong>Question:</strong> @qna.Question
+        </div>
+        <div class="card-body">
+            <p><strong>Type:</strong> @qna.Type</p>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Option 1:</strong> @qna.Option1</li>
+                <li class="list-group-item"><strong>Option 2:</strong> @qna.Option2</li>
+                <li class="list-group-item"><strong>Option 3:</strong> @qna.Option3</li>
+                <li class="list-group-item"><strong>Option 4:</strong> @qna.Option4</li>
+            </ul>
+            <p class="mt-2"><strong>Answer:</strong> @qna.Answer</p>
+        </div>
+    </div>
+}

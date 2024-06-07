@@ -22,6 +22,7 @@ namespace E_Study.Repository.Repositories
             // Assuming you have DbSet<Message> named DbSet in your context
             return await dataContext.Comments
                 .Where(m => m.PostId == postId).Include(p => p.User)
+                .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
         }
     }
